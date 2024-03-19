@@ -8,7 +8,10 @@ function userHome() {
 
 
 
- <div className="section-1"></div>
+ <div className="section-1">
+  <div className="profile-card"></div>
+  
+ </div>
  <div className="section-2"></div>
  <div className="section-3"></div>
 
