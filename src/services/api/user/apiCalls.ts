@@ -17,7 +17,7 @@ import { BASE_URL } from "../../../constants/baseUrls";
 
 
 
-export const apiCall = async (method, url, data) => {
+export const apiCall = async (method:string, url:string, data:any) => {
   return await new Promise(async (resolve, reject) => {
     try {
       let response, error;
@@ -45,8 +45,8 @@ export const apiCall = async (method, url, data) => {
       }
       
       if(response){
-        resolve(response.data);
-        console.log("apicalls"+response.data);
+        resolve(response);
+        console.log(response.data);
         
       } else if (error) {
         console.log(error);

@@ -1,6 +1,61 @@
-import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import './otpPage.css'
+import { postOTP } from '../../../services/api/user/apiMethods';
+
 function OtpPage() {
+
+  const [otp1, setOtp1] = useState<string>('');
+  const [otp2, setOtp2] = useState<string>('');
+  const [otp3, setOtp3] = useState<string>('');
+  const [otp4, setOtp4] = useState<string>('');
+  const navigate = useNavigate();
+  const otp1Ref = useRef<HTMLInputElement>(null);
+  const otp2Ref = useRef<HTMLInputElement>(null);
+  const otp3Ref = useRef<HTMLInputElement>(null);
+  const otp4Ref = useRef<HTMLInputElement>(null);
+
+  const handleOtpChange = (
+    otp: string,
+    setOtp: React.Dispatch<React.SetStateAction<string>>,
+    prevRef: React.RefObject<HTMLInputElement> | null,
+    nextRef: React.RefObject<HTMLInputElement> | null
+  ) => {
+    const regex = /^[0-9\b]+$/;
+    if (otp === '' || regex.test(otp)) {
+      setOtp(otp);
+      if (otp === '' && prevRef && prevRef.current) {
+        prevRef.current.focus();
+      } else if (otp.length === 1 && nextRef && nextRef.current) {
+        nextRef.current.focus();
+      }
+    }
+  };
+
+
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const otp = otp1 + otp2 + otp3 + otp4;
+    console.log(otp);
+    
+  
+    postOTP(otp).then((response:any) => {
+      const data = response.data
+      if(response.status === 200) {
+       toast.success(data.message)
+        navigate('/home');
+      } else {
+
+        console.log(response.message);
+        toast.error(data.message)
+      }
+    }).catch((error) => {
+      console.log(error?.message)
+    })
+  };
+  
   return (
     
     <div className="flex h-screen">
@@ -23,20 +78,43 @@ function OtpPage() {
           </div>
         
 
-          <form action="" method="post">
+          <form  onSubmit={handleSubmit} method="post">
       <div className="flex flex-col space-y-8">
         <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs ">
           <div className="w-16 h-16">
-            <input className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-700" type="text" name="" id="" />
+            <input
+             ref={otp1Ref}
+             type="text"
+             value={otp1}
+             onChange={(e) => handleOtpChange(e.target.value, setOtp1, null, otp2Ref)}
+             maxLength={1} className= "w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-700"  />
           </div>
           <div className="w-16 h-16">
-            <input className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-700" type="text" name="" id="" />
+            <input
+            ref={otp2Ref}
+            type="text"
+            value={otp2}
+            onChange={(e) => handleOtpChange(e.target.value, setOtp2, otp1Ref, otp3Ref)}
+            maxLength={1} 
+            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-700"  />
           </div>
           <div className="w-16 h-16">
-            <input className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-700" type="text" name="" id="" />
+            <input
+             ref={otp3Ref}
+             type="text"
+             value={otp3}
+             onChange={(e) => handleOtpChange(e.target.value, setOtp3, otp2Ref, otp4Ref)}
+             maxLength={1} 
+            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-700"  />
           </div>
           <div className="w-16 h-16">
-            <input className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-700" type="text" name="" id="" />
+            <input
+            ref={otp4Ref}
+            type="text"
+            value={otp4}
+            onChange={(e) => handleOtpChange(e.target.value, setOtp4, otp3Ref, null)}
+            maxLength={1}
+             className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-700" />
           </div>
         </div>
 

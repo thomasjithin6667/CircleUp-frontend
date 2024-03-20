@@ -5,6 +5,7 @@ import TextError from '../../../components/TextError';
 import {initialValues,validationSchema} from '../../../utils/validation/signupValidation'
 import { postRegister } from '../../../services/api/user/apiMethods';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 
 
@@ -15,10 +16,13 @@ function Signup() {
  const submit = (values: any) => {
   
     postRegister(values).then((response:any) => {
+      const data = response.data
       if(response.status === 200) {
-        navigate('/login');
+       toast.success(data.message)
+        navigate('/otp');
       } else {
         console.log(response.message);
+        toast.error(data.message)
       }
     }).catch((error) => {
       console.log(error?.message)
