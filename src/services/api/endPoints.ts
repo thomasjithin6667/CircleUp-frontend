@@ -1,3 +1,4 @@
 export const userUrls ={
-    register:'/register'
+    register:'/register',
+    registerOtp:'/register-otp'
 }

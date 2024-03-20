@@ -17,10 +17,10 @@ export const postRegister = (userData:FormValues) => {
     })
 }
 
-export const postOTP = (otp:string)=>{
+export const postOTP = (otp:{ otp: string })=>{
 return new Promise((resolve,reject)=>{
     try {
-        apiCall("post", userUrls.register, otp).then((response)=>{
+        apiCall("post", userUrls.registerOtp, otp).then((response)=>{
             resolve(response);
             console.log("apiMethods"+response);
             

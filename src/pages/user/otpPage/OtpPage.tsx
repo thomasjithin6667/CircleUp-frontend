@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './otpPage.css'
 import { postOTP } from '../../../services/api/user/apiMethods';
 
@@ -15,6 +15,39 @@ function OtpPage() {
   const otp2Ref = useRef<HTMLInputElement>(null);
   const otp3Ref = useRef<HTMLInputElement>(null);
   const otp4Ref = useRef<HTMLInputElement>(null);
+
+  const [timer, setTimer] = useState<number>(20);
+  const [resendDisabled, setResendDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    const countdownInterval = setInterval(() => {
+      if (timer > 0) {
+        setTimer(timer - 1);
+      } else {
+        clearInterval(countdownInterval);
+        setResendDisabled(false);
+        toast.error("Time expired please resend otp")
+      }
+    }, 1000);
+
+    return () => clearInterval(countdownInterval);
+  }, [timer]);
+
+  const startResendTimer = () => {
+    setResendDisabled(true);
+    setTimer(20);
+  };
+
+  const handleResendClick = () => {
+    startResendTimer();
+    // Add logic to resend OTP here
+    // For example:
+    // postResendOTP().then((response) => {
+    //   // Handle response
+    // }).catch((error) => {
+    //   // Handle error
+    // });
+  };
 
   const handleOtpChange = (
     otp: string,
@@ -37,11 +70,13 @@ function OtpPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const otp = otp1 + otp2 + otp3 + otp4;
-    console.log(otp);
-    
+
+    const otp:string = otp1 + otp2 + otp3 + otp4;
+    const payload={ otp }
+
   
-    postOTP(otp).then((response:any) => {
+  
+    postOTP(payload).then((response:any) => {
       const data = response.data
       if(response.status === 200) {
        toast.success(data.message)
@@ -80,7 +115,7 @@ function OtpPage() {
 
           <form  onSubmit={handleSubmit} method="post">
       <div className="flex flex-col space-y-8">
-        <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs ">
+        <div className="flex justify-between">
           <div className="w-16 h-16">
             <input
              ref={otp1Ref}
@@ -121,10 +156,16 @@ function OtpPage() {
         <div className='flex justify-between  items-center '>
               <div className='flex gap-2  items-center'>
     
-<p className='text-xs text-grey-600'>Expires in</p>
+              <p className='text-xs text-grey-600'>Expires in {timer} seconds</p>
               </div>
            
-            <p className='text-xs text-red-600'>Resent OTP</p>
+              <button
+          onClick={handleResendClick}
+          disabled={resendDisabled}
+          className='text-xs text-red-600 hover:underline focus:outline-none'
+        >
+          Resend OTP
+        </button>
           </div>
             <div>
               <button type="submit" className="w-full text-sm bg-green-600 text-white p-3 mt-5 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Verify Account</button>
