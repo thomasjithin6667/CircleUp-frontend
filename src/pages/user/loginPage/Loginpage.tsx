@@ -7,6 +7,9 @@ import {initialValues,validationSchema} from '../../../utils/validation/loginVal
 import { postLogin } from '../../../services/api/user/apiMethods';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../../utils/context/reducers/authSlice';
+
 
 
 
@@ -17,13 +20,15 @@ import { toast } from 'sonner';
 
 function Login() {
   const navigate = useNavigate();
-
+      const dispatch = useDispatch();
   const submit = (values: any) => {
   
     postLogin(values).then((response:any) => {
+
       const data = response.data
       if(response.status === 200) {
        toast.success(data.message)
+       dispatch(loginSuccess({ user: data }));
         navigate('/home');
       } else {
         console.log(response.message);
