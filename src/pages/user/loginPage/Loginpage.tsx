@@ -1,7 +1,40 @@
+
+import { Formik,Form,Field ,ErrorMessage} from 'formik';
 import './login.css'
 import { Link } from 'react-router-dom';
+import TextError from '../../../components/TextError';
+import {initialValues,validationSchema} from '../../../utils/validation/loginValidation'
+import { postLogin } from '../../../services/api/user/apiMethods';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+
+
+
+
+
+
+
 
 function Login() {
+  const navigate = useNavigate();
+
+  const submit = (values: any) => {
+  
+    postLogin(values).then((response:any) => {
+      const data = response.data
+      if(response.status === 200) {
+       toast.success(data.message)
+        navigate('/home');
+      } else {
+        console.log(response.message);
+        toast.error(data.message)
+      }
+    }).catch((error) => {
+      console.log(error?.message)
+    })
+  };
+  
+
   return (
    
    
@@ -35,15 +68,21 @@ function Login() {
           <div className="mt-4 text-xs text-gray-600 text-center">
             <p>or with email</p>
           </div>
-          <form action="#" method="POST" className="space-y-4">
+          <Formik       initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={submit}>
+          <Form className="space-y-4">
           
             <div>
               
-              <input type="text" id="email" placeholder='Email' name="email" className="mt-5 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
+              <Field type="text" id="email" placeholder='Email' name="email" className="mt-5 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
+              <ErrorMessage name="email" component={TextError} />
             </div>
             <div>
           
-              <input type="password" placeholder='Password' id="password" name="password" className="mt-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
+              <Field type="password" placeholder='Password' id="password" name="password" className="mt-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
+              <ErrorMessage name="password"  component={TextError}/>
+
             </div>
             <div className='flex justify-between  items-center '>
               <div className='flex gap-2  items-center'>
@@ -57,12 +96,13 @@ function Login() {
 <p className='text-xs text-grey-600'>Remember me</p>
               </div>
            
-            <p className='text-xs text-red-600'>Forgot password</p>
+            <p className='text-xs  text-red-600'>Forgot password ?</p>
           </div>
             <div>
               <button type="submit" className="w-full text-sm bg-green-600 text-white p-3 mt-5 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black  focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Login</button>
             </div>
-          </form>
+          </Form>
+          </Formik>
        
           <div className="mt-4 text-xs text-gray-600 text-center">
             <p>Don't have an account yet?  <Link className="font-semibold text-green-600 hover:underline" to="/signup">Register here</Link> </p>

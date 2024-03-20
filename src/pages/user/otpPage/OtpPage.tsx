@@ -1,10 +1,13 @@
 import { toast } from 'sonner';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './otpPage.css'
-import { postOTP } from '../../../services/api/user/apiMethods';
+import { postOTP,postResendOTP } from '../../../services/api/user/apiMethods';
 
 function OtpPage() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const email = queryParams.get('email') || '';
 
   const [otp1, setOtp1] = useState<string>('');
   const [otp2, setOtp2] = useState<string>('');
@@ -16,13 +19,18 @@ function OtpPage() {
   const otp3Ref = useRef<HTMLInputElement>(null);
   const otp4Ref = useRef<HTMLInputElement>(null);
 
-  const [timer, setTimer] = useState<number>(20);
-  const [resendDisabled, setResend] = useState<boolean>(false);
+
+  const initialTimer = parseInt(localStorage.getItem("otpTimer") || "30")
+  const [timer, setTimer] = useState<number>(initialTimer);
+  const [resend, setResend] = useState<boolean>(false);
+
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
       if (timer > 0) {
         setTimer(timer - 1);
+        localStorage.setItem("otpTimer", (timer-1).toString());
+        
       } else {
         clearInterval(countdownInterval);
         setResend(true);
@@ -35,18 +43,22 @@ function OtpPage() {
 
   const startResendTimer = () => {
     setResend(false);
-    setTimer(20);
+    setTimer(30);
+    localStorage.setItem("otpTimer", "30");
   };
 
   const handleResendClick = () => {
+    console.log("hello")
     startResendTimer();
-    // Add logic to resend OTP here
-    // For example:
-    // postResendOTP().then((response) => {
-    //   // Handle response
-    // }).catch((error) => {
-    //   // Handle error
-    // });
+    setOtp1("")
+    setOtp2("")
+    setOtp3("")
+    setOtp4("")
+    postResendOTP({email:email}).then((response:any) => {
+      toast.success("OTP has been resend to"+response.data.email);
+    }).catch((error) => {
+      console.log(error)
+    });
   };
 
   const handleOtpChange = (
@@ -70,8 +82,9 @@ function OtpPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (timer === 0) {
-      setResend(false);
+      setResend(true);
       toast.info("OTP has expired Please resent")
       return;
     }
@@ -84,10 +97,11 @@ function OtpPage() {
 
     const payload={ otp }
     postOTP(payload).then((response:any) => {
+      localStorage.removeItem('otpTimer')
       const data = response.data
       if(response.status === 200) {
        toast.success(data.message)
-        navigate('/home');
+        navigate('/login');
       } else {
 
         console.log(response.message);
@@ -111,7 +125,7 @@ function OtpPage() {
         
         <div className="max-w-md w-full p-6" >
           <p className="title text-4xl font-black  mb-2 text-black ">OTP verification.</p>
-          <h1 className="text-sm  mb-6 text-gray-500 ">We sent a code to samplemail@gmail.com</h1>
+          <h1 className="text-sm  mb-6 text-gray-500 ">We sent a code to {email}</h1>
           <div className="mt-4 flex flex-col lg:flex-row items-center justify-between">
     
           </div>
@@ -165,10 +179,10 @@ function OtpPage() {
     
               <p className='text-xs text-grey-600'>Expires in {timer} seconds</p>
               </div>
-           {resendDisabled? <button
+           {resend? <button
           onClick={handleResendClick}
 
-          className='text-xs text-red-600 hover:underline focus:outline-none'
+          className='text-xs font-semibold text-red-600 hover:underline focus:outline-none'
         >
           Resend OTP
         </button>:""}

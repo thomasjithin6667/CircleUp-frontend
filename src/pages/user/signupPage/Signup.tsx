@@ -12,14 +12,15 @@ import { toast } from 'sonner';
 
 function Signup() {
   const navigate = useNavigate();
-  
+  localStorage.removeItem('otpTimer')
+
  const submit = (values: any) => {
   
     postRegister(values).then((response:any) => {
       const data = response.data
       if(response.status === 200) {
        toast.success(data.message)
-        navigate('/otp');
+        navigate(`/otp?email=${data.email}`);
       } else {
         console.log(response.message);
         toast.error(data.message)
