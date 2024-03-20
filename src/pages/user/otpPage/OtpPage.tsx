@@ -17,7 +17,7 @@ function OtpPage() {
   const otp4Ref = useRef<HTMLInputElement>(null);
 
   const [timer, setTimer] = useState<number>(20);
-  const [resendDisabled, setResendDisabled] = useState<boolean>(false);
+  const [resendDisabled, setResend] = useState<boolean>(false);
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
@@ -25,7 +25,7 @@ function OtpPage() {
         setTimer(timer - 1);
       } else {
         clearInterval(countdownInterval);
-        setResendDisabled(false);
+        setResend(true);
         toast.error("Time expired please resend otp")
       }
     }, 1000);
@@ -34,7 +34,7 @@ function OtpPage() {
   }, [timer]);
 
   const startResendTimer = () => {
-    setResendDisabled(true);
+    setResend(false);
     setTimer(20);
   };
 
@@ -70,12 +70,19 @@ function OtpPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (timer === 0) {
+      setResend(false);
+      toast.info("OTP has expired Please resent")
+      return;
+    }
 
-    const otp:string = otp1 + otp2 + otp3 + otp4;
+    const otp:string = otp1 + otp2 + otp3 + otp4||'';
+    if(otp.trim().length!==4){
+      toast.error("Enter a Valid OTP")
+      return
+    }
+
     const payload={ otp }
-
-  
-  
     postOTP(payload).then((response:any) => {
       const data = response.data
       if(response.status === 200) {
@@ -158,14 +165,14 @@ function OtpPage() {
     
               <p className='text-xs text-grey-600'>Expires in {timer} seconds</p>
               </div>
-           
-              <button
+           {resendDisabled? <button
           onClick={handleResendClick}
-          disabled={resendDisabled}
+
           className='text-xs text-red-600 hover:underline focus:outline-none'
         >
           Resend OTP
-        </button>
+        </button>:""}
+             
           </div>
             <div>
               <button type="submit" className="w-full text-sm bg-green-600 text-white p-3 mt-5 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Verify Account</button>
