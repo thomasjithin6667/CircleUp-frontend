@@ -1,40 +1,29 @@
 import { Formik,Form,Field ,ErrorMessage} from 'formik';
 import './signup.css'
 import { Link } from 'react-router-dom';
-import * as Yup from 'yup'
 import TextError from '../../../components/TextError';
+import {initialValues,validationSchema} from '../../../utils/validation/signupValidation'
+import { postRegister } from '../../../services/api/user/apiMethods';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 function Signup() {
+  const navigate = useNavigate();
   
-  interface FormValues {
-    username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }
+ const submit = (values: any) => {
   
-  const initialValues: FormValues = {
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    postRegister(values).then((response:any) => {
+      if(response.status === 200) {
+        navigate('/login');
+      } else {
+        console.log(response.message);
+      }
+    }).catch((error) => {
+      console.log(error?.message)
+    })
   };
-  
-  const validationSchema = Yup.object({
-    username: Yup.string().required('Username is required'),
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password')], 'Passwords must match')
-      .required('Confirm Password is required'),
-  });
-  
-  const submit=(values:any)=>{
-    
-      console.log(values);
-
-  }
-
   
   
   return (
@@ -77,26 +66,24 @@ function Signup() {
               <Field type="text" id="username" name="username" placeholder='Username'   className="my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />          
               <ErrorMessage name="username" component={TextError} />
             </div>
+
             <div>        
               <Field type="text" id="email"  name="email" placeholder='Email'  className="my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
               <ErrorMessage name="email" component={TextError} />
             </div>
+
             <div>
-          
               <Field type="password" placeholder='Password'  name="password" id="password"  className="my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
               <ErrorMessage name="password"  component={TextError}/>
-           
- 
             </div>
+
             <div>
-          
           <Field type="password" placeholder='confirm Password'  name="confirmPassword" id="confirmPassword"  className="my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />        
           <ErrorMessage name="confirmPassword" component={TextError} />
-         
-      
         </div>
+
             <div>
-              <button type="submit" className="w-full text-sm bg-green-600 text-white p-3 mt-3 rounded-md hover:bg-gray-800  focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Sign Up</button>
+              <button type="submit" className="w-full text-sm bg-green-600 text-white p-3 mt-6 rounded-md hover:bg-gray-800  focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Sign Up</button>
             </div>
           </Form>
           </Formik>
