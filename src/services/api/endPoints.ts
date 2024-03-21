@@ -13,3 +13,7 @@ export const authUrl = {
     authUser: "/auth/user",
     authAdmin: "/auth/admin"
 };
+
+export const adminUrl = {
+    login: "/admin/login"
+}

@@ -46,7 +46,7 @@ export const apiCall = async (method:string, url:string, data:any) => {
       
       if(response){
         resolve(response);
-        console.log(response.data);
+    
         
       } else if (error) {
  console.log(error);
