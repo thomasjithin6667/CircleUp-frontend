@@ -49,7 +49,9 @@ export const apiCall = async (method:string, url:string, data:any) => {
         console.log(response.data);
         
       } else if (error) {
-        console.log(error);
+ console.log(error);
+ 
+        reject(error?.response?.data);
         
         // if(error?.data?.status === 403 && error?.data?.error_code === "FORBIDDEN"){
         //   localStorage.setItem(userAuth, "");
