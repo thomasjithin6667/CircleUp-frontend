@@ -10,8 +10,11 @@ function userHome() {
   
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem('email')
     navigate('/login')
   };
+
+
 
   return (
     <div className="bg-gray-200 h-screen">
@@ -21,6 +24,8 @@ function userHome() {
         <div className="profile-card"></div>
         <button onClick={handleLogout}>Logout</button>
       </div>
+
+      
       <div className="section-2"></div>
       <div className="section-3"></div>
     </div>

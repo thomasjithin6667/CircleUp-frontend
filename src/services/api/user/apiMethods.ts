@@ -2,6 +2,8 @@ import { userUrls } from "../endPoints";
 import { apiCall } from "./apiCalls";
 import { FormValues } from "../../../utils/validation/signupValidation";
 
+//@dec      user Registration
+//method    POST
 
 export const postRegister = (userData:FormValues) => {
     return new Promise((resolve, reject) => {
@@ -16,6 +18,10 @@ export const postRegister = (userData:FormValues) => {
         }
     })
 }
+
+
+//@dec      Verify  Otp
+//method    POST
 
 export const postOTP = (otp:{ otp: string })=>{
 return new Promise((resolve,reject)=>{
@@ -33,7 +39,9 @@ return new Promise((resolve,reject)=>{
 })
 }
 
-// Resend OTP
+
+//@dec      Resend Otp
+//method    POST
 
 export const postResendOTP = (email:{email:string})=>{
     return new Promise((resolve)=>{
@@ -58,10 +66,31 @@ export const postResendOTP = (email:{email:string})=>{
     
 //@dec      Login user
 //method    POST
+
 export const postLogin = (userData:{email:string,password:string}) => {
     return new Promise((resolve, reject) => {
         try {
             apiCall('post', userUrls.login, userData).then((response)=>{
+                resolve(response);
+            }).catch((err)=>{
+                reject(err);
+            })
+        } catch (error) {
+            resolve({ status: 500, message:"Somethings wrong." });
+        }
+    })
+
+}
+
+
+
+//@dec      Google signup  user
+//method    POST
+
+export const  googleAuthenticate = (userData:{username:string,email:string,imageUrl:string}) => {
+    return new Promise((resolve, reject) => {
+        try {
+            apiCall('post', userUrls.googleAuth, userData).then((response)=>{
                 resolve(response);
             }).catch((err)=>{
                 reject(err);
