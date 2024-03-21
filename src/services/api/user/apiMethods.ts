@@ -6,7 +6,7 @@ import { FormValues } from "../../../utils/validation/signupValidation";
 //method    POST
 
 export const postRegister = (userData:FormValues) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         try {
             apiCall("post", userUrls.register, userData).then((response)=>{
                 resolve(response);
@@ -24,7 +24,7 @@ export const postRegister = (userData:FormValues) => {
 //method    POST
 
 export const postOTP = (otp:{ otp: string })=>{
-return new Promise((resolve,reject)=>{
+return new Promise((resolve)=>{
     try {
         apiCall("post", userUrls.registerOtp, otp).then((response)=>{
             resolve(response);
@@ -101,3 +101,61 @@ export const  googleAuthenticate = (userData:{username:string,email:string,image
     })
 
 }
+
+
+//@dec      Forgot Password
+//method    POST
+
+
+export const forgotPassword = (email: { email: string }) => {
+    return new Promise((resolve) => {
+      try {
+        console.log(email);
+        apiCall("post", userUrls.forgotPassword, email).then((response) => {
+          resolve(response);
+          console.log("apiMethods" + response);
+        });
+      } catch (error) {
+        resolve({ status: 500, message: "Somethings wrong." });
+      }
+    });
+  };
+
+
+
+   //@dec      Forgot Password OTP sent
+//method    POST
+
+
+export const forgotOTP = (otp: { otp: string }) => {
+    return new Promise((resolve) => {
+      try {
+        console.log(otp);
+        apiCall("post", userUrls.forgotOtp, otp).then((response) => {
+          resolve(response);
+          console.log("apiMethods" + response);
+        });
+      } catch (error) {
+        resolve({ status: 500, message: "Somethings wrong." });
+      }
+    });
+  };
+
+//@dec      Renew Password
+//method    POST
+
+  export const renewPassword = (userData: { password: string; confirmPassword: string }) => {
+    return new Promise((resolve, reject) => {
+      try {
+        apiCall("post", userUrls.resetPassword, userData)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } catch (error) {
+        resolve({ status: 500, message: "Somethings wrong." });
+      }
+    });
+  };

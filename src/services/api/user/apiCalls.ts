@@ -1,9 +1,9 @@
 import { api } from "./api";
 // import { refreshToken, userAuth } from "../const/localStorage";
-import axios from "axios";
+// import axios from "axios";
 
 // import { persistor } from "../utils/store";
-import { BASE_URL } from "../../../constants/baseUrls";
+// import { BASE_URL } from "../../../constants/baseUrls";
 
 
 
@@ -20,7 +20,7 @@ import { BASE_URL } from "../../../constants/baseUrls";
 export const apiCall = async (method:string, url:string, data:any) => {
   return await new Promise(async (resolve, reject) => {
     try {
-      let response, error;
+      let response:any, error:any;
 
       if (method === "post") {
         response = await api.post(url, data).catch((err) => {

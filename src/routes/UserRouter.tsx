@@ -7,6 +7,7 @@ import RegisterSucces from "../pages/user/registerSucces/RegisterSucces";
 import ChangePassword from "../pages/user/changePassword/ChangePassword";
 import Landing from "../pages/user/landingPage/Landing";
 import UserHome from "../pages/user/userHome/UserHome";
+import PasswordOtp from "../pages/user/passwordOtpPage/PasswordOtp";
 
 
 
@@ -20,8 +21,12 @@ const UserRouter=()=>{
         <Route path="/otp" element={<OtpPage/>} />
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/change-password" element={<ChangePassword/>} />
+        <Route path='/forgot-otp' element={<PasswordOtp />} />
         <Route path="/register-success" element={<RegisterSucces/>} />
         <Route  path="/home" element={<UserHome/>} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+    
+
    
         </Routes>
         </>

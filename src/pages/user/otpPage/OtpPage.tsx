@@ -101,7 +101,7 @@ function OtpPage() {
       const data = response.data
       if(response.status === 200) {
        toast.success(data.message)
-        navigate('/login');
+        navigate('/register-success');
       } else {
 
         console.log(response.message);
@@ -189,7 +189,7 @@ function OtpPage() {
              
           </div>
             <div>
-              <button type="submit" className="w-full text-sm bg-green-600 text-white p-3 mt-5 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Verify Account</button>
+              <button type="submit" className="w-full text-sm bg-green-600 text-white p-3 mt-5 rounded-md hover:bg-gray-800  focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Verify Account</button>
             </div>
       </div>
     </form>
