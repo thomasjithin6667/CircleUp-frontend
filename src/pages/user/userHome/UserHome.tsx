@@ -9,6 +9,8 @@ import { Formik,Form,Field ,ErrorMessage,useFormik} from 'formik';
 import * as Yup from "yup";
 import { toast } from 'sonner';
 import PreviewImage from "../../../components/PreviewImage";
+import TextError from "../../../components/TextError";
+
 
 
 function userHome() {
@@ -59,6 +61,7 @@ function userHome() {
   const handleCancelClick = () => {
     setShowModal(false);
     formik.values.image=""
+    formik.errors.image=undefined
   };
   
   return (
@@ -199,11 +202,18 @@ function userHome() {
 
 
      </div>
-     <div onClick={handleButtonClick} className="image-preview flex items-center justify-center cursor-pointer">
-       {!formik.values.image&&(<div className="flex flex-col gap 10 items-center"><ImagePlus  color="gray" strokeWidth={1.5} size={40}/> 
-       <p>Select Image</p> </div>)}
+     <div>
+      <button type="button" onClick={handleButtonClick}  >
+     <div className="image-preview flex items-center justify-center cursor-pointer">
+       {(!formik.values.image || formik.errors.image) &&(<div className="flex flex-col gap 10 items-center"><ImagePlus  color="gray" strokeWidth={1.5} size={40}/> 
+       <p className="text-xs">Select Image</p> </div>)}
      {formik.values.image && !formik.errors.image && <PreviewImage file={formik.values.image} />}
               </div>
+              </button>
+     { formik.errors.image&&( <p className="text-red-600 text-xs" >{formik.errors.image}</p>  ) }
+     </div>
+
+              
               </div>
         
        
@@ -242,20 +252,17 @@ function userHome() {
       />
           <div className="count ml-auto text-gray-400 text-xs font-semibold">0/300</div>
         </div>
+ 
      
        
         <div className="buttons flex">
           <div   onClick={handleCancelClick} className="text-xs rounded btn border border-gray-300 px-4 py-2  cursor-pointer text-gray-500 ml-auto  hover:bg-red-600  hover:text-white ">Cancel</div>
-          <button  className="text-xs rounded btn border px-4 py-2 cursor-pointer text-white ml-2 bg-gray-900  hover:bg-green-600 " >Publish Post</button>
+          <button  type="submit" className="text-xs rounded btn border px-4 py-2 cursor-pointer text-white ml-2 bg-gray-900  hover:bg-green-600 " >Publish Post</button>
         </div>
         </form>
  
 
-        { formik.errors&&(
-    toast.error(formik.errors.image) 
-  )
-
- }
+     
       </div>
     </div>
       </div>)}
