@@ -53,7 +53,7 @@ function userHome() {
           value && value.size < 1024 * 1024
         )
     }),
-    onSubmit:async (values) => {
+    onSubmit:async () => {
       
      const{image}=formik.values
      const formData= new FormData()
