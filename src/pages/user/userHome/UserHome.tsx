@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import { toast } from 'sonner';
 import PreviewImage from "../../../components/PreviewImage";
 import TextError from "../../../components/TextError";
+import axios from 'axios'
 
 
 
@@ -52,9 +53,23 @@ function userHome() {
           value && value.size < 1024 * 1024
         )
     }),
-    onSubmit: (values) => {
+    onSubmit:async (values) => {
       
-      console.log(values);
+     const{image}=formik.values
+     const formData= new FormData()
+ 
+     try {
+      formData.append("file",image)
+      formData.append("upload_preset","izfeaxkx")
+      const res =await axios.post("https://api.cloudinary.com/v1_1/dxxsszr8t/image/upload",formData)
+      console.log(res);
+      
+     } catch (error) {
+      console.log(error);
+      
+      
+     }
+
     }
   });
  
