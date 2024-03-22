@@ -3,11 +3,12 @@ import { useDispatch, useStore } from 'react-redux';
 import { logout } from "../../../utils/context/reducers/authSlice";
 import { useNavigate } from 'react-router-dom';
 import "./userHome.css"
-import { Bell, Bookmark, Mail,LucideKeySquare } from "lucide-react";
+import { Bell, Bookmark, Mail,LucideKeySquare,ImagePlus } from "lucide-react";
 import { useState,useRef } from "react";
 import { Formik,Form,Field ,ErrorMessage,useFormik} from 'formik';
 import * as Yup from "yup";
-
+import { toast } from 'sonner';
+import PreviewImage from "../../../components/PreviewImage";
 
 
 function userHome() {
@@ -26,38 +27,43 @@ function userHome() {
     setShowModal(true);
   };
 
-  const handleCancelClick = () => {
-    setShowModal(false);
-  };
-
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleButtonClick = () => {
-    fileInputRef.current?.click(); // Optional chaining (?.) used here
+  const handleButtonClick = (e:any) => {
+    e.preventDefault()
+ 
+    fileInputRef.current?.click(); 
   };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]; // Optional chaining (?.) used here
-    // Handle the selected file here
-    console.log('Selected file:', file);
-  };
-
 
   const formik = useFormik({
     initialValues: {
       image: ''
     },
     validationSchema: Yup.object({
-      image: Yup.mixed().required('Image file required')
+      image: Yup.mixed()
+        .required('Image file required')
+        .test("FILE_TYPE", "Invalid file type", (value:any) =>
+          value && ['image/png', 'image/jpeg'].includes(value.type)
+        )
+        .test("FILE_SIZE", "File size too big", (value:any) =>
+          value && value.size < 1024 * 1024
+        )
     }),
     onSubmit: (values) => {
-      // Handle form submission here
+      
       console.log(values);
     }
   });
+ 
+  const handleCancelClick = () => {
+    setShowModal(false);
+    formik.values.image=""
+  };
+  
   return (
     <div>
+      
       <Header />
 
       <div className="home-main">
@@ -177,20 +183,28 @@ function userHome() {
       </div>
 
       </div>
-
+       
       {showModal &&(<div className="addpost-popup">
+        
       <div className="addpost-popup">
       <div className="addpost-modal rounded-xl bg-white mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
           <p className="font-semibold mb-2">Create Post</p>
           <hr />
 
           <form onSubmit={formik.handleSubmit} >
-     <div className="flex flex-col">
+           <div className="post-info-section">
+     <div className="post-inputs">
      <input  type="text" placeholder="Title"  className="rounded-lg border mt-3 border-gray-300 p-2 mb-4 outline-none text-xs font-normal" />
         <textarea className=" rounded-lg description sec p-3 h-60 border border-gray-300 outline-none text-xs font-normal" spellCheck="false"  placeholder="Describe everything about this post here"></textarea>
 
 
      </div>
+     <div onClick={handleButtonClick} className="image-preview flex items-center justify-center cursor-pointer">
+       {!formik.values.image&&(<div className="flex flex-col gap 10 items-center"><ImagePlus  color="gray" strokeWidth={1.5} size={40}/> 
+       <p>Select Image</p> </div>)}
+     {formik.values.image && !formik.errors.image && <PreviewImage file={formik.values.image} />}
+              </div>
+              </div>
         
        
         <div className="icons flex text-gray-500 m-2">
@@ -218,17 +232,30 @@ function userHome() {
         type="file"
         ref={fileInputRef}
         style={{ display: 'none' }}
-        onChange={(e)=>formik.setFieldValue('image',e.target.files[0])}
+        onChange={(e) => {
+          const files = e.target.files;
+          if (files && files.length > 0) {
+            const file = files[0];
+            formik.setFieldValue('image', file);
+          }
+        }}
       />
           <div className="count ml-auto text-gray-400 text-xs font-semibold">0/300</div>
         </div>
-        
+     
        
         <div className="buttons flex">
           <div   onClick={handleCancelClick} className="text-xs rounded btn border border-gray-300 px-4 py-2  cursor-pointer text-gray-500 ml-auto  hover:bg-red-600  hover:text-white ">Cancel</div>
-          <button type="submit" className="text-xs rounded btn border px-4 py-2 cursor-pointer text-white ml-2 bg-gray-900  hover:bg-green-600 " >Publish Post</button>
+          <button  className="text-xs rounded btn border px-4 py-2 cursor-pointer text-white ml-2 bg-gray-900  hover:bg-green-600 " >Publish Post</button>
         </div>
         </form>
+ 
+
+        { formik.errors&&(
+    toast.error(formik.errors.image) 
+  )
+
+ }
       </div>
     </div>
       </div>)}
