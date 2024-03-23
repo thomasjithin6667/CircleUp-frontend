@@ -11,6 +11,9 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../utils/context/reducers/authSlice';
 import {auth,provider,fbProvider} from "../../../utils/firebase/config"
 import {signInWithPopup} from "firebase/auth";
+import { useEffect } from 'react';
+import { useSelector } from "react-redux";
+
 
 
 
@@ -22,6 +25,16 @@ import {signInWithPopup} from "firebase/auth";
 
 
 function Login() {
+
+
+  const selectUser = (state:any)=>state.auth.user;
+const user = useSelector(selectUser);
+
+
+
+
+
+
   const navigate = useNavigate();
       const dispatch = useDispatch();
   const submit = (values: any) => {
@@ -72,7 +85,17 @@ function Login() {
     });
   };
   
+  
+  useEffect(() => {
+   
 
+    if (user) {
+      navigate('/home')
+    }
+
+   
+  }, [user, navigate])
+  
   
   const facebookSubmit = () => {
     signInWithPopup(auth, fbProvider).then((data: any) => {

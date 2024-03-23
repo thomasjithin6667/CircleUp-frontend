@@ -180,3 +180,23 @@ export const addPost = (postData: {userId:any, imageUrl: string; title: string; 
     }
   });
 };
+
+//@dec      get all post
+//method    POST
+
+export const    getAllPosts = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("get", postUrls.getAllPosts, null)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+

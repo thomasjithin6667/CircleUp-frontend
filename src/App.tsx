@@ -1,17 +1,30 @@
 
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import AdminRouter from './routes/AdminRouter';
-import UserRouter from './routes/UserRouter';
+import {   Outlet, useNavigate } from "react-router-dom";
 import { Toaster } from "sonner";
+import Header from "./components/Header";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
 
 function App() {
+  const selectUser = (state:any)=>state.auth.user;
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
+
+   useEffect(() => {
+    if (!user ) {
+      navigate("/login");
+    }
+  },[user,  navigate]);
+
 
 
   return (
     <>
        
-    <Router>
-    <Toaster
+
+<div>
+<Toaster
   toastOptions={{
     unstyled: true,
     classNames: {
@@ -22,13 +35,16 @@ function App() {
     },
   }}
 />
-      <Routes>
-        <Route path="/admin/*" element={<AdminRouter />} />
-        <Route path="/*" element={<UserRouter />} />
-      </Routes>
-    </Router>
+      <Header />
+
+     
+          <Outlet/>
+        </div>
+        
   </>
   )
 }
 
 export default App
+
+

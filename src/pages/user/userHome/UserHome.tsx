@@ -1,33 +1,62 @@
-import Header from "../../../components/Header";
 import "./userHome.css";
 import AddPost from "../../../components/AddPost";
 import UserProfileBar from "../../../components/UserProfileBar";
 import Post from "../../../components/Post";
 import PeopleCard from "../../../components/PeopleCard";
-function userHome() {
+import { useEffect, useState } from "react";
+import { getAllPosts } from "../../../services/api/user/apiMethods";
 
+function UserHome() {
+  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([]); 
 
+  useEffect(() => {
+    try {
+      setLoading(true);
+      setTimeout(() => {
+        getAllPosts()
+          .then((response:any) => {
+            const postsData = response.data;
+            setPosts(postsData); 
+            
+            console.log(postsData);
+          })
+          .catch((error) => {
+          console.log(error);
+          
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      }, 2000);
+    } catch (error) {
+    console.log(error);
+    
+    }
+  }, []);
 
   return (
-    <div>
-      <Header />
+    <div className="home-main">
+      <div className="hidden lg:block home-section-1" id="mobile-menu-2">
+        <UserProfileBar />
+      </div>
 
-      <div className="home-main">
-        <div className="home-section-1">
-          <UserProfileBar />
-        </div>
+      <div className="home-section-2">
+        <AddPost />
 
-        <div className="home-section-2">
-          <AddPost />
-          <Post />
+        {posts.length > 0 && (
+          <div className="goals">
+            {posts.map((post:any) => (
+              <Post key={post._id} post={post} />
+            ))}
+          </div>
+        )}
+      </div>
 
-     
-        </div>
-        <div className="home-section-3">
-          <div className="home-scroll">
-            <div className="home-scrollbox">
-              <PeopleCard/>
-            </div>
+      <div className="hidden lg:block home-section-3" id="mobile-menu-2">
+        <div className="home-scroll">
+          <div className="home-scrollbox">
+            <PeopleCard />
           </div>
         </div>
       </div>
@@ -35,7 +64,4 @@ function userHome() {
   );
 }
 
-export default userHome;
-{
-  /* <button onClick={handleLogout}>Logout</button> */
-}
+export default UserHome;

@@ -6,7 +6,8 @@ export const userUrls ={
     login:'/login',
     forgotPassword:'/forgot-password',
     forgotOtp:'/forgot-otp',
-    resetPassword:'/reset-password'
+    resetPassword:'/reset-password',
+   
 }
 
 export const authUrl = {
@@ -15,7 +16,8 @@ export const authUrl = {
 };
 
 export const postUrls = {
-    addPost:'/post/add-post'
+    addPost:'/post/add-post',
+    getAllPosts:'/post/get-post'
 }
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Bell, Bookmark, Mail } from "lucide-react";
-import { useDispatch, useStore } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/context/reducers/authSlice";
 
@@ -186,7 +186,7 @@ const Header: React.FC<HeaderProps> = () => {
                   </li>
                   <li>
                     <a
-                      href="#"
+                       onClick={handleLogout}
                       className="block px-4 py-2 font-semibold text-xs text-red-500 hover:bg-gray-100"
                     >
                       Sign out
