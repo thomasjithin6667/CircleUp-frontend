@@ -14,6 +14,11 @@ export const authUrl = {
     authAdmin: "/auth/admin"
 };
 
+export const postUrls = {
+    addPost:'/post/add-post'
+}
+
+
 export const adminUrl = {
     login: "/admin/login"
 }

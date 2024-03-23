@@ -48,7 +48,7 @@ body{
 
 }
 .home-info-card{
-    height: 45%;
+    padding: 20px;
     margin: 20px;
     border-radius: 10px;
 
@@ -93,7 +93,7 @@ body{
 
 .addpost-popup{
     width: 100%;
-
+  z-index: 10;
     background-color: rgba(0, 0, 0, 0.407);
     position: fixed;
     top: 0;
@@ -128,4 +128,9 @@ body{
     margin: 10px;
     border-radius: 10px;
  
+}
+
+.hide {
+    font-size: 4px;
+    color: rgba(0, 0, 0, 0.442);
 }

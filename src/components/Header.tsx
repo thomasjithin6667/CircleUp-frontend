@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Bell, Bookmark, Mail } from "lucide-react";
+import { useDispatch, useStore } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../utils/context/reducers/authSlice";
+
+
 
 interface HeaderProps {}
 
@@ -26,6 +31,15 @@ const Header: React.FC<HeaderProps> = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("email");
+    navigate("/login");
+  };
+
 
   return (
     <nav className="z-10 bg-white lg:px-6 py-2.5 h-16 sticky top-0" >
