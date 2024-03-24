@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import Header from "./components/Header";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import UserProfileBar from "./components/UserProfileBar";
 
 
 function App() {
@@ -24,21 +25,16 @@ function App() {
        
 
 <div>
-<Toaster
-  toastOptions={{
-    unstyled: true,
-    classNames: {
-      error: 'text-red-600 text-xs flex justify-start border border-rounded gap-3 w-80 px-4 py-5 bg-white rounded-md',
-      success: 'text-green-600 text-xs flex justify-start border border-rounded gap-3 w-80 px-4 py-5 bg-white rounded-md',
-      warning: 'text-gray-300 text-xs flex justify-start border border-rounded gap-3 w-80 px-4 py-5 bg-white rounded-md', 
-      info: 'text-black text-xs flex justify-start border border-rounded gap-3 w-80 px-4 py-5 bg-white rounded-md',
-    },
-  }}
-/>
+
       <Header />
 
-     
+      <div className="home-main">
+      <div className="hidden lg:block home-section-1" id="mobile-menu-2">
+        <UserProfileBar />
+      </div>
+
           <Outlet/>
+      </div>
         </div>
         
   </>

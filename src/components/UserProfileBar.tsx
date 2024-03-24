@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom"
 
 function UserProfileBar() {
+  const navigate =useNavigate()
   return (
     <>
             <div className="home-profile-card bg-white flex flex-col justify-around items-center  pt-6 px-6">
@@ -9,14 +11,14 @@ function UserProfileBar() {
           <p className="text-xs text-gray-400">Mern Stack Developer</p>
           </div>
           
-          <button type="submit" className="w-full text-xs font-bold bg-gray-200 text-black p-3 rounded-md hover:bg-green-600 hover:text-white  focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">View Profile</button>
+          <button onClick={()=>{navigate('/profile/bio')}} type="submit" className="w-full text-xs font-bold bg-gray-200 text-black p-3 rounded-md hover:bg-green-600 hover:text-white  focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">View Profile</button>
 
 
         </div>
-    <div className="home-info-card bg-white flex flex-col justify-around px-6">
+    <div className=" home-info-card bg-white flex flex-col justify-around px-6">
       <div className="">
       <p className="text-sm font-bold">Availabilty</p>
-      <p className="text-xs bg-green-600 text-white py-1 mt-1 w-32 rounded-full text-center">Available for work</p>
+      <p className="text-xs bg-c-green text-white py-1 mt-1 w-32 rounded-full text-center">Available for work</p>
       </div>
 
       <div className="mt-4" >

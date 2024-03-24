@@ -3,7 +3,8 @@ import { useState, useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import PreviewImage from "./PreviewImage";import { useSelector } from "react-redux";
+import PreviewImage from "./PreviewImage";
+import { useSelector } from "react-redux";
 import { toast } from 'sonner';
 import { addPost } from "../services/api/user/apiMethods";
  

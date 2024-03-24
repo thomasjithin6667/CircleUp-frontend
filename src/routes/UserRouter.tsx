@@ -10,6 +10,10 @@ import UserHome from "../pages/user/userHome/UserHome";
 import PasswordOtp from "../pages/user/passwordOtpPage/PasswordOtp";
 import App from "../App";
 import { adminLoginRouter, adminRouter } from "./AdminRouter";
+import Profile from "../pages/user/profilePage/Profile";
+import UserBio from "../components/UserBio";
+import UserPost from "../components/UserPost";
+import Settings from "../components/Settings";
 
 createBrowserRouter
 
@@ -57,6 +61,24 @@ const appRouter = createBrowserRouter([
         // },
       ],
     },
+    {
+      path:"/profile",
+      element:<Profile/>,
+      children:[
+        {
+          path:"bio",
+          element:<UserBio/>,
+        },
+        {
+          path:"user-posts",
+          element:<UserPost/>,
+        },
+        {
+          path:"settings",
+          element:<Settings/>
+        }
+      ]
+        },
     {
       path: "/login",
       element: <Login />,

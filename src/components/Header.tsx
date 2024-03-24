@@ -4,11 +4,14 @@ import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/context/reducers/authSlice";
 
+import { Spinner } from 'flowbite-react';
+
 
 
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
+
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +45,9 @@ const Header: React.FC<HeaderProps> = () => {
 
 
   return (
-    <nav className="z-10 bg-white lg:px-6 py-2.5 h-16 sticky top-0" >
+    <nav className="border z-10 bg-white lg:px-6 py-2.5 h-16 sticky top-0" >
+      
+      
       <div className="flex flex-wrap justify-between">
         <a href="/" className="flex items-center">
           <img
@@ -59,7 +64,7 @@ const Header: React.FC<HeaderProps> = () => {
           <ul className="flex flex-col mt-4 gap-5 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
             <li>
               <a
-                href="#"
+                onClick={()=>navigate('/home')}
                 className="text-xs font-bold block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-green-50 lg:hover:bg-transparent lg:border-0 lg:p-0 dark:text-gray-700 lg:dark:hover:text-green-600 dark:hover:bg-gray-700 dark:hover:text-green-600 lg:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Home

@@ -1,10 +1,10 @@
 import "./userHome.css";
 import AddPost from "../../../components/AddPost";
-import UserProfileBar from "../../../components/UserProfileBar";
 import Post from "../../../components/Post";
 import PeopleCard from "../../../components/PeopleCard";
 import { useEffect, useState } from "react";
 import { getAllPosts } from "../../../services/api/user/apiMethods";
+import PostSkeletonUi from "../../../components/skeletonUI/PostSkeletonUi";
 
 function UserHome() {
   const [loading, setLoading] = useState(false);
@@ -36,21 +36,26 @@ function UserHome() {
   }, []);
 
   return (
-    <div className="home-main">
-      <div className="hidden lg:block home-section-1" id="mobile-menu-2">
-        <UserProfileBar />
-      </div>
 
+      <div>
       <div className="home-section-2">
-        <AddPost />
+        <div  className="home-scroll">
+          <div className="home-scrollbox">
+          <AddPost />
+{loading&&(
+  <PostSkeletonUi/>
+)}
+{posts.length > 0 && (
+  <div className="posts">
+    {posts.map((post:any) => (
+      <Post key={post._id} post={post} />
+    ))}
+  </div>
+)}
 
-        {posts.length > 0 && (
-          <div className="goals">
-            {posts.map((post:any) => (
-              <Post key={post._id} post={post} />
-            ))}
           </div>
-        )}
+        </div>
+    
       </div>
 
       <div className="hidden lg:block home-section-3" id="mobile-menu-2">
@@ -60,7 +65,10 @@ function UserHome() {
           </div>
         </div>
       </div>
-    </div>
+
+      </div>
+
+    
   );
 }
 

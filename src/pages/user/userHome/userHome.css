@@ -1,11 +1,12 @@
-body{
+/* body{
     background-color: rgb(234, 233, 233);
-}
+} */
 
 
 .home-main{
     height: 100vh;
     display: flex;
+    background-color: rgb(234, 233, 233);
 
     
     
@@ -119,6 +120,12 @@ body{
     width: 300px;
     height: 300px;
 
+
+}
+.user-post-inputs{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
 
 }
 .image-preview{
