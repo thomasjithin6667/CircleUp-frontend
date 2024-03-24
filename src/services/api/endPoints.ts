@@ -17,7 +17,9 @@ export const authUrl = {
 
 export const postUrls = {
     addPost:'/post/add-post',
-    getAllPosts:'/post/get-post'
+    getAllPosts:'/post/get-post',
+    getUserPosts:'/post/get-user-post',
+    editPost:'/post/edit-post'
 }
 
 

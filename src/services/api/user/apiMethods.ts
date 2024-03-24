@@ -200,3 +200,44 @@ export const    getAllPosts = () => {
   });
 };
 
+
+
+//@dec      Get User Post
+//method    POST
+
+export const    getUserPost = (userId:{userId:any}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", postUrls.getUserPosts, userId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+//@dec      Edit User post
+//method    POST
+
+export const editPost = (postData: {userId:any,postId:any,  title:any; description:string,hideLikes:boolean,hideComment:boolean }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", postUrls.editPost, postData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};

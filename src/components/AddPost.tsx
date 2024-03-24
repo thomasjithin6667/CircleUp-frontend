@@ -61,8 +61,8 @@ function AddPost() {
           "File size too big",
           (value: any) => value && value.size < 1024 * 1024
         ),
-        title: Yup.string().required("Title is required"),
-        description: Yup.string().required("Description is required"),
+        title: Yup.string().trim() .required("Title is required"),
+        description: Yup.string().trim().required("Description is required"),
     }),
     onSubmit: async () => {
 

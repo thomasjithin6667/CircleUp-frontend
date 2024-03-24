@@ -4,7 +4,7 @@ import './profile.css'
 
 
 function Profile() {
-  
+  console.log("hello");
   const navigate = useNavigate();
   return (
     <div className="wrapper">
@@ -17,6 +17,8 @@ function Profile() {
 
     </div>
     <Outlet/>
+
+    
     </div>
     </div>
   )
