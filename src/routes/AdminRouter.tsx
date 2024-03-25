@@ -3,7 +3,7 @@ import AdminLogin from "../pages/admin/adminLoginPage/AdminLogin";
 import AdminDashboard from "../pages/admin/adminDashboardPage/AdminDashboard";
 import UserList from "../pages/admin/userlistPage/UserList";
 import JobCategoryPage from "../pages/admin/categoryListPage/JobCategoryPage";
-
+import PostList from "../pages/admin/postlistPage/PostList";
 
 // const AdminRouter=()=>{
 //     return (
@@ -39,7 +39,13 @@ export const adminRouter = {
       {
         path:"/admin/jobs",
         element:<JobCategoryPage/>
+      },
+      {
+        path:"/admin/posts",
+        element:<PostList/>
+        
       }
+    
     ]
   };
   

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { BASE_URL } from "../../../constants/baseUrls";
-// import { userAuth } from "../const/localStorage";
+import { store } from "../../../utils/context/store";
+
+
 
 
 export const api = axios.create({
@@ -9,13 +11,20 @@ export const api = axios.create({
   withCredentials : true,
 });
 
-// api.interceptors.request.use(
-//   async (config) => {
-//     config.headers["Authorization"] = localStorage.getItem(userAuth);
-//     return config;
-//   },
-//   async (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+api.interceptors.request.use(
+  async (config) => {
 
+    const state = store.getState();
+    const authToken = state.auth.token;
+
+
+  
+      config.headers['Authorization'] = `Bearer ${authToken}`;
+  
+
+    return config;
+  },
+  async (error) => {
+    return Promise.reject(error);
+  }
+);

@@ -68,22 +68,22 @@ function Signup() {
     <Formik   initialValues={initialValues} validationSchema={validationSchema} onSubmit={submit} >
           <Form>
           <div>
-              <Field type="text" id="username" name="username" placeholder='Username'   className="my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />          
+              <Field type="text" id="username" name="username" placeholder='Username'   className=" border-gray-300  my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />          
               <ErrorMessage name="username" component={TextError} />
             </div>
 
             <div>        
-              <Field type="text" id="email"  name="email" placeholder='Email'  className="my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
+              <Field type="text" id="email"  name="email" placeholder='Email'  className=" border-gray-300 my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
               <ErrorMessage name="email" component={TextError} />
             </div>
 
             <div>
-              <Field type="password" placeholder='Password'  name="password" id="password"  className="my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
+              <Field type="password" placeholder='Password'  name="password" id="password"  className=" border-gray-300 my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />
               <ErrorMessage name="password"  component={TextError}/>
             </div>
 
             <div>
-          <Field type="password" placeholder='confirm Password'  name="confirmPassword" id="confirmPassword"  className="my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />        
+          <Field type="password" placeholder='confirm Password'  name="confirmPassword" id="confirmPassword"  className=" border-gray-300 my-1 text-xs p-3 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" />        
           <ErrorMessage name="confirmPassword" component={TextError} />
         </div>
 
