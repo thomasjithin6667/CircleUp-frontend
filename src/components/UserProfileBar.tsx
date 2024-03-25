@@ -1,13 +1,17 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 
 function UserProfileBar() {
+  const selectUser = (state: any) => state.auth.user || "";
+  const user = useSelector(selectUser) || "";
+  const userId = user._id || "";
   const navigate =useNavigate()
   return (
     <>
             <div className="home-profile-card bg-white flex flex-col justify-around items-center  pt-6 px-6">
-          <img className=" w-16 h-16 rounded-full" src="./src/assets/profile.png"alt="" />
+          <img className=" w-16 h-16 rounded-full" src={user.profileImg}alt="" />
           <div className="flex flex-col items-center" >
-          <p className="text-sm font-bold"> Thomas Jithin</p>
+          <p className="text-sm font-bold">{user.name}</p>
           <p className="text-xs text-gray-400">Mern Stack Developer</p>
           </div>
           

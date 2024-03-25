@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Bell, Bookmark, Mail } from "lucide-react";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/context/reducers/authSlice";
 
@@ -11,7 +11,8 @@ import { Spinner } from 'flowbite-react';
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
-
+  const selectUser = (state: any) => state.auth.user || "";
+  const user = useSelector(selectUser) || "";
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -145,7 +146,7 @@ const Header: React.FC<HeaderProps> = () => {
               >
                 <img
                   className="w-6 h-6 rounded-full border"
-                  src="/docs/images/people/profile-picture-3.jpg"
+                  src={user.profileImg}
                   alt="user photo"
                 />
               </button>
@@ -158,10 +159,10 @@ const Header: React.FC<HeaderProps> = () => {
               >
                 <div className="px-4 py-2">
                   <span className="block text-xs font-semibold text-gray-900">
-                    Bonnie Green
+                   {user.name}
                   </span>
                   <span className="block text-xs text-gray-500 truncate">
-                    name@flowbite.com
+                   {user.email}
                   </span>
                 </div>
                 <ul className="py-2">

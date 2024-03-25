@@ -14,7 +14,7 @@ interface PostProps {
     userId: {
       _id: string;
       username: string;
-      profileImg: string;
+      profileImageUrl: string;
     };
     title: string;
     imageUrl: string;
@@ -160,7 +160,7 @@ const PostDetails: React.FC<PostProps> = ({ post }) => {
                 className="block cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
               >
                 <img
-                  src={post.imageUrl}
+                  src={post.userId.profileImageUrl}
                   className="h-9 w-9 rounded-full object-cover"
                   alt="user"
                 />
@@ -172,7 +172,7 @@ const PostDetails: React.FC<PostProps> = ({ post }) => {
               <EllipsisVertical size={18} />
             </button>
           </header>
-          {isOpen && (
+          {isOpen && post.userId==userId && (
             <div className="absolute right-7 top-5 mt-2 w-40 bg-white divide-y divide-gray-100 rounded-lg shadow-lg">
               <ul className="py-2">
                 <li>

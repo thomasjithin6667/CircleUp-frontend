@@ -96,10 +96,13 @@ export const adminPostBlock = (postId:{postId:string}) => {
 
 //@dec      Job Category
 //@method   Get
-export const addJobCategory = (jobcategory:{jobcategory:string}) => {
+export const addJobCategory = (jobCategory:{jobCategory:string}) => {
+
+    console.log(jobCategory);
+    
     return new Promise((resolve, reject) => {
         try {
-            adminApiCalls("post", adminUrl.addJobCategory, jobcategory).then((response) => {
+            adminApiCalls("post", adminUrl.addJobCategory, jobCategory).then((response) => {
                 resolve(response);
               }
             ).catch((err) => {
