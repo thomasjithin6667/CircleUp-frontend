@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom"
 import "./landing.css"
+useNavigate
 
 function Landing() {
+  const naviagte = useNavigate()
   return (
     <>
        
@@ -11,7 +14,7 @@ function Landing() {
                
             </a>
             <div className="flex items-center lg:order-2 ms-10">
-                <a href="/login"  className="inline-flex items-center justify-center px-5 py-2 mr-3 text-xs font-medium text-center border rounded-lg text-green-600 hover:bg-gray-100 ">Log in</a>
+                <a href="/signup"  className="inline-flex items-center justify-center px-5 py-2 mr-3 text-xs font-medium text-center border rounded-lg text-green-600 hover:bg-gray-100 ">Sign Up</a>
         
             </div>
             <div  className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
@@ -43,10 +46,10 @@ function Landing() {
 <p className="mt-6 text-gray-700">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero similique obcaecati illum mollitia.</p>
 
 <div className="mx-auto mt-6 w-full max-w-sm rounded-md border bg-transparent focus-within:border-blue-400 focus-within:ring focus-within:ring-blue-300 focus-within:ring-opacity-40 dark:border-gray-700 dark:focus-within:border-blue-300">
-  <form className="flex flex-col md:flex-row">
+  <form  className="flex flex-col md:flex-row">
     <input type="email" placeholder="Enter your email address" className=" text-xs m-1 h-10 flex-1 appearance-none border-none bg-transparent px-4 py-2 text-gray-700 placeholder-gray-400 focus:placeholder-transparent focus:outline-none focus:ring-0 dark:text-gray-200" />
 
-    <button type="button" className=" text-xs m-1 h-10 transform rounded-md bg-green-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-gray-900 focus:bg-blue-400 focus:outline-none">Join Us</button>
+    <button  type="submit" className=" text-xs m-1 h-10 transform rounded-md bg-green-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-gray-900 focus:bg-blue-400 focus:outline-none">Join Us</button>
   </form>
 </div>
 </div>

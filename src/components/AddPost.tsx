@@ -160,7 +160,7 @@ function AddPost() {
                     <input
                       type="text"
                       placeholder="Title"
-                      className="rounded-lg border mt-3 border-gray-300 p-2  outline-none text-xs font-normal"
+                      className="rounded-lg border mt-3 border-gray-300 p-2  focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600   outline-none text-xs font-normal"
                       value={formik.values.title}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -172,7 +172,7 @@ function AddPost() {
                       </p>
                     )}
                     <textarea
-                      className=" rounded-lg description sec p-3 mt-4 h-60 border border-gray-300 outline-none text-xs font-normal"
+                      className=" rounded-lg description sec p-3 mt-4 h-60 border  focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600  border-gray-300 outline-none text-xs font-normal"
                       spellCheck="false"
                       placeholder="Describe everything about this post here"
                       value={formik.values.description}

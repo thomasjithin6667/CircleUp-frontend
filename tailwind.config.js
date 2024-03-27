@@ -7,8 +7,10 @@ export default {
 
       colors: {
         'green-600': '#079D46' , 
+       
       }
     },
+ 
   },
   plugins: [
     require('flowbite/plugin'),

@@ -95,14 +95,14 @@ const Header: React.FC<HeaderProps> = () => {
                 type="search"
                 name="search"
                 placeholder="Search"
-                className="search-input text-xs bg-white h-8 px-5 w-full pr-10 rounded-full focus:outline-none border border-gray-300"
+                className="search-input text-xs bg-white h-8 px-5 w-full pr-10 rounded-full  focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600  border border-gray-300"
                 style={{
                   position: "relative",
                 }}
               />
               <button
                 type="submit"
-                className="search-icon text-white rounded-full absolute bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-800 font-medium text-sm px-2 py-2"
+                className="search-icon text-white rounded-full absolute bg-green-600 font-medium text-sm px-2 py-2"
                 style={{
                   position: "absolute",
                   right: "2px",

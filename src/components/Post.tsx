@@ -1,4 +1,4 @@
-import { Bookmark, Heart, MessageCircle } from "lucide-react";
+import { Bookmark, Heart, MessageCircle,X } from "lucide-react";
 import { likePost } from "../services/api/user/apiMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsePosts } from "../utils/context/reducers/authSlice";
@@ -36,7 +36,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const handleHideCommentToggle = () => {
     SetIsCommentSection(!isCommentSection);
   };
-
+  const handleClosePostDetails = () => {
+    SetIsCommentSection(false); 
+  };
   const [isLikedByUser, setIsLikedByUser] = useState(
     post.likes.includes(userId)
   );
@@ -119,7 +121,8 @@ const Post: React.FC<PostProps> = ({ post }) => {
       {isCommentSection && (
             <div className="addpost-popup">
               <div className="addpost-popup">
-                <PostDetails  key={post._id} post={post}/>
+              <button className="close-button me-5" onClick={handleClosePostDetails}><X size={18}  color="white"/></button>
+                <PostDetails  key={post._id} post={post} />
         
               </div>
             </div>
