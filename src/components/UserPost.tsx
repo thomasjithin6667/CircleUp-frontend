@@ -15,10 +15,7 @@ function UserPost() {
   const posts = useSelector(selectUserPost) || [];
 
 
-  const handleClosePostDetails = () => {
   
-  };
-
 
   const [loading, setLoading] = useState(false);
 
@@ -66,7 +63,7 @@ function UserPost() {
           <div className="goals">
             {posts.map((post: any) => (
 
-              <PostDetails  key={post._id} post={post} />
+              <PostDetails  key={post._id} post={post} likesValue={false} commentsValue={false} />
             ))}
           </div>
         )}

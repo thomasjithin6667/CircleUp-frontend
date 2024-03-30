@@ -15,7 +15,7 @@ function UserProfileBar() {
           <p className="text-xs text-gray-400">Mern Stack Developer</p>
           </div>
           
-          <button onClick={()=>{navigate('/profile/bio')}} type="submit" className="w-full text-xs font-bold bg-gray-200 text-black p-3 rounded-md hover:bg-green-600 hover:text-white  focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">View Profile</button>
+          <button onClick={()=>{navigate('/profile/bio')}} type="submit" className="w-full text-xs font-bold bg-gray-200 text-black p-3 rounded-md hover:bg-green-600 hover:text-white   transition-colors duration-300">View Profile</button>
 
 
         </div>

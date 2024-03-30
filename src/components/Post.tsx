@@ -31,16 +31,24 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
   const userId = user._id || "";
-
+ const[value1,setValue1]=useState(false)
+ const[value2,setValue2]=useState(false)
   const[isCommentSection,SetIsCommentSection]=useState(false)
   const handleHideCommentToggle = () => {
     SetIsCommentSection(!isCommentSection);
+    setValue1(true)
+    setValue2(false)
   };
+  const handleLikedPeople=()=>{
+    SetIsCommentSection(!isCommentSection);
+    setValue1(false)
+    setValue2(true)
+  }
   const handleClosePostDetails = () => {
     SetIsCommentSection(false); 
   };
   const [isLikedByUser, setIsLikedByUser] = useState(
-    post.likes.includes(userId)
+    post.likes.some((like) => like._id === userId)
   );
   const[likeCount,setLikeCount]=useState(post.likes.length)
 
@@ -49,15 +57,16 @@ const Post: React.FC<PostProps> = ({ post }) => {
       likePost({ postId, userId })
         .then((response: any) => {
           const postData = response.data;
-          console.log(postData.posts);
           dispatch(setUsePosts({ userPost: postData.posts }));
           setIsLikedByUser(!isLikedByUser);
           if (isLikedByUser) {
          
             setLikeCount((prev) => prev - 1);
+            post.likes.pop();
           } else {
            
             setLikeCount((prev) => prev + 1);
+            post.likes.push({ _id: userId, username: user.name, profileImageUrl: user.profileImg })
           }
 
         })
@@ -114,15 +123,19 @@ const Post: React.FC<PostProps> = ({ post }) => {
           </button>
         </div>
       </div>
+      <button onClick={handleLikedPeople}>
       <div className="font-semibold text-sm py-4 mx-4">
         <p>{likeCount} likes</p>
       </div>
 
+      </button>
+  
+
       {isCommentSection && (
             <div className="addpost-popup">
               <div className="addpost-popup">
-              <button className="close-button me-5" onClick={handleClosePostDetails}><X size={18}  color="white"/></button>
-                <PostDetails  key={post._id} post={post} />
+              <button className="close-button me-5" onClick={handleClosePostDetails} ><X size={18}  color="white"/></button>
+                <PostDetails  key={post._id} post={post} likesValue={value2} commentsValue={value1} />
         
               </div>
             </div>

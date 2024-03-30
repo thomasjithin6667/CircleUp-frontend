@@ -6,10 +6,10 @@ import {initialValues,validationSchema} from '../../../utils/validation/signupVa
 import { postRegister } from '../../../services/api/user/apiMethods';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { googleAuthenticate, postLogin } from '../../../services/api/user/apiMethods';
+import { googleAuthenticate} from '../../../services/api/user/apiMethods';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../utils/context/reducers/authSlice';
-import {auth,provider,fbProvider} from "../../../utils/firebase/config"
+import {auth,provider} from "../../../utils/firebase/config"
 import {signInWithPopup} from "firebase/auth";
 import { useEffect } from 'react';
 import { useSelector } from "react-redux";
@@ -50,7 +50,6 @@ const dispatch = useDispatch();
   
   const googleSubmit = () => {
     signInWithPopup(auth, provider).then((data: any) => {
-      console.log(data);
   
       const userData = {
         username: data.user.displayName,

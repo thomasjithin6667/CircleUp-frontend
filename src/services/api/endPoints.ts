@@ -7,6 +7,8 @@ export const userUrls ={
     forgotPassword:'/forgot-password',
     forgotOtp:'/forgot-otp',
     resetPassword:'/reset-password',
+    setPreferences:'/set-preferences'
+    
    
 }
 
@@ -21,7 +23,12 @@ export const postUrls = {
     getUserPosts:'/post/get-user-post',
     editPost:'/post/edit-post',
     deletePost:'/post/delete-post',
-    likePost:'/post/like-post'
+    likePost:'/post/like-post',
+    getAllPostComments:'/post/get-post-comments',
+    addComment:'/post/add-comment',
+    replyComment:'/post/reply-comment',
+    deleteComment:'/post/delete-post-comment'
+  
 }
 
 

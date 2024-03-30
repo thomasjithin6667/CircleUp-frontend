@@ -1,6 +1,5 @@
 
 import {   Outlet, useNavigate } from "react-router-dom";
-import { Toaster } from "sonner";
 import Header from "./components/Header";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
