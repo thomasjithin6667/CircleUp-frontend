@@ -146,7 +146,7 @@ const Header: React.FC<HeaderProps> = () => {
               >
                 <img
                   className="w-6 h-6 rounded-full border"
-                  src={user.profileImg}
+                  src={user.profileImageUrl}
                   alt="user photo"
                 />
               </button>

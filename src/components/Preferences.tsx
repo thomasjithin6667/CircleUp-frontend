@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal } from 'flowbite-react';
 import { BriefcaseBusiness, User, UserRoundPlus, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { setPreferences } from '../services/api/user/apiMethods';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess } from '../utils/context/reducers/authSlice';
 
 function Preferences() {
     
   const selectUser = (state: any) => state.auth.user || ''; 
   const user = useSelector(selectUser) || '';
   const userId = user._id || '';
+  const dispatch = useDispatch();
   const [userType, setuserType] = useState('');
   const [isHiring, setisHiring] = useState('');
 
@@ -23,9 +25,19 @@ function Preferences() {
 
   const handleSave = () => {
     if (userType && isHiring) {
-      console.log('Selected Type:', userType);
-      console.log('Selected Status:', isHiring);
-      setPreferences({userId:userId,userType:userType,isHiring:isHiring})
+      setPreferences({userId:userId,userType:userType,isHiring:isHiring}) .then((response: any) => {
+        const data = response.data;
+        if (response.status === 200) {
+          dispatch(loginSuccess({ user: data }));
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error?.message);
+        toast.error('An error occurred. Please try again.');
+      });
       
     } else {
      toast.error('Please select both options before saving.');
@@ -38,6 +50,7 @@ function Preferences() {
         <Modal.Body>
           <p className="text-sm font-semibold">Basic Information</p>
         </Modal.Body>
+     
         <Modal.Footer className="flex flex-col items-start">
           <div className="space-y-6">
             <p className="text-xs leading-relaxed text-gray-500 dark:text-gray-400">

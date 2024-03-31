@@ -1,4 +1,4 @@
-import { Bell, Bookmark, Mail, LucideKeySquare, ImagePlus,FileImage,Smile,Type,Camera} from "lucide-react";
+import { ImagePlus,FileImage,Smile,Type,Camera} from "lucide-react";
 import { useState, useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";

@@ -7,6 +7,7 @@ import { getAllPosts } from "../../../services/api/user/apiMethods";
 import PostSkeletonUi from "../../../components/skeletonUI/PostSkeletonUi";
 import { useDispatch, useSelector } from "react-redux";
 import Preferences from "../../../components/Preferences";
+import BasicInformation from "../../../components/BasicInformation";
 
 function UserHome() {
 
@@ -49,8 +50,12 @@ function UserHome() {
 
       <div>
 
-        {!user.type&&(
+        {!user.userType&&(
           <Preferences/>
+        )}
+
+        {!user.fullname&&user.userType&&(
+          <BasicInformation/>
         )}
 
        
