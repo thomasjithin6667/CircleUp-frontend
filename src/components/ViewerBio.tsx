@@ -1,27 +1,62 @@
 import { useSelector } from "react-redux";
 import "../pages/user/userHome/userHome.css"
-import { Edit, LocateIcon, Mail, Phone } from "lucide-react";
-import EditBio from "./EditBio";
-import { useState } from "react";
+import {  LocateIcon, Mail, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+import { getUserDetails, getUserPost } from "../services/api/user/apiMethods";
 
-function UserBio() {
-  const selectUser = (state: any) => state.auth.user || "";
-  const user = useSelector(selectUser) || "";
-  const [isEdit, setIsEdit] = useState(false);
 
-  const handleEditButtonClick = () => {
-    setIsEdit(true);
-  };
 
-  const handleCancelEdit = () => {
-    setIsEdit(false);
-  };
+
+function ViewerBio() {
+  const selectUser = (state: any) => state.auth.user;
+  const userData = useSelector(selectUser);
+  const loggedUserId = userData._id;
+  const [isConnected, setIsConnected] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [connections, setConnections] = useState<any>(null);
+  const [Post, setPost] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { userId } = useParams();
+  console.log(userId);
+  
+
+  useEffect(() => {
+    getUserDetails(userId)
+      .then((response: any) => {
+       
+        setUser(response.data.user);
+        setConnections(response.data.connections);
+        const followers = response.data.connections.connections;
+        setIsConnected(followers.includes(loggedUserId));
+      })
+      .catch((error: any) => {
+        toast.error(error.message);
+      });
+    getUserPost({ userId: userId })
+      .then((response: any) => {
+        const postsData = response.data;
+        setPost(postsData);
+        console.log(postsData);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+
+  
 
   return (
 
     
     <div >
       
+{user && (
 
       <div >
 
@@ -30,7 +65,7 @@ function UserBio() {
       <div className="bio bg-white w-full h-96 rounded-b-md pt-16 px-10">
         <div className="flex justify-between">
         <p  className="text-xs mb-5 text-green-600 font-medium">Online</p>
-        <button onClick={handleEditButtonClick}><Edit size={15}/></button>
+     
           
         </div>
        
@@ -48,7 +83,7 @@ function UserBio() {
         </div>
         <div>
          
-          <p className="text-sm font-bold text-green-600 my-5" > 118 Circles </p>
+          <p className="text-sm font-bold text-green-600 my-5" > {connections.connections.length} Circles </p>
         </div>
         <div className="flex gap-4">
           <button className="text-xs flex  text-green-600 border px-2 py-1 rounded-md border-green-600" >Open to</button>
@@ -77,12 +112,9 @@ function UserBio() {
 
       </div>
       </div>
+)}
     
-    {isEdit&&(
-        
-    <EditBio  onCancelEdit={handleCancelEdit} />
-
-    )}
+  
     
   
     </div>
@@ -93,4 +125,4 @@ function UserBio() {
   );
 }
 
-export default UserBio;
+export default ViewerBio;

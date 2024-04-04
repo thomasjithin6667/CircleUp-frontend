@@ -11,8 +11,8 @@ function UserProfileBar() {
             <div className="home-profile-card bg-white flex flex-col justify-around items-center  pt-6 px-6">
           <img className=" w-16 h-16 rounded-full" src={user.profileImageUrl}alt="" />
           <div className="flex flex-col items-center" >
-          <p className="text-sm font-bold">{user.name}</p>
-          <p className="text-xs text-gray-400">Mern Stack Developer</p>
+          <p className="text-sm font-bold">{user.profile?.fullname||user.companyProfile?.companyName}</p>
+          <p className="text-xs text-gray-400">{user.profile?.designation||user.companyProfile?.companyType}</p>
           </div>
           
           <button onClick={()=>{navigate('/profile/bio')}} type="submit" className="w-full text-xs font-bold bg-gray-200 text-black p-3 rounded-md hover:bg-green-600 hover:text-white   transition-colors duration-300">View Profile</button>

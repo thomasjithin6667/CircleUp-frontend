@@ -3,7 +3,7 @@ import AddPost from "../../../components/AddPost";
 import Post from "../../../components/Post";
 import PeopleCard from "../../../components/PeopleCard";
 import { useEffect, useState } from "react";
-import { getAllPosts } from "../../../services/api/user/apiMethods";
+import { getAllPosts, getUserSuggestions } from "../../../services/api/user/apiMethods";
 import PostSkeletonUi from "../../../components/skeletonUI/PostSkeletonUi";
 import { useDispatch, useSelector } from "react-redux";
 import Preferences from "../../../components/Preferences";
@@ -17,7 +17,7 @@ function UserHome() {
   const userId = user._id || "";
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]); 
-  
+  const [users,setUsers] = useState([]);
 
   useEffect(() => {
     try {
@@ -38,6 +38,12 @@ function UserHome() {
             setLoading(false);
           });
       }, 2000);
+
+      getUserSuggestions({userId}).then((response:any)=>{
+        setUsers(response.data.suggestedUsers);
+      }).catch((error:any)=>{
+        console.log(error.message)
+      })
     } catch (error) {
     console.log(error);
     
@@ -54,7 +60,7 @@ function UserHome() {
           <Preferences/>
         )}
 
-        {!user.fullname&&user.userType&&(
+        {!user.profile?.fullname!&&!user.companyProfile?.companyName&&user.userType&&(
           <BasicInformation/>
         )}
 
@@ -80,9 +86,15 @@ function UserHome() {
       </div>
 
       <div className="hidden lg:block home-section-3" id="mobile-menu-2">
-        <div className="home-scroll">
+        <div className="home-people-scroll">
           <div className="home-scrollbox">
-            <PeopleCard />
+          {users?.map((user: any) => (
+       
+       <PeopleCard user={user}   />
+      
+     
+    
+     ))}
           </div>
         </div>
       </div>

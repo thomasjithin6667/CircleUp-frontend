@@ -15,31 +15,32 @@ import UserBio from "../components/UserBio";
 import UserPost from "../components/UserPost";
 import Settings from "../components/Settings";
 
+import People from "../pages/user/people/People";
+import Jobs from "../components/Jobs";
+import PeopleDiscover from "../components/PeopleDiscover";
+import PeopleConnections from "../components/PeopleConnections";
+import PeopleRequests from "../components/PeopleRequests";
+import PeopleRequested from "../components/PeopleRequested";
+import JobsOpenToWork from "../pages/user/jobs/JobsOpenToWork";
+import JobsHiring from "../pages/user/jobs/JobsHiring";
+import Applications from "../components/Applications";
+import Interviews from "../components/Interviews";
+import EditJob from "../components/EditJob";
+import AddJob from "../components/AddJob";
+import ViewJob from "../components/ViewJob";
+import HiringInterviews from "../components/HiringInterviews";
+import JobList from "../components/JobList";
+import ViewerConnections from "../components/ViewerConnections";
+import ViewerJobs from "../components/ViewerJobs";
+import ViewerPosts from "../components/ViewerPosts";
+import ViewerBio from "../components/ViewerBio";
+import ViewerProfile from "../pages/user/visitProfile/ViewerProfile";
+
+import Chat from "../pages/user/chat/Chat";
+
 createBrowserRouter
 
-// const UserRouter=()=>{
-//     return (
-//         <>
-//             <Routes>
-//         <Route  path="/" element={<Landing/>} />
-//         <Route path="/signup" element={< Signup/>} />
-//         <Route path="/login" element={< Login/>} />
-//         <Route path="/otp" element={<OtpPage/>} />
-//         <Route path="/forgot-password" element={<ForgotPassword/>} />
-//         <Route path="/change-password" element={<ChangePassword/>} />
-//         <Route path='/forgot-otp' element={<PasswordOtp />} />
-//         <Route path="/register-success" element={<RegisterSucces/>} />
-//         <Route  path="/home" element={<UserHome/>} />
-//         <Route path='/forgot-password' element={<ForgotPassword />} />
-    
 
-   
-//         </Routes>
-//         </>
-//     )
-
-
-// }
 const appRouter = createBrowserRouter([
     {
         path:"/",
@@ -54,12 +55,97 @@ const appRouter = createBrowserRouter([
         {
           path: "/home",
           element: <UserHome />,
-        },
+        }
+        
         // {
         //   path: "/profile/:username",
         //   element: <UserProfile />,
         // },
       ],
+    },
+    {
+      path:"/jobs",
+      element:<App/>,
+      children:[
+        {
+          path:"/jobs/hiring",
+          element:<JobsHiring/>,
+          children:[
+            {
+              path:"/jobs/hiring/job-list",
+              element:<JobList/>
+            },
+            {
+              path:"/jobs/hiring/interviews",
+              element:<HiringInterviews/>
+
+            },
+            {
+              path:"/jobs/hiring/view-job",
+              element:<ViewJob/>
+            },
+            {
+              path:"/jobs/hiring/add-job",
+              element:<AddJob/>
+            },
+            {
+              path:"/jobs/hiring/edit-job",
+              element:<EditJob/>
+            }
+          ]
+        },{
+          path:"/jobs/open-to-work",
+          element:<JobsOpenToWork/>,
+          children:[
+            {
+              path:"/jobs/open-to-work/jobs",
+              element:<Jobs/>
+            },
+            {
+              path:"/jobs/open-to-work/applications",
+              element:<Applications/>
+
+            },
+            {
+              path:"/jobs/open-to-work/interviews",
+              element:<Interviews/>
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path:"/people",
+      element:<App/>,
+      children:[
+        {
+          path:"/people",
+          element:<People/>,
+          children:[
+            {
+              path:"/people/discover",
+              element:<PeopleDiscover/>
+            },
+            {
+              path:"/people/connections",
+              element:<PeopleConnections/>
+            },
+            {
+              path:"/people/requests",
+              element:<PeopleRequests/>
+            },
+            {
+              path:"/people/requested",
+              element:<PeopleRequested/>
+            },
+
+
+
+
+          ]
+        },
+       
+      ]
     },
     {
       path:"/profile",
@@ -79,6 +165,30 @@ const appRouter = createBrowserRouter([
         }
       ]
         },
+
+        {
+          path:"/visit-profile/",
+          element:<ViewerProfile/>,
+          children:[
+            {
+              path:"bio/:userId",
+              element:<ViewerBio/>,
+            },
+            {
+              path:"posts/:userId",
+              element:<ViewerPosts/>,
+            },
+            {
+              path:"jobs/:userId",
+              element:<ViewerJobs/>
+            },
+            
+            {
+              path:"connections/:userId",
+              element:<ViewerConnections/>
+            }
+          ]
+            },
     {
       path: "/login",
       element: <Login />,
@@ -107,6 +217,11 @@ const appRouter = createBrowserRouter([
         path:"/register-success",
         element:<RegisterSucces/>
     },
+     {
+      path:"/chat",
+      element:<Chat/>
+     }
+    ,
     adminRouter,  
     adminLoginRouter,
   

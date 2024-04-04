@@ -7,6 +7,7 @@ import PreviewImage from "./PreviewImage";
 import { useSelector } from "react-redux";
 import { toast } from 'sonner';
 import { addPost } from "../services/api/user/apiMethods";
+import CropImage from "./CropImage";
 
 import { Button, Spinner } from "flowbite-react";
 
@@ -24,7 +25,8 @@ function AddPost() {
   const [showModal, setShowModal] = useState(false);
   const [hideLikes, setHideLikes] = useState(false);
   const [hideComment, setHideComment] = useState(false);
-
+  const [croppedImage, setCroppedImage] = useState("");
+  const [isCroppeSelected, setIsCroppeSelected] = useState(false);
 
   const handleHideLikesToggle = () => {
     setHideLikes(!hideLikes);
@@ -55,28 +57,20 @@ function AddPost() {
     validationSchema: Yup.object({
       image: Yup.mixed()
         .required("Image file required")
-        .test(
-          "FILE_TYPE",
-          "Invalid file type",
-          (value: any) =>
-            value && ["image/png", "image/jpeg"].includes(value.type)
-        )
-        .test(
-          "FILE_SIZE",
-          "File size too big",
-          (value: any) => value && value.size < 1024 * 1024
-        ),
+       ,
         title: Yup.string().trim() .required("Title is required"),
         description: Yup.string().trim().required("Description is required"),
     }),
     onSubmit: async () => {
       setLoading(true);
       const { image, title, description} = formik.values;
-      const formData = new FormData();
 
       try {
-        formData.append("file", image);
-        formData.append("upload_preset", "izfeaxkx");
+        const response = await fetch(croppedImage);
+        const blob = await response.blob();
+      
+        const formData = new FormData();
+        formData.append("file", blob);        formData.append("upload_preset", "izfeaxkx");
         const res = await axios.post(
           "https://api.cloudinary.com/v1_1/dxxsszr8t/image/upload",
           formData
@@ -112,7 +106,11 @@ function AddPost() {
   const handleCancelClick = () => {
     setShowModal(false);
     formik.values.image = "";
+    setCroppedImage("")
  
+  };
+  const handleCloseCanvas = () => {
+    setIsCroppeSelected(!isCroppeSelected);
   };
   return (
     <>
@@ -200,11 +198,27 @@ function AddPost() {
                             <p className="text-xs">Select Image</p>{" "}
                           </div>
                         )}
-                        {formik.values.image && !formik.errors.image && (
-                          <PreviewImage file={formik.values.image} />
-                        )}
+                      
+                        {croppedImage && !formik.errors.image && (
+                        <img
+                          style={{height: "300px", borderRadius: "10px" }}
+                          src={croppedImage}
+                          alt="img"
+                        />
+                    )}
                       </div>
+                      
                     </button>
+                    {formik.values.image &&
+                      isCroppeSelected &&
+                      !formik.errors.image && (
+                        <CropImage
+                          imgUrl={formik.values.image}
+                          aspectInit={{ value: 1 / 1 }}
+                          setCroppedImg={setCroppedImage}
+                          handleNextImage={handleCloseCanvas}
+                        />
+                      )}
                     {formik.errors.image && (
                       <p className="text-red-600 text-xs">
                         {formik.errors.image}
@@ -316,7 +330,10 @@ function AddPost() {
                       const files = e.target.files;
                       if (files && files.length > 0) {
                         const file = files[0];
-                        formik.setFieldValue("image", file);
+                        const imageUrl = URL.createObjectURL(file);
+  
+                        formik.setFieldValue("image", imageUrl);
+                        setIsCroppeSelected(!isCroppeSelected);
                       }
                     }}
                   />

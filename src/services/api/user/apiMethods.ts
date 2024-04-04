@@ -1,4 +1,4 @@
-import { userUrls ,postUrls } from "../endPoints";
+import { userUrls ,postUrls, connectionUrls, jobUrls } from "../endPoints";
 import { apiCall } from "./apiCalls";
 import { FormValues } from "../../../utils/validation/signupValidation";
 
@@ -367,12 +367,253 @@ export const deleteComment = ( commentId:{commentId:any}) => {
 
 
 
-//@dec      Add a reply comment
+//@dec      set Preferences
 //method    POST
 export const setPreferences = (userData: {userId:string,userType:any,isHiring:any }) => {
   return new Promise((resolve, reject) => {
     try {
       apiCall("post", userUrls.setPreferences,userData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      set Preferences
+//method    POST
+export const setBasicInformation = (userData: any) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", userUrls.setBasicInformation,userData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+//@dec      get connections of a user
+//method    POST
+
+export const getUserSuggestions = (userId: { userId: string }) => {
+  return new Promise((resolve, reject) => {
+    try {      
+      apiCall("post", userUrls.userSuggestions, userId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      Get User Details
+//method    POST
+
+export const getUserDetails = (  userId: string|undefined) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("get", userUrls.getUserDetails + `/${userId}`, null)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+//@dec      followUser
+//method    POST
+
+export const followUser = (data: { userId: string ,followingUser:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", connectionUrls.follow, data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+//@dec      UnFollowUser
+//method    POST
+
+export const UnFollowUser = (data: { userId: string ,unfollowingUser:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", connectionUrls.unFollow, data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      Get all follow requested Users
+//method    POST
+
+export const getRequestedUsers = (userId: { userId: string }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      console.log(userId);
+      
+      apiCall("post", connectionUrls.requestedUsers, userId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      accept follow Request
+//method    POST
+
+export const acceptFollowRequest = (data: { userId: string ,requestedUser:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", connectionUrls.acceptRequest, data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+//@dec      reject follow Request
+//method    POST
+
+export const rejectFollowRequest = (data: { userId: string ,requestedUser:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", connectionUrls.rejectRequest, data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      get connections of a user
+//method    POST
+
+export const getUserConnection = (userId: { userId: string }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      console.log(userId);
+      
+      apiCall("post", connectionUrls.getConnection, userId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      cancel follow Request
+//method    POST
+
+export const cancelFollowRequest = (data: { userId: string ,cancelingUser:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", connectionUrls.cancelRequest, data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//add job
+
+export const addJob= (data:any) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", jobUrls.addJob, data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+//list job
+
+export const listJob= (data:any) => {
+  
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", jobUrls.listJob, data)
         .then((response) => {
           resolve(response);
         })

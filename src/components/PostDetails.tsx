@@ -331,13 +331,13 @@ const PostDetails: React.FC<PostProps> = ({
               </a>
             </div>
 
-            {post.userId.username == user.name && (
+            {post.userId.username == user.username && (
               <button onClick={toggleDropdown} className="me-2">
                 <EllipsisVertical size={18} />
               </button>
             )}
           </header>
-          {isOpen && post.userId.username == user.name && (
+          {isOpen && post.userId.username == user.username && (
             <div className="absolute right-7 top-5 mt-2 w-40 bg-white divide-y divide-gray-100 rounded-lg shadow-lg">
               <ul className="py-2">
                 <li>
@@ -562,7 +562,7 @@ const PostDetails: React.FC<PostProps> = ({
                             >
                               Reply{" "}
                             </button>
-                            {user.name == comment.userId.username && (
+                            {user.username == comment.userId.username && (
                               <button
                                 onClick={() => {setOpenModal(true);setParentCommentId(comment._id)}}
                                 className="ms-2"
@@ -629,7 +629,7 @@ const PostDetails: React.FC<PostProps> = ({
                   <Form>
                     <div className="w-full items-center absolute bottom-0 pe-6 bg-white h-20">
                       <div>
-                        <p className="text-xs font-bold mb-1">@{user.name}</p>
+                        <p className="text-xs font-bold mb-1">@{post.userId.username}</p>
                       </div>
                       <div className="flex">
                         <Field

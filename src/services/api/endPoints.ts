@@ -7,8 +7,10 @@ export const userUrls ={
     forgotPassword:'/forgot-password',
     forgotOtp:'/forgot-otp',
     resetPassword:'/reset-password',
-    setPreferences:'/set-preferences'
-    
+    setPreferences:'/set-preferences',
+    setBasicInformation:'/set-basic-information',
+    userSuggestions:'/user-suggestions',
+    getUserDetails:'/user-details',
    
 }
 
@@ -42,3 +44,20 @@ export const adminUrl = {
     addJobCategory:'/admin/add-job-category',
     blockJobCategory:'/admin/block-job-category'
 }
+
+export const connectionUrls = {
+    follow:'/connection/follow',
+    unFollow:'/connection/unFollow',
+    acceptRequest:'/connection/accept-request',
+    rejectRequest:'/connection/reject-request',
+    requestedUsers:'/connection//get-requested-users',
+    getConnection:'/connection/get-connection',
+    cancelRequest:'/connection/cancel-request'
+  }
+
+
+  export const jobUrls = {
+    addJob:'/job/add-job',
+    listJob:'/job/list-all-job'
+
+  }

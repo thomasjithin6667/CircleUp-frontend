@@ -5,19 +5,45 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../utils/context/reducers/authSlice";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import TextError from "./TextError";
-import { basicFormInitialValues,basicFormValidationSchema,basicFormCompanyInitialValues,basicFormCompanyValidationSchema } from "../utils/validation/basicInformationValidation";
+import {basicFormValidationSchema,basicFormCompanyValidationSchema } from "../utils/validation/basicInformationValidation";
 import ProfilePreviewImage from "./ProfilePreviewImage";
 import axios from "axios";
 import { setBasicInformation } from "../services/api/user/apiMethods";
 
-function BasicInformation() {
+function EditBio({ onCancelEdit }:any) {
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
   const userId = user._id || "";
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const basicFormInitialValues = {
+    image: "",
+    fullname:user.profile?.fullname,
+    location: user.profile?.location,
+    designation:user.profile?.designation,
+    dateOfBirth:user.profile?.dateOfBirth ? new Date(user.profile.dateOfBirth).toISOString().slice(0, 10) : "",
+    phone: user.phone,
+    gender: user.profile?.gender,
+    about: user.profile?.about,
+  };
+
+
+  
+
+const basicFormCompanyInitialValues = {
+    image: "",
+    fullname: user.companyProfile?.companyName,
+    location: user.companyProfile?.companyLocation,
+    establishedOn: user.companyProfile?.establishedOn?new Date(user.companyProfile.establishedOn).toISOString().slice(0, 10) : "",
+    phone: user.phone,
+    noOfEmployees: user.companyProfile?.noOfEmployees,
+    about: user.companyProfile?.aboutCompany,
+    companyType:user.companyProfile?.companyType
+  };
 
 
   const BasicFormHandleSubmit = async (values: any) => {
@@ -302,6 +328,12 @@ function BasicInformation() {
                       <ErrorMessage name="about" component={TextError} />
                     </div>
                     <div className="w-full flex justify-end mt-4">
+                    <div
+                    onClick={onCancelEdit}
+                    className="text-xs rounded btn border border-gray-300 px-4 py-2  cursor-pointer text-gray-500 ml-auto  hover:bg-red-600  hover:text-white "
+                  >
+                    Cancel
+                  </div>
                       <button
                         type="submit"
                         className=" text-xs rounded btn border w-24 px-4 py-2 cursor-pointer text-white ml-2 bg-gray-900  hover:bg-green-600"
@@ -464,13 +496,24 @@ function BasicInformation() {
                       />
                       <ErrorMessage name="about" component={TextError} />
                     </div>
+                    <div>
+                    
+             
+                 
                     <div className="w-full flex justify-end mt-4">
+                    <div
+                    onClick={onCancelEdit}
+                    className="text-xs rounded btn border border-gray-300 px-4 py-2  cursor-pointer text-gray-500 ml-auto  hover:bg-red-600  hover:text-white "
+                  >
+                    Cancel
+                  </div>
                       <button
                         type="submit"
                         className=" text-xs rounded btn border w-24 px-4 py-2 cursor-pointer text-white ml-2 bg-gray-900  hover:bg-green-600"
                       >
                         Save
                       </button>
+                    </div>
                     </div>
                   </div>
                 </Form>
@@ -483,4 +526,4 @@ function BasicInformation() {
   );
 }
 
-export default BasicInformation;
+export default EditBio;
