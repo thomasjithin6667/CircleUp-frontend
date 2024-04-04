@@ -27,11 +27,11 @@ function UserPost() {
       setTimeout(() => {
         getUserPost({userId:user._id})
           .then((response: any) => {
-            const postsData = response.data;
+           
             dispatch(setUsePosts({ userPost: response.data }));
            
             
-            console.log(postsData);
+         
             
           })
           .catch((error) => {
@@ -60,7 +60,7 @@ function UserPost() {
     }
      
           {posts.length >0 && !loading&&(
-          <div className="goals">
+          <div className="posts">
             {posts.map((post: any) => (
 
               <PostDetails  key={post._id} post={post} likesValue={false} commentsValue={false} />

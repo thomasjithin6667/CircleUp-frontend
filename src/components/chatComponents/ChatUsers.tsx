@@ -1,11 +1,46 @@
-import { PlusCircle } from 'lucide-react'
-import { Button, Modal, Select } from "flowbite-react";
-import { useState } from "react";
+import { PlusCircle, X } from 'lucide-react'
+import { Button, Modal} from "flowbite-react";
+import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+import { getUserConnection } from '../../services/api/user/apiMethods';
 
 
 function ChatUsers() {
     const [openModal, setOpenModal] = useState(false);
     const [modalSize, setModalSize] = useState<string>('md');
+
+    
+    const selectUser = (state: any) => state.auth.user;
+
+    const userData = useSelector(selectUser);
+        
+    const userId = userData._id;
+    const [userlist, setUserlist] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+   
+    
+
+
+
+    useEffect(() => {
+        try {
+          setLoading(true);
+    
+            getUserConnection({ userId })
+          .then((response: any) => {
+            const connectionData = response.data.connection;
+            setUserlist(connectionData.connections);
+            setLoading(false);
+           
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }, []);
+      console.log(userlist);
 
   return (
     <div className="relative flex flex-col hidden h-full bg-white border-r border-gray-300 shadow-xl md:block transform transition-all duration-500 ease-in-out" style={{ width: '24rem' }}>
@@ -196,7 +231,97 @@ function ChatUsers() {
       </button>
     </div>
 
+
+    <>
+      <div className="flex flex-wrap gap-4">
+        <div className="w-40">
+      
+        </div>
+        <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
+      </div>
+      <Modal  show={openModal} size={modalSize} onClose={() => setOpenModal(false)}>
+        
+        <Modal.Body>
+           
+            <div className='flex justify-between items-center'>
+           <p className='text-sm font-semibold'>Add User</p>
+                <button onClick={() => setOpenModal(false)}>   <X size={18} color='gray'/></button>
+         
+            </div>
+ 
+        </Modal.Body>
+        <Modal.Footer>
+            <div className='w-full'>
+            <div className="relative flex items-center w-full pl-2 overflow-hidden text-gray-600 focus-within:text-gray-400">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+            <button type="submit" className="p-1 focus:outline-none focus:shadow-none">
+              <svg className="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fillRule="nonzero" d="M9.5,3 C13.0898509,3 16,5.91014913 16,9.5 C16,10.9337106 15.5358211,12.2590065 14.7495478,13.3338028 L19.7071068,18.2928932 C20.0976311,18.6834175 20.0976311,19.3165825 19.7071068,19.7071068 C19.3466228,20.0675907 18.7793918,20.0953203 18.3871006,19.7902954 L18.2928932,19.7071068 L13.3338028,14.7495478 C12.2590065,15.5358211 10.9337106,16 9.5,16 C5.91014913,16 3,13.0898509 3,9.5 C3,5.91014913 5.91014913,3 9.5,3 Z M9.5,5 C7.01471863,5 5,7.01471863 5,9.5 C5,11.9852814 7.01471863,14 9.5,14 C11.9852814,14 14,11.9852814 14,9.5 C14,7.01471863 11.9852814,5 9.5,5 Z"/>
+              </svg>
+            </button>
+          </span>
+          <input type="search" name="q"
+                 className="w-full m-1 py-2 pl-12 text-xs border-none bg-gray-200 items-center h-10  pr-4 rounded-md focus:border-gray-200  focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300" style={{ borderRadius: '25px' }}
+                 placeholder="Search..." autoComplete="off"/>
+        </div>
+        <div className="w-full">
+        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+
+        
+   
+
+          {loading ? (
+      <div className="">
+   
+        
+      </div>
+    ) : (
+      <div className="flex flex-row flex-wrap gap-x-8 gap-y-0 ">
+        {userlist?.map((user: any) => (
+       
+       <li className="w-full pb-0 pt-3 sm:pt-4 ">
+       <div className="flex items-center space-x-4">
+       
+         <div className="shrink-0">
+          
+                       <img className="object-cover w-12 h-12 rounded-full" src={user.profileImageUrl} alt="" />
+
+         </div>
+         <div className="min-w-0 flex-1">
+           <p className="truncate text-xs font-medium text-gray-900 dark:text-white">{user.profile.fullname||user.companyProfile.fullname}</p>
+           <p className="truncate text-xs text-gray-500 dark:text-gray-400">{user.profile.designation||user.companyProfile.companyType}</p>
+         </div>
+       
+         <button
+             
+                className="text-xs rounded btn border px-4 py-2 cursor-pointer text-white ml-2 bg-gray-900  hover:bg-green-600 "
+              >
+               Message
+              </button>
+
+         </div>
+         <hr className='m-2' />
+       
+     </li>
+
+         
+        
+       
+        ))}
+      </div>
+    )}
+ 
+        </ul>
+      </div>
+            </div>
+ 
+        </Modal.Footer>
+    
+      </Modal>
+    </>
+
   </div>
+  
 
 
 

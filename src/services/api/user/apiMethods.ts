@@ -386,6 +386,25 @@ export const setPreferences = (userData: {userId:string,userType:any,isHiring:an
 };
 
 
+//@dec      set UserType
+//method    POST
+export const setUserRole = (userData: {userId:string,isHiring:boolean}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", userUrls.setUserRole,userData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
 //@dec      set Preferences
 //method    POST
 export const setBasicInformation = (userData: any) => {

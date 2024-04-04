@@ -26,7 +26,7 @@ interface jobProps {
   };
 }
 
-const Jobs: React.FC<jobProps> = ({ post }) => {
+const Jobs = ({ post }:any) => {
   const dispatch = useDispatch();
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";

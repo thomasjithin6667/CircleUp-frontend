@@ -1,11 +1,21 @@
-import React from 'react'
-import PostSkeletonUi from '../../../components/skeletonUI/PostSkeletonUi'
-import PeopleCard from "../../../components/PeopleCard"
+import React, { useEffect } from 'react'
 import {Outlet, useNavigate} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 function JobsHiring() {
+
+  const selectUser = (state:any)=>state.auth.user;
+  const user = useSelector(selectUser);
+
   const navigate = useNavigate();
+
+   useEffect(() => {
+    if (user.isHiring===false ) {
+      navigate("jobs/open-to-work/job-list");
+    }
+  },[user,  navigate]);
+
   return (
 
 

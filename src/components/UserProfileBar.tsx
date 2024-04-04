@@ -22,7 +22,15 @@ function UserProfileBar() {
     <div className=" home-info-card bg-white flex flex-col justify-around px-6">
       <div className="">
       <p className="text-sm font-bold">Availabilty</p>
-      <p className="text-xs bg-c-green text-white py-1 mt-1 w-32 rounded-full text-center">Available for work</p>
+      {!user.isHiring&&(
+         <p className="text-xs bg-green-600 text-white py-1 mt-1 w-32 rounded-full text-center">Available for work</p>
+
+      )}
+     
+      {user.isHiring&&(
+         <p className="text-xs bg-green-700 text-white py-1 mt-1 w-32 rounded-full text-center">Recruiting </p>
+
+      )}
       </div>
 
       <div className="mt-4" >

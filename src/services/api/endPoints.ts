@@ -8,6 +8,7 @@ export const userUrls ={
     forgotOtp:'/forgot-otp',
     resetPassword:'/reset-password',
     setPreferences:'/set-preferences',
+    setUserRole:'/set-user-role',
     setBasicInformation:'/set-basic-information',
     userSuggestions:'/user-suggestions',
     getUserDetails:'/user-details',

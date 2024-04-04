@@ -264,8 +264,8 @@ const PostDetails: React.FC<PostProps> = ({
       deletePost({ postId, userId })
         .then((response: any) => {
           const postData = response.data;
-          console.log(postData.posts);
-          dispatch(setUsePosts({ userPost: response.data }));
+         
+          dispatch(setUsePosts({userPost: postData.posts}));
           toast.info("Post Deleted");
           setIsOpen(!isOpen);
         })

@@ -87,6 +87,7 @@ const basicFormCompanyInitialValues = {
       } else {
         await setBasicInformation({ userId,fullname,designation,location,dateOfBirth,phone,gender,about })
           .then((response: any) => {
+            onCancelEdit(false)
             const data = response.data;
             if (response.status === 200) {
               toast.success(data.message);
@@ -130,6 +131,7 @@ const basicFormCompanyInitialValues = {
 
           await setBasicInformation({ userId, imageUrl,fullname,companyType,location,noOfEmployees,phone,establishedOn,about })
             .then((response: any) => {
+              onCancelEdit(false)
               const data = response.data;
               if (response.status === 200) {
                 dispatch(loginSuccess({user:data}));

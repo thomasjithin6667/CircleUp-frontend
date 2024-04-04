@@ -98,8 +98,8 @@ const appRouter = createBrowserRouter([
           element:<JobsOpenToWork/>,
           children:[
             {
-              path:"/jobs/open-to-work/jobs",
-              element:<Jobs/>
+              path:"/jobs/open-to-work/job-list",
+              element:<Jobs />
             },
             {
               path:"/jobs/open-to-work/applications",

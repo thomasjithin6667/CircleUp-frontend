@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import PreviewImage from "./PreviewImage";
 import { useSelector } from "react-redux";
 import { toast } from 'sonner';
 import { addPost } from "../services/api/user/apiMethods";
@@ -15,7 +14,7 @@ import { Button, Spinner } from "flowbite-react";
 
 
 
-function AddPost() {
+function AddPost({updatePost}:any) {
 
   const selectUser = (state: any) => state.auth.user || ''; 
   const user = useSelector(selectUser) || '';
@@ -83,6 +82,7 @@ function AddPost() {
               const data = response.data;
               if (response.status === 200) {
                 toast.success(data.message);
+                updatePost(data.posts)
                 handleCancelClick();
               } else {
                 console.log(response.message);
@@ -201,7 +201,7 @@ function AddPost() {
                       
                         {croppedImage && !formik.errors.image && (
                         <img
-                          style={{height: "300px", borderRadius: "10px" }}
+                          style={{ borderRadius: "10px" }}
                           src={croppedImage}
                           alt="img"
                         />
@@ -214,8 +214,8 @@ function AddPost() {
                       !formik.errors.image && (
                         <CropImage
                           imgUrl={formik.values.image}
-                          aspectInit={{ value: 1 / 1 }}
-                          setCroppedImg={setCroppedImage}
+                          aspectInit={{ value: 1.59/ 1 }}
+                          setCroppedImg={()=>{setCroppedImage}}
                           handleNextImage={handleCloseCanvas}
                         />
                       )}

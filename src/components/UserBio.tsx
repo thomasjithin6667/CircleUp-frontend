@@ -3,11 +3,14 @@ import "../pages/user/userHome/userHome.css"
 import { Edit, LocateIcon, Mail, Phone } from "lucide-react";
 import EditBio from "./EditBio";
 import { useState } from "react";
+import SetUserType from "./SetUserType";
+
 
 function UserBio() {
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
   const [isEdit, setIsEdit] = useState(false);
+  const [isSetUserType, setIsSetUserType] = useState(false);
 
   const handleEditButtonClick = () => {
     setIsEdit(true);
@@ -51,7 +54,7 @@ function UserBio() {
           <p className="text-sm font-bold text-green-600 my-5" > 118 Circles </p>
         </div>
         <div className="flex gap-4">
-          <button className="text-xs flex  text-green-600 border px-2 py-1 rounded-md border-green-600" >Open to</button>
+          <button onClick={()=>setIsSetUserType(true)} className="text-xs flex   text-green-600 border px-2 py-1 rounded-md border-green-600" >Open to</button>
           <button className="text-xs flex  text-green-600 border px-2 py-1 rounded-md border-green-600" >Add Section</button>
         </div>
       </div>
@@ -83,7 +86,12 @@ function UserBio() {
     <EditBio  onCancelEdit={handleCancelEdit} />
 
     )}
-    
+
+    {isSetUserType&&(
+      
+      <SetUserType setOpenModal={setIsSetUserType}/>
+    )}
+
   
     </div>
 
