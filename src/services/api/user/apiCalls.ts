@@ -24,9 +24,12 @@ export const apiCall = async (method:string, url:string, data:any) => {
   return await new Promise(async (resolve, reject) => {
     try {
       let response:any, error:any;
-
-      if (method === "post") {
+    
+          
+      if (method ==="post") {
+        
         response = await api.post(url, data).catch((err) => {
+          
           error = err;
         });
       } else if (method === "get") {
@@ -63,6 +66,7 @@ export const apiCall = async (method:string, url:string, data:any) => {
 
       }
     } catch (err) {
+      
         reject(err);
     }
   });

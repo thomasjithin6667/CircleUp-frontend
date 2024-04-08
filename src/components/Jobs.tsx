@@ -27,7 +27,6 @@ interface jobProps {
 }
 
 const Jobs = ({ post }:any) => {
-  const dispatch = useDispatch();
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
   const userId = user._id || "";
@@ -95,7 +94,7 @@ const Jobs = ({ post }:any) => {
      
          <div>
          <p  className="text-xs font-semibold"  >Location</p>
-           <p className="text-xs" >{job.location}</p>
+           <p className="text-xs" >{job.jobLocation}</p>
          </div>
          <div>
            <p  className="text-xs font-semibold"  >Salary</p>
@@ -112,7 +111,7 @@ const Jobs = ({ post }:any) => {
          </div>
          <div>
          <p className="text-xs font-semibold" >Qualifications</p>
-           <p className="text-xs" >{job.Qualification}</p>
+           <p className="text-xs" >{job.qualification}</p>
          </div>
  
        </div>

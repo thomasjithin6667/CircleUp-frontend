@@ -1,4 +1,4 @@
-import { userUrls ,postUrls, connectionUrls, jobUrls } from "../endPoints";
+import { userUrls ,postUrls, connectionUrls, jobUrls,chatUrl } from "../endPoints";
 import { apiCall } from "./apiCalls";
 import { FormValues } from "../../../utils/validation/signupValidation";
 
@@ -633,6 +633,173 @@ export const listJob= (data:any) => {
   return new Promise((resolve, reject) => {
     try {
       apiCall("post", jobUrls.listJob, data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+
+//@dec      Add New Conversation
+//method    post
+export const addConversation = (conversationData: {
+  senderId: string;
+  receiverId: string;
+}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", chatUrl.addConversation, conversationData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+//@dec      Get User Conversations
+//method    get
+export const getUserConversations = (userId:string) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const url = `${chatUrl.getUserConversation}/${userId}`;
+
+      apiCall("get", url, null)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+//@dec      Get Conversation Between two users
+//method    get
+export const findConversation = (conversationData :{ firstUser: string,secondUser:string }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const url = `${chatUrl.findConversation}/${conversationData.firstUser}/${conversationData.secondUser}`;
+
+      apiCall("get", url, null)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+//@dec      Add New Message
+//method    post
+export const addMessage = (messageData: {conversationId:string,sender:string,text:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", chatUrl.addMessage, messageData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      Get User Conversations
+//method    get
+export const getUserMessages = (conversationId:string) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const url = `${chatUrl.getMessages}/${conversationId}`;
+
+      apiCall("get", url, null)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+//@dec      initiate checkout 
+//method    get
+export const initiateCheckout = (userId:{userId:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+     
+       
+      apiCall("post", userUrls.checkout,userId).then((response)=>{
+
+        resolve(response);
+        
+    })   .catch((err) => {
+      reject(err);
+    });
+} catch (error) {
+    resolve({status:500, message: "Somethings wrong."})
+}
+});
+};
+
+
+
+//@dec      validate payment
+//method    post
+export const validatePayment = (paymentData: {userId:string,sessionId:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", userUrls.validate, paymentData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+//@dec      Add New Message
+//method    post
+export const getAllTransactions = (userId: {userId:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", userUrls.allTransactions, userId)
         .then((response) => {
           resolve(response);
         })

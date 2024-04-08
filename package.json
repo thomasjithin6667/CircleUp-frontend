@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dotlottie/player-component": "^2.7.12",
     "@reduxjs/toolkit": "^2.2.1",
+    "@stripe/stripe-js": "^3.2.0",
     "@types/axios": "^0.14.0",
     "@types/firebase": "^3.2.1",
     "axios": "^1.6.8",
@@ -19,6 +21,7 @@
     "firebase": "^10.9.0",
     "flowbite-react": "^0.7.5",
     "formik": "^2.4.5",
+    "lottie-react": "^2.4.0",
     "lucide-react": "^0.358.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,6 +30,7 @@
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.3",
     "redux-persist": "^6.0.0",
+    "socket.io-client": "^4.7.5",
     "sonner": "^1.4.3",
     "yup": "^1.4.0"
   },

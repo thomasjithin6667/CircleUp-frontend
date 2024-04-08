@@ -1,3 +1,5 @@
+
+
 export const userUrls ={
     register:'/register',
     registerOtp:'/register-otp',
@@ -12,6 +14,9 @@ export const userUrls ={
     setBasicInformation:'/set-basic-information',
     userSuggestions:'/user-suggestions',
     getUserDetails:'/user-details',
+    checkout:'/checkout-user',
+    validate:'/validate-payment',
+    allTransactions:'/get-transactions'
    
 }
 
@@ -59,6 +64,16 @@ export const connectionUrls = {
 
   export const jobUrls = {
     addJob:'/job/add-job',
-    listJob:'/job/list-all-job'
+    listJob:'/job/list-all-job',
 
   }
+
+
+
+  export const chatUrl = {
+    addConversation: "/chat/add-conversation",
+    getUserConversation: "/chat/get-conversations",
+    findConversation: "/chat/find-conversation",
+    addMessage: "/chat/add-message",
+    getMessages: "/chat/get-messages",
+  };

@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../utils/context/reducers/authSlice';
 import {auth,provider,fbProvider} from "../../../utils/firebase/config"
 import {signInWithPopup} from "firebase/auth";
-import { useEffect } from 'react';
+import { useEffect, } from 'react';
 import { useSelector } from "react-redux";
 
 
@@ -120,6 +120,8 @@ const user = useSelector(selectUser);
   
 
 
+
+
   return (
    
    
@@ -198,6 +200,7 @@ const user = useSelector(selectUser);
           </div>
         </div>
       </div>
+
     </div>
   )
 }

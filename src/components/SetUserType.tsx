@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Modal } from 'flowbite-react';
 import { BriefcaseBusiness, UserRoundPlus, X } from 'lucide-react';
 import { toast } from 'sonner';

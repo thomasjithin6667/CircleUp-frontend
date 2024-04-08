@@ -4,8 +4,6 @@ import { useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/context/reducers/authSlice";
 
-import { Spinner } from 'flowbite-react';
-
 
 
 interface HeaderProps {}
@@ -135,9 +133,14 @@ const Header: React.FC<HeaderProps> = () => {
             <li>
               <Bookmark color="gray" strokeWidth={1.5} size={20} />
             </li>
+            <a
+              onClick={()=>navigate('/chat')} 
+             
+            >
             <li>
               <Mail color="gray" strokeWidth={1.5} size={20} />
             </li>
+            </a>
             <li className="relative">
               <button
                 type="button"
@@ -157,12 +160,12 @@ const Header: React.FC<HeaderProps> = () => {
                   isUserMenuOpen ? "block" : "hidden"
                 }`}
               >
-                <div className="px-4 py-2">
+                <div className="px-4 py-4">
                   <span className="block text-xs font-semibold text-gray-900">
-                   {user.name}
+                   {user.username}
                   </span>
                   <span className="block text-xs text-gray-500 truncate">
-                   {user.email}
+         
                   </span>
                 </div>
                 <ul className="py-2">
@@ -184,10 +187,10 @@ const Header: React.FC<HeaderProps> = () => {
                   </li>
                   <li>
                     <a
-                      href="#"
+                       onClick={()=>navigate('/premium/plans')} 
                       className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100"
                     >
-                      Earnings
+                   CircleUp Premium
                     </a>
                   </li>
                   <li>

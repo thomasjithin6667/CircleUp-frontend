@@ -37,6 +37,10 @@ import ViewerBio from "../components/ViewerBio";
 import ViewerProfile from "../pages/user/visitProfile/ViewerProfile";
 
 import Chat from "../pages/user/chat/Chat";
+import Premium from "../components/Premium";
+import PaymentSuccess from "../components/PaymentSuccess";
+import PaymentFailed from "../components/PaymentFailed";
+import PremiumPlans from "../pages/user/premiumPage/PremiumPlans";
 
 createBrowserRouter
 
@@ -222,6 +226,24 @@ const appRouter = createBrowserRouter([
       element:<Chat/>
      }
     ,
+    {
+      path:"/premium",
+      element:<PremiumPlans/>,
+      children:[
+        {
+          path:"/premium/plans",
+          element:<Premium/>,
+        },
+        {
+          path:"/premium/payment-success",
+          element:<PaymentSuccess/>,
+        },
+        {
+          path:"/premium/payment-failed",
+          element:<PaymentFailed/>,
+        }
+      ]
+    },
     adminRouter,  
     adminLoginRouter,
   
