@@ -47,7 +47,7 @@ function JobsOpenToWork() {
     
         <div className="home-people-scroll">
           <div className="home-scrollbox">
-            <PeopleCard />
+            {/* <PeopleCard /> */}
           </div>
         </div>
       </div>

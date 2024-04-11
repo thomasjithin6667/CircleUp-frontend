@@ -17,9 +17,9 @@ function ViewerBio() {
   const [user, setUser] = useState<any>(null);
   const [connections, setConnections] = useState<any>(null);
   const [Post, setPost] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { userId } = useParams();
-  console.log(userId);
+
   
 
   useEffect(() => {

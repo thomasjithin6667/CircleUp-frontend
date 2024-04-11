@@ -3,7 +3,7 @@ import { formatDistanceToNow } from "date-fns";
 
 import { Formik, Form, Field } from "formik";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   EllipsisVertical,
   Edit,
@@ -33,6 +33,7 @@ import { setUsePosts } from "../utils/context/reducers/authSlice";
 
 import {  Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+
 
 interface PostProps {
   post: {
@@ -75,6 +76,7 @@ const PostDetails: React.FC<PostProps> = ({
   const [replyComments, setReplyComments] = useState(false);
   const [parentCommentId, setParentCommentId] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const commentBoxRef = useRef(null);
 
   useEffect(() => {
     getPostComments({ postId: post._id })
@@ -298,6 +300,13 @@ const PostDetails: React.FC<PostProps> = ({
     }
   };
 
+  useEffect(() => {
+
+    if (commentBoxRef.current) {
+      commentBoxRef.current.scrollTop = commentBoxRef.current.scrollHeight;
+    }
+  }, [comments, replyComments,isComment]);
+
 
 
   return (
@@ -500,15 +509,34 @@ const PostDetails: React.FC<PostProps> = ({
                         <Heart color="gray" strokeWidth={1.5} size={22} />
                       )}
                     </button>
-                    <button type="button" onClick={handleIsComment}>
-                      <MessageCircle color="gray" strokeWidth={1.5} size={22} />
-                    </button>
-                  </div>
-                  <button onClick={handleIsLikes}>
-                    <span className="text-gray-600 text-sm font-bold">
-                      {post.likes.length} Likes
-                    </span>
-                  </button>
+
+                    
+          {post.hideComment==false&&(
+           
+           <button type="button" onClick={handleIsComment}>
+           <MessageCircle color="gray" strokeWidth={1.5} size={22} />
+         </button>
+
+
+          )}
+              </div>
+
+
+{post.hideLikes==false&&(
+    <button onClick={handleIsLikes}>
+    <span className="text-gray-600 text-sm font-bold">
+      {post.likes.length} Likes
+    </span>
+  </button>
+            
+      
+
+
+    )}
+
+
+              
+                
                 </div>
                 <span className="block ml-2 text-xs text-gray-600">
                   5 minutes
@@ -528,7 +556,7 @@ const PostDetails: React.FC<PostProps> = ({
               </div>
 
               <div className="home-scroll-post">
-                <div className="home-scrollbox-post pb-96">
+                <div ref={commentBoxRef}  className="home-scrollbox-post  ">
                   {comments.map((comment: any) => (
                     <div key={comment._id}>
                       <div className="mb-6">

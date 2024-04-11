@@ -27,7 +27,7 @@ function Messages({ user, currentChat}:any) {
 
     });
   }, [currentChat]);
-  // const scrollRef = useRef();
+ 
 
   const handleSubmit = () => {
     const userId = user._id;
@@ -39,7 +39,7 @@ function Messages({ user, currentChat}:any) {
       toast.info("message has been send");
       setNewMessage("");
       setMessages([...messages, response.data]);
-      // scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+
     });
   };
 
@@ -77,8 +77,8 @@ function Messages({ user, currentChat}:any) {
         </svg>
       </button> */}
     </div>
-    <div className="top-0 bottom-0 left-0 right-0 flex flex-col flex-1 overflow-hidden bg-transparent bg-bottom bg-cover ">
-      <div className="self-center flex-1 w-full ">
+    <div className="message-scrollbox-post top-0 bottom-0 left-0 right-0 flex flex-col flex-1 overflow-hidden bg-transparent bg-bottom bg-cover ">
+      <div className="message-scroll-post self-center flex-1 w-full ">
         <div className="relative flex flex-col px-3 py-1 m-auto w-full">
           <div className="self-center px-2 py-1 mx-0 my-1 text-xs text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">Channel was created</div>
           <div className="self-center px-2 py-1 mx-0 my-1 text-xs text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">May 6</div>
@@ -87,13 +87,20 @@ function Messages({ user, currentChat}:any) {
                   messages.map((message ,index) => {
                     return message.sender._id === user._id ||
                       message.sender === user._id ? (
-                    
-                        <ChatBubbleReciver message={message} />
+                    <div className='mb-3'>
+                                              <ChatBubbleSender message={message} />
+
+
+                    </div>
+                     
                      
                     ) : (
-                     
-                        <ChatBubbleSender message={message} />
-                     
+                      <div className='mb-3' >
+                                              <ChatBubbleReciver message={message} />
+
+
+                      </div>
+                      
                     );
                   })}
 

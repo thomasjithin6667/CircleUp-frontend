@@ -24,3 +24,18 @@ body{
   outline: none;
 }
 
+.addsection button:focus{
+  display: none;
+
+
+}
+
+
+.addsection button{
+font-size: 12px;
+color: #828282;
+
+
+
+}
+

@@ -29,7 +29,7 @@ import EditJob from "../components/EditJob";
 import AddJob from "../components/AddJob";
 import ViewJob from "../components/ViewJob";
 import HiringInterviews from "../components/HiringInterviews";
-import JobList from "../components/JobList";
+import JobList from "../components/HiringJobList";
 import ViewerConnections from "../components/ViewerConnections";
 import ViewerJobs from "../components/ViewerJobs";
 import ViewerPosts from "../components/ViewerPosts";
@@ -41,6 +41,8 @@ import Premium from "../components/Premium";
 import PaymentSuccess from "../components/PaymentSuccess";
 import PaymentFailed from "../components/PaymentFailed";
 import PremiumPlans from "../pages/user/premiumPage/PremiumPlans";
+import HiringApplicants from "../components/HiringApplicants";
+import HiringJobList from "../components/HiringJobList";
 
 createBrowserRouter
 
@@ -77,7 +79,12 @@ const appRouter = createBrowserRouter([
           children:[
             {
               path:"/jobs/hiring/job-list",
-              element:<JobList/>
+              element:<HiringJobList/>
+            },
+            {
+              path:"/jobs/hiring/applicants",
+              element:<HiringApplicants/>
+
             },
             {
               path:"/jobs/hiring/interviews",
@@ -93,7 +100,7 @@ const appRouter = createBrowserRouter([
               element:<AddJob/>
             },
             {
-              path:"/jobs/hiring/edit-job",
+              path:"/jobs/hiring/edit-job/:jobId",
               element:<EditJob/>
             }
           ]

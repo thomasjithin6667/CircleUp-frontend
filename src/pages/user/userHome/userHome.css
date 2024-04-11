@@ -3,8 +3,7 @@
     height: 100vh;
     display: flex;
     background-color: rgb(234, 233, 233);
-
-    
+   
     
 }
 
@@ -103,11 +102,34 @@
  }
  .home-scrollbox-post{
      width: 100%;
-     height: 100px;
+     height: 350px;
+     overflow-y: scroll;
+     padding-bottom: 30px;
 
 
  
  }
+
+
+ .message-scroll-post{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  
+ 
+ }
+ .message-scrollbox-post{
+     width: 100%;
+     height: 350px;
+     overflow-y: scroll;
+     padding-bottom: 30px;
+
+
+ 
+ }
+
+
+
 ::-webkit-scrollbar{
     width: 0px;
 }

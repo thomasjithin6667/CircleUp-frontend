@@ -170,7 +170,7 @@ const handleAddConversation=(senderId:string,receiverId:string) => {
         <div className="w-40">
       
         </div>
-        <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
+     
       </div>
       <Modal  show={openModal} size={modalSize} onClose={() => setOpenModal(false)}>
         

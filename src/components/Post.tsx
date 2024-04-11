@@ -66,7 +66,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
           } else {
            
             setLikeCount((prev) => prev + 1);
-            post.likes.push({ _id: userId, username: user.name, profileImageUrl: user.profileImg })
+            post.likes.push({ _id: userId, username: user.username, profileImageUrl: user.profileImageUrl })
           }
 
         })
@@ -103,32 +103,55 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
       <p className="ms-5 text-xs text-gray-700 ">{post.description}</p>
 
-      <div className="flex items-center justify-between mx-4  mt-2">
+      <div className="flex items-center justify-between mx-4 pb-4 mt-2">
         <div className="flex gap-5">
-          <button
-            onClick={() => handleLike(post._id, user._id)}
-            type="button"
-          >
-            {isLikedByUser ? (
-              <Heart color="green" fill="green" strokeWidth={1.5} size={22} />
-            ) : (
-              <Heart color="gray" strokeWidth={1.5} size={22} />
-            )}
-          </button>
-          <button type="button" onClick={handleHideCommentToggle}>
-            <MessageCircle color="gray" strokeWidth={1.5} size={22} />
-          </button>
+        <button
+                 onClick={() => handleLike(post._id, user._id)}
+                 type="button"
+               >
+                 {isLikedByUser ? (
+                   <Heart color="green" fill="green" strokeWidth={1.5} size={22} />
+                 ) : (
+                   <Heart color="gray" strokeWidth={1.5} size={22} />
+                 )}
+               </button>
+
+       
+ 
+
+          {post.hideComment==false&&(
+              <button type="button" onClick={handleHideCommentToggle}>
+              <MessageCircle color="gray" strokeWidth={1.5} size={22} />
+            </button>
+
+
+          )}
+
+
+        
+
+
           <button type="button">
             <Bookmark color="gray" strokeWidth={1.5} size={22} />
           </button>
         </div>
       </div>
-      <button onClick={handleLikedPeople}>
-      <div className="font-semibold text-sm py-4 mx-4">
-        <p>{likeCount} likes</p>
-      </div>
 
-      </button>
+      {post.hideLikes==false&&(
+            <button onClick={handleLikedPeople}>
+            <div className="font-semibold text-sm pb-4 mx-4">
+              <p>{likeCount} likes</p>
+            </div>
+      
+            </button>
+      
+
+
+    )}
+
+
+      
+  
   
 
       {isCommentSection && (

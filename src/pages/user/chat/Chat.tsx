@@ -12,15 +12,7 @@ function Chat() {
   const userId = user._id;
   const [conversations, setConversations] = useState([]);
   const [currentChat,setCurrentChat] = useState('');
-  // const [socket, setSocket] = useState(null);
 
-  
-  // const socket = io.connect(BASE_URL);
-  // useEffect(()=> {
-  //   socket.emit("newUser", currentChat);
-  //   console.log("connected")
-  //   return () => socket.disconnect()
-  // })
 
 
   useEffect(()=>{
@@ -39,8 +31,7 @@ function Chat() {
   return (
   <div>
 
-  <Header/>
-  <div className="relative flex w-full h-screen overflow-hidden antialiased bg-gray-200">
+  <div className="relative flex w-full  overflow-hidden antialiased bg-gray-200" style={{height:"730px"}}>
    
       <ChatUsers conversations={conversations} user={user} setCurrentChat={setCurrentChat} setConversations={setConversations} />
 

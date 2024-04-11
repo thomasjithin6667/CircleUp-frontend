@@ -210,15 +210,15 @@ function AddPost({updatePost}:any) {
                       
                     </button>
                     {formik.values.image &&
-                      isCroppeSelected &&
-                      !formik.errors.image && (
-                        <CropImage
-                          imgUrl={formik.values.image}
-                          aspectInit={{ value: 1.59/ 1 }}
-                          setCroppedImg={()=>{setCroppedImage}}
-                          handleNextImage={handleCloseCanvas}
-                        />
-                      )}
+                    isCroppeSelected &&
+                    !formik.errors.image && (
+                      <CropImage
+                        imgUrl={formik.values.image}
+                        aspectInit={{ value: 1.59 / 1 }}
+                        setCroppedImg={setCroppedImage}
+                        handleNextImage={handleCloseCanvas}
+                      />
+                    )}
                     {formik.errors.image && (
                       <p className="text-red-600 text-xs">
                         {formik.errors.image}

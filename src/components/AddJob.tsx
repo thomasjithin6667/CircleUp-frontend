@@ -4,9 +4,10 @@ import * as Yup from 'yup';
 import TextError from './TextError';
 import { addJob } from '../services/api/user/apiMethods';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const AddJob = () => {
-
+  const navigate = useNavigate();
   
   const selectUser = (state: any) => state.auth.user || ''; 
   const user = useSelector(selectUser) || '';
@@ -74,6 +75,7 @@ const AddJob = () => {
     const data = { ...values, userId:userId }
     addJob(data)
     setSubmitting(false);
+    navigate('/jobs/hiring/job-list')
 
   };
 

@@ -1,3 +1,4 @@
+import { Target} from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 
@@ -11,7 +12,7 @@ function UserProfileBar() {
             <div className="home-profile-card bg-white flex flex-col justify-around items-center  pt-6 px-6">
           <img className=" w-16 h-16 rounded-full" src={user.profileImageUrl}alt="" />
           <div className="flex flex-col items-center" >
-          <p className="text-sm font-bold">{user.profile?.fullname||user.companyProfile?.companyName}</p>
+          <p className="text-sm font-bold flex gap-1 items-center">{user.profile?.fullname||user.companyProfile?.companyName} {user.isPremium==true&&(<Target color="green" size={15}/>)}</p>
           <p className="text-xs text-gray-400">{user.profile?.designation||user.companyProfile?.companyType}</p>
           </div>
           
@@ -28,7 +29,7 @@ function UserProfileBar() {
       )}
      
       {user.isHiring&&(
-         <p className="text-xs bg-green-700 text-white py-1 mt-1 w-32 rounded-full text-center">Recruiting </p>
+         <p className="text-xs bg-white border  border-green-600 font-semibold text-green-600 py-1 mt-1 w-32 rounded-full text-center">Recruiting </p>
 
       )}
       </div>

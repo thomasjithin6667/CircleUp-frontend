@@ -1,16 +1,23 @@
 import { useSelector } from "react-redux";
 import "../pages/user/userHome/userHome.css"
-import { Edit, LocateIcon, Mail, Phone } from "lucide-react";
+import { Edit, LocateIcon, Mail, Phone, Target, X} from "lucide-react";
 import EditBio from "./EditBio";
 import { useState } from "react";
 import SetUserType from "./SetUserType";
+import { Tabs } from "flowbite-react";
 
+import {  Modal } from "flowbite-react";
 
 function UserBio() {
+
+
+  
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
   const [isEdit, setIsEdit] = useState(false);
   const [isSetUserType, setIsSetUserType] = useState(false);
+  const[isAddsection,setIsAddsection]=useState(false)
+  const [openModal, setOpenModal] = useState(false);
 
   const handleEditButtonClick = () => {
     setIsEdit(true);
@@ -38,7 +45,7 @@ function UserBio() {
         </div>
        
         <div className="flex gap-10">
-        <p className="text-sm font-bold">{user.profile?.fullname||user.companyProfile?.companyName}</p>
+        <p className="text-sm font-bold flex items-center gap-1">{user.profile?.fullname||user.companyProfile?.companyName} {user.isPremium==true&&(<Target color="green" size={15}/>)}</p>
         <p className="text-xs">{user.username}</p>
 
         </div>
@@ -55,8 +62,9 @@ function UserBio() {
         </div>
         <div className="flex gap-4">
           <button onClick={()=>setIsSetUserType(true)} className="text-xs flex   text-green-600 border px-2 py-1 rounded-md border-green-600" >Open to</button>
-          <button className="text-xs flex  text-green-600 border px-2 py-1 rounded-md border-green-600" >Add Section</button>
+          <button  onClick={() => setOpenModal(true)} className="text-xs flex  text-green-600 border px-2 py-1 rounded-md border-green-600" >Add Section</button>
         </div>
+       
       </div>
       <div className="profile-image w-32 h-32 absolute rounded-lg border-4 border-white top-60 left-56">
      <img className="rounded-md w-full h-full" src={user.profileImageUrl} alt="" />
@@ -91,6 +99,105 @@ function UserBio() {
       
       <SetUserType setOpenModal={setIsSetUserType}/>
     )}
+  
+    
+      
+
+            {user.userType==='individual'&&(
+              <div>
+                <Modal show={openModal} onClose={() => setOpenModal(false)}>
+       
+       <Modal.Body>
+       <div className='flex justify-between items-center mb-3'>
+           <p className='text-sm font-semibold'>Add Section</p>
+           <button onClick={() => setOpenModal(false)}>
+             <X size={18} color='gray' />
+           </button>
+         </div>
+        
+         <Tabs className="addsection text-xs"  aria-label="Tabs with icons">
+                <Tabs.Item title="Experience" >
+    This is <span className="font-medium text-gray-800 dark:text-white">Profile tab's associated content</span>.
+    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
+    control the content visibility and styling.
+  </Tabs.Item>
+  <Tabs.Item className="text-xs" title="Education" >
+    This is <span className="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</span>.
+    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
+    control the content visibility and styling.
+  </Tabs.Item>
+  <Tabs.Item className="text-xs" title="Skills" >
+    This is <span className="font-medium text-gray-800 dark:text-white">Settings tab's associated content</span>.
+    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
+    control the content visibility and styling.
+  </Tabs.Item>
+  <Tabs.Item className="text-xs" title="Resume" >
+    This is <span className="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</span>.
+    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
+    control the content visibility and styling.
+  </Tabs.Item>
+  </Tabs>
+
+</Modal.Body>
+
+</Modal>
+  
+              </div>
+              
+
+            )}
+
+            
+{user.userType==='organization'&&(
+                <div>
+                <Modal show={openModal} onClose={() => setOpenModal(false)}>
+       
+       <Modal.Body>
+       <div className='flex justify-between items-center mb-3'>
+           <p className='text-sm font-semibold'>Add Section</p>
+           <button onClick={() => setOpenModal(false)}>
+             <X size={18} color='gray' />
+           </button>
+         </div>
+        
+         <Tabs className="addsection text-xs"  aria-label="Tabs with icons">
+                <Tabs.Item title="Statistics" >
+    This is <span className="font-medium text-gray-800 dark:text-white">Profile tab's associated content</span>.
+    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
+    control the content visibility and styling.
+  </Tabs.Item>
+  <Tabs.Item className="text-xs" title="Benefits" >
+    This is <span className="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</span>.
+    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
+    control the content visibility and styling.
+  </Tabs.Item>
+  <Tabs.Item className="text-xs" title="socials" >
+    This is <span className="font-medium text-gray-800 dark:text-white">Settings tab's associated content</span>.
+    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
+    control the content visibility and styling.
+  </Tabs.Item>
+  <Tabs.Item className="text-xs" title="Profile"  >
+    This is <span className="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</span>.
+    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
+    control the content visibility and styling.
+  </Tabs.Item>
+  </Tabs>
+
+</Modal.Body>
+
+</Modal>
+  
+              </div>
+              
+
+            )}
+  
+
+    
+    
+
+
+
 
   
     </div>

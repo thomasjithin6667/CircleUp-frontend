@@ -1,4 +1,4 @@
-import { CircleArrowUp,CircleCheck,CircleX,CircleArrowDownIcon,Ban} from "lucide-react";
+import { CircleArrowUp,CircleCheck,CircleX,CircleArrowDownIcon,Ban, Target} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { UnFollowUser, acceptFollowRequest, cancelFollowRequest, rejectFollowRequest } from "../services/api/user/apiMethods";
 import { toast } from "sonner";
@@ -60,7 +60,7 @@ const handleUnFollow = (user:any) => {
         src={user?.profileImageUrl}
         alt="Profile"
       />
-          <p className="text-sm font-semibold" > {user?.profile?.fullname||user?.companyProfile?.companyName}</p>
+          <p className="text-sm font-semibold flex items-center gap-1" > {user?.profile?.fullname||user?.companyProfile?.companyName}{user.isPremium==true&&(<Target color="green" size={15}/>)} </p>
           <p className="text-xs text-gray-400">{user?.profile?.designation||user?.companyProfile?.companyType}</p>
           <p className="text-xs text-green-600 font-medium">{user?.profile?.location||user?.companyProfile?.companyLocation}</p>
 

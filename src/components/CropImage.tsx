@@ -71,7 +71,7 @@ const CropImage: React.FC<Props> = ({
             max={3}
             step={0.1}
             value={zoom}
-            onInput={(e:any) => {
+            onInput={(e) => {
               onZoomChange(parseFloat(e.target.value));
             }}
             className="w-[50%]"
@@ -80,7 +80,7 @@ const CropImage: React.FC<Props> = ({
         <div className="text-center">
           <button type="button"
             className="bg-red-500 text-white px-4 p-1 mr-5 rounded-lg"
-            // onClick={() => setimgSelected(false)}
+            onClick={() => setimgSelected(false)}
           >
             cancel
           </button>
