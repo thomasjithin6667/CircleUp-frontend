@@ -646,13 +646,32 @@ export const editJob= (data:any) => {
 };
 
 
+//view job
+
+export const viewJob= (data:any) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", jobUrls.viewJob, data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
 //list job
 
-export const listJob= (data:any) => {
+export const listJob= (filterData:any) => {
   
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", jobUrls.listJob, data)
+      apiCall("post", jobUrls.listJob, filterData)
         .then((response) => {
           resolve(response);
         })
@@ -799,6 +818,28 @@ export const cancelApplication= (data:any) => {
 
 
 
+
+
+
+
+
+//get all applications of a user 
+export const getFormSelectFormData= () => {
+  
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("get", jobUrls.getFormSelectData,null)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
 
 
 
@@ -991,3 +1032,117 @@ export const getJobDetails = ( jobId:{jobId: string|undefined}) => {
     }
   });
 };
+
+
+
+//@dec      get notifications
+//method    POST
+
+export const getNotifications= (userId: { userId: string }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      
+      
+      apiCall("post", userUrls.getNotifications, userId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      add-interview
+//method    POST
+
+export const  addInterview= (
+  interviewData:
+   { 
+    applicationId: string,
+    jury:any[] ,
+    interviewDate: string ,
+    interviewTime: string 
+    }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      
+      
+      apiCall("post", jobUrls.addInterview, interviewData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//get interviewee interview
+export const getIntervieweeInterviews= (intervieweeId:{intervieweeId:string}) => {
+  
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", jobUrls.getIntervieweeInterviews, intervieweeId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+//get interviewer interview
+export const getInterviewerInterviews= (interviewerId:{interviewerId:string}) => {
+  
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", jobUrls.getInterviewerInterviews, interviewerId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
+
+//get job interview
+export const getJobInterviews= (jobId:{jobId:string}) => {
+  
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", jobUrls.getJobInterviews, jobId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+

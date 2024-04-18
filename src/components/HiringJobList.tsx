@@ -95,12 +95,12 @@ const HiringJobList: React.FC = () => {
       {jobs?.map((job: any) => (
         <tr key={job._id} className="hover:bg-gray-50">
           <th className="flex gap-3 px-6 py-4 font-normal text-gray-900">
-            <div className="relative h-10 w-10">
-              <img
-                className="h-full w-full rounded-full object-cover object-center"
-                src={job.userId.profileImageUrl}
-                alt=""
-              />
+            <div className="relative rounded-full  h-10 w-10 bg-green-600 flex items-center justify-center font-bold text-white ">
+
+                {job.jobRole.slice(0,1)}
+                  
+
+             
             </div>
             <div className="text-xs">
               <div className="font-medium text-gray-700">
@@ -130,9 +130,10 @@ const HiringJobList: React.FC = () => {
           </td >
           <td className=" flex text-xs py-4">
             <button
+             onClick={()=>{navigate(`/jobs/view-job/job-info/${job._id}`)}}
             
               type="button"
-              onClick={() => (job._id, "block")}
+        
               className="text-xs px-5 bg-white text-green-600 hover:bg-gray-100 border border-gray-200 focus:outline-none font-medium rounded-lg py-2.5 text-center inline-flex items-center me-2 mb-2"
             >
               <View size={18} /> View

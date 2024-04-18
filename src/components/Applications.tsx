@@ -62,8 +62,9 @@ getemployeeApplications({applicantId:userId})
         <div key={application._id} className="home-post-section bg-white p-4 " style={{ height: "165px" }}>
           <div className="w-full flex justify-between ">
             <div className="flex">
-              <img className="w-14 h-14 rounded-md" src={application.jobId.userId.profileImageUrl} alt="" />
-              <div className="mx-5">
+            <div className="w-14 h-14 rounded-md bg-green-600 flex items-center justify-center font-bold text-white text-2xl">
+                {application?.jobId?.jobRole?.slice(0,1)}
+                </div>               <div className="mx-5">
                 <p className="text-sm">{application.jobId.companyName}</p>
                 <p className="text-sm font-bold">{application.jobId.jobRole}</p>
               </div>

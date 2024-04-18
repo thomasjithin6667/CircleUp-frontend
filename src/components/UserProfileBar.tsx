@@ -16,7 +16,7 @@ function UserProfileBar() {
           <p className="text-xs text-gray-400">{user.profile?.designation||user.companyProfile?.companyType}</p>
           </div>
           
-          <button onClick={()=>{navigate('/profile/bio')}} type="submit" className="w-full text-xs font-bold bg-gray-200 text-black p-3 rounded-md hover:bg-green-600 hover:text-white   transition-colors duration-300">View Profile</button>
+          <button onClick={()=>{navigate('/profile/bio')}} type="submit" className="w-full text-xs border font-bold bg-gray-200 text-black p-3 rounded-md hover:bg-white hover:border hover:text-green-600   transition-colors duration-300">View Profile</button>
 
 
         </div>

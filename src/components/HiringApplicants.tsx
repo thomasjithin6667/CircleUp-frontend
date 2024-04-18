@@ -1,30 +1,11 @@
 
-import React, { useEffect, useState } from "react";
-import { Bookmark, View } from "lucide-react";
-import { getemployeeApplications, getemployerApplications, listJob, updateApplicationStatus } from "../services/api/user/apiMethods";
+import  { useEffect, useState } from "react";
+import { View } from "lucide-react";
+import { getemployerApplications, updateApplicationStatus } from "../services/api/user/apiMethods";
 import { useSelector } from "react-redux";
-import ApplyJobForm from "./ApplyJobForm";
 import { toast } from "sonner";
 import ViewApplication from "./ViewApplication";
 
-interface jobProps {
-  post: {
-    _id: string;
-    userId: {
-      _id: string;
-      profileImageUrl: string;
-    };
-    companyName: string;
-    jobRole: string;
-    jobDescription: string;
-    requiredSkills: string;
-    jobLocation: string;
-    salary: string;
-    jobType: string;
-    experience: string;
-    qualification: string;
-  };
-}
 
 const HiringApplications = () => {
   const selectUser = (state: any) => state.auth.user || "";
@@ -63,6 +44,8 @@ const HiringApplications = () => {
         .then((response: any) => {
           const applicationsData = response.data.applications;
           setApplications(applicationsData);
+ 
+          
         })
         .catch((error) => {
           console.log(error.message);
@@ -75,13 +58,14 @@ const HiringApplications = () => {
   return (
     <>
       {applications.map((application) => (
-        <div key={application._id} className="home-post-section bg-white p-4 " style={{ height: "165px" }}>
+        <div key={application._id} className="home-post-section bg-white p-4 " style={{ height: "180px" }}>
           <div className="w-full flex justify-between ">
             <div className="flex">
-              <img className="w-14 h-14 rounded-md" src={application.applicantId.profileImageUrl} alt="" />
+              <img className="w-14 h-14 rounded-md border-2 p-.5 mb-3  border-green-600" src={application.applicantId.profileImageUrl} alt="" />
               <div className="mx-5">
-                <p className="text-sm">{}</p>
-                <p className="text-sm font-bold">{application.applicantId.username}</p>
+              <p className="text-sm font-bold"> {application?.applicantId?.profile?.fullname ? application?.applicantId?.profile?.fullname : application?.applicantId?.companyProfile?.companyName}</p>
+                <p className="text-xs">{application?.applicantId?.profile?.designation? application?.applicantId?.profile?.designation: application?.applicantId?.companyProfile?.companyType}</p>
+       
               </div>
             </div>
             <div className="flex text-xs gap-1">

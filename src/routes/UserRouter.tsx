@@ -43,6 +43,14 @@ import PaymentFailed from "../components/PaymentFailed";
 import PremiumPlans from "../pages/user/premiumPage/PremiumPlans";
 import HiringApplicants from "../components/HiringApplicants";
 import HiringJobList from "../components/HiringJobList";
+import JobsDetails from "../pages/user/jobs/JobsDetails";
+import ViewJobApplications from "../components/ViewJobApplications";
+import Notifications from "../components/Notifications";
+import SavedCollections from "../components/SavedCollections";
+import SavedPosts from "../components/SavedPosts";
+import SavedJobs from "../components/SavedJobs";
+import ViewJobInterviews from "../components/ViewJobInterviews";
+import InterviewCall from "../pages/user/interviewCall/InterviewCall";
 
 createBrowserRouter
 
@@ -51,22 +59,40 @@ const appRouter = createBrowserRouter([
     {
         path:"/",
         element:<Landing/>
-          // errorElement: <Error />,
+        
     },
     {
       path: "/home",
       element: <App />,
-      // errorElement: <Error />,
+   
       children: [
         {
           path: "/home",
           element: <UserHome />,
+        },
+        {
+          path: "/home/notifications",
+          element: <Notifications/>,
+          
+        },
+        {
+          path: "/home/saved",
+          element: <SavedCollections/>,
+          children:[
+            {
+              path:"/home/saved/posts",
+              element:<SavedPosts />
+            },
+            {
+              path:"/home/saved/jobs",
+              element:<SavedJobs/>
+
+            }
+          ]
+
+          
         }
-        
-        // {
-        //   path: "/profile/:username",
-        //   element: <UserProfile />,
-        // },
+ 
       ],
     },
     {
@@ -92,7 +118,11 @@ const appRouter = createBrowserRouter([
 
             },
             {
-              path:"/jobs/hiring/view-job",
+              path:"/jobs/hiring/interview-call/:roomId",
+              element:<InterviewCall/>
+            },
+            {
+              path:"/jobs/hiring/view-job/:jobId",
               element:<ViewJob/>
             },
             {
@@ -120,7 +150,43 @@ const appRouter = createBrowserRouter([
             {
               path:"/jobs/open-to-work/interviews",
               element:<Interviews/>
-            }
+            },
+            
+            {
+              path:"/jobs/open-to-work/interview-call/:roomId",
+              element:<InterviewCall/>
+            },
+          ]
+        },{
+          path:"/jobs/view-job/",
+          element:<JobsDetails/>,
+          children:[
+            {
+              path:"/jobs/view-job/job-info/:jobId",
+              element:<ViewJob/>
+            },
+            {
+              path:"/jobs/view-job/applications/pending/:jobId",
+              element:<ViewJobApplications/>
+
+            },
+            {
+              path:"/jobs/view-job/applications/accepted/:jobId",
+              element:<ViewJobApplications/>
+            },
+            
+            {
+              path:"/jobs/view-job/applications/rejected/:jobId",
+              element:<ViewJobApplications/>
+            } ,
+            {
+              path:"/jobs/view-job/interviews/:jobId",
+              element:<ViewJobInterviews/>
+            },
+            {
+              path:"/jobs/view-job/interview-call/:roomId",
+              element:<InterviewCall/>
+            },
           ]
         }
       ]
@@ -250,6 +316,11 @@ const appRouter = createBrowserRouter([
           element:<PaymentFailed/>,
         }
       ]
+    },
+    {
+      path:"/interview-call/:roomId",
+      element:<InterviewCall/>
+
     },
     adminRouter,  
     adminLoginRouter,

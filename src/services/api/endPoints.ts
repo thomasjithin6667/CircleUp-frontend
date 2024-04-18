@@ -16,7 +16,8 @@ export const userUrls ={
     getUserDetails:'/user-details',
     checkout:'/checkout-user',
     validate:'/validate-payment',
-    allTransactions:'/get-transactions'
+    allTransactions:'/get-transactions',
+    getNotifications:'/get-notifications'
    
 }
 
@@ -68,16 +69,20 @@ export const connectionUrls = {
     listUserJob:'/job/list-user-job',
     getJobDetails:'/job/job-details',
     editJob:'/job/edit-job',
-    addJobApplication:'job/apply-job',
-    updateApplicationStatus:'job/update-application-status',
-    employeeApplications:'job/get-applications-employee',
-    employerApplications:'job/get-applications-empolyer',
-    getAllJobDetails:'job/get-all-job-details',
-    cancelApplication:'job/cancel-job-application',
-
-
-
-
+    viewJob:'/job/view-job',
+    addJobApplication:'/job/apply-job',
+    updateApplicationStatus:'/job/update-application-status',
+    employeeApplications:'/job/get-applications-employee',
+    employerApplications:'/job/get-applications-empolyer',
+    getAllJobDetails:'/job/get-all-job-details',
+    cancelApplication:'/job/cancel-job-application',
+    addInterview:'/job/add-interview',
+    editInterview:'/job/edit-interview',
+    setInterviewStatus:'/job/set-interview-status',
+    getIntervieweeInterviews:'/job/get-interviewee-interviews',
+    getInterviewerInterviews:'/job/get-interviewer-interviews',
+    getJobInterviews:'/job/get-job-interviews',
+    getFormSelectData:'/job/form-select-data'
   }
 
 

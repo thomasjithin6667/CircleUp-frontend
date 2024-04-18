@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import TextError from './TextError';
 import { editJob, getJobDetails } from '../services/api/user/apiMethods';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';

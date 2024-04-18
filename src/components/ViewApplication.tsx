@@ -27,10 +27,11 @@ const showPdf=(pdf:string)=>{
         </Modal.Body>
         <Modal.Footer className="flex flex-col items-start gap-5">
         <div className="flex">
-              <img className="w-14 h-14 rounded-md" src={application.applicantId.profileImageUrl} alt="" />
+              <img className="w-14 h-14 rounded-md border-2 p-.5 mb-3 border-green-600" src={application.applicantId.profileImageUrl} alt="" />
               <div className="mx-5">
-                <p className="text-sm">{}</p>
-                <p className="text-sm font-bold">{application.applicantId.username}</p>
+              <p className="text-sm font-bold"> {application?.applicantId?.profile?.fullname ? application?.applicantId?.profile?.fullname : application?.applicantId?.companyProfile?.companyName}</p>
+                <p className="text-xs">{application?.applicantId?.profile?.designation? application?.applicantId?.profile?.designation: application?.applicantId?.companyProfile?.companyType}</p>
+
               </div>
             </div>
       

@@ -16,7 +16,6 @@ function UserBio() {
   const user = useSelector(selectUser) || "";
   const [isEdit, setIsEdit] = useState(false);
   const [isSetUserType, setIsSetUserType] = useState(false);
-  const[isAddsection,setIsAddsection]=useState(false)
   const [openModal, setOpenModal] = useState(false);
 
   const handleEditButtonClick = () => {

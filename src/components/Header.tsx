@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Bell, Bookmark, Mail } from "lucide-react";
 import { useDispatch, useSelector} from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation  } from "react-router-dom";
 import { logout } from "../utils/context/reducers/authSlice";
 
 
@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = () => {
   const user = useSelector(selectUser) || "";
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const location = useLocation();
   const toggleUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
   };
@@ -36,13 +36,16 @@ const Header: React.FC<HeaderProps> = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+
+
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("email");
     navigate("/login");
   };
 
-
+  const activeLinkStyle = "text-green-600"; 
+  const inactiveLinkStyle = "text-gray-700";
   return (
     <nav className="border z-10 bg-white lg:px-6 py-2.5 h-16 sticky top-0" >
       
@@ -60,32 +63,38 @@ const Header: React.FC<HeaderProps> = () => {
           className="hidden justify-between items-center w-full lg:flex lg:w-auto"
           id="mobile-menu-2"
         >
-          <ul className="flex flex-col mt-4 gap-5 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-            <li>
-              <a
-                onClick={()=>navigate('/home')}
-                className="text-xs font-bold block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-green-50 lg:hover:bg-transparent lg:border-0 lg:p-0 dark:text-gray-700 lg:dark:hover:text-green-600 dark:hover:bg-gray-700 dark:hover:text-green-600 lg:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                 onClick={()=>navigate('/people/discover')}
-                className="text-xs font-bold block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:p-0 dark:text-gray-700 lg:dark:hover:text-green-600 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                People
-              </a>
-            </li>
-            <li>
-              <a
-                 onClick={()=>navigate('/jobs/open-to-work/job-list')}
-                className="text-xs font-bold block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:p-0 dark:text-gray-700 lg:dark:hover:text-green-600 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Jobs
-              </a>
-            </li>
-          </ul>
+        <ul className="flex flex-col mt-4 gap-5 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+          <li>
+            <a
+              onClick={() => navigate('/home')}
+              className={`text-xs font-bold block py-2 pr-4 pl-3 ${
+                location.pathname.startsWith('/home') ? activeLinkStyle : inactiveLinkStyle
+              }`}
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              onClick={() => navigate('/people/discover')}
+              className={`text-xs font-bold block py-2 pr-4 pl-3 ${
+                location.pathname.startsWith('/people') ? activeLinkStyle : inactiveLinkStyle
+              }`}
+            >
+              People
+            </a>
+          </li>
+          <li>
+            <a
+              onClick={() => navigate('/jobs/open-to-work/job-list')}
+              className={`text-xs font-bold block py-2 pr-4 pl-3 ${
+                location.pathname.startsWith('/jobs') ? activeLinkStyle : inactiveLinkStyle
+              }`}
+            >
+              Jobs
+            </a>
+          </li>
+        </ul>
 
           <form className="relative w-80 ms-52 me-6">
             <div className="relative">
@@ -127,14 +136,15 @@ const Header: React.FC<HeaderProps> = () => {
           </form>
 
           <ul className="flex justify-between items-center gap-6">
-            <li>
+            <li  onClick={() => navigate('/home/notifications')}>
               <Bell color="gray" strokeWidth={1.5} size={20} />
             </li>
-            <li>
+            <li onClick={() => navigate('/home/saved/posts')}>
               <Bookmark color="gray" strokeWidth={1.5} size={20} />
             </li>
             <a
-              onClick={()=>navigate('/chat')} 
+              onClick={()=>navigate('/chat', { state: { from: location.pathname } })} 
+              
              
             >
             <li>

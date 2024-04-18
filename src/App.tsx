@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import UserProfileBar from "./components/UserProfileBar";
+import { FilterProvider } from "./utils/context/jobfilterData/FilterContext";
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
   return (
     <>
        
-
+     <FilterProvider>
 <div>
 
       <Header />
@@ -35,6 +36,7 @@ function App() {
           <Outlet/>
       </div>
         </div>
+        </FilterProvider>
         
   </>
   )
