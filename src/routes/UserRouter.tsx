@@ -50,8 +50,8 @@ import SavedPosts from "../components/SavedPosts";
 import SavedJobs from "../components/SavedJobs";
 import ViewJobInterviews from "../components/ViewJobInterviews";
 import InterviewCall from "../pages/user/interviewCall/InterviewCall";
+import Protect from "../routes/protectRoutes/ProtectRoutes";
 
-createBrowserRouter
 
 
 const appRouter = createBrowserRouter([
@@ -62,16 +62,29 @@ const appRouter = createBrowserRouter([
     },
     {
       path: "/home",
-      element: <App />,
+      element: (
+        <Protect>
+          <App />
+        </Protect>
+      ),
    
       children: [
         {
           path: "/home",
-          element: <UserHome />,
+          element: (
+         
+               <UserHome />
+    
+          )
+          
         },
         {
           path: "/home/notifications",
-          element: <Notifications/>,
+          element: (
+          
+           <Notifications/>
+           
+          )
           
         },
         {
@@ -96,7 +109,12 @@ const appRouter = createBrowserRouter([
     },
     {
       path:"/jobs",
-      element:<App/>,
+      element: (
+        <Protect>
+          <App />
+        </Protect>
+      )
+     ,
       children:[
         {
           path:"/jobs/hiring",
@@ -135,7 +153,12 @@ const appRouter = createBrowserRouter([
           ]
         },{
           path:"/jobs/open-to-work",
-          element:<JobsOpenToWork/>,
+          element: (
+            <Protect>
+             <JobsOpenToWork/>
+            </Protect>
+          )
+         ,
           children:[
             {
               path:"/jobs/open-to-work/job-list",
@@ -158,7 +181,13 @@ const appRouter = createBrowserRouter([
           ]
         },{
           path:"/jobs/view-job/",
-          element:<JobsDetails/>,
+          element: (
+            <Protect>
+             <JobsDetails/>
+            </Protect>
+          )
+          
+          ,
           children:[
             {
               path:"/jobs/view-job/job-info/:jobId",
@@ -192,7 +221,12 @@ const appRouter = createBrowserRouter([
     },
     {
       path:"/people",
-      element:<App/>,
+      element: (
+        <Protect>
+       <App/>
+        </Protect>
+      )
+     ,
       children:[
         {
           path:"/people",
@@ -225,7 +259,12 @@ const appRouter = createBrowserRouter([
     },
     {
       path:"/profile",
-      element:<Profile/>,
+  
+      element: (
+        <Protect>
+     <Profile/>
+        </Protect>
+      ),
       children:[
         {
           path:"bio",
@@ -295,12 +334,22 @@ const appRouter = createBrowserRouter([
     },
      {
       path:"/chat",
-      element:<Chat/>
+      element: (
+        <Protect>
+     <Chat/>
+        </Protect>
+      )
+     
      }
     ,
     {
       path:"/premium",
-      element:<PremiumPlans/>,
+      element: (
+        <Protect>
+     <PremiumPlans/>
+        </Protect>
+      )
+   ,
       children:[
         {
           path:"/premium/plans",

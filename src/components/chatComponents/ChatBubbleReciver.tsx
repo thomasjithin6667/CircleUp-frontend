@@ -15,8 +15,9 @@ const ChatBubbleReciver= ({message}:any) => {
           {message?.sender?.username}
         </span>
         <span className="text-xs font-normal text-gray-500 dark:text-gray-400">
+
         {/* {formatDistanceToNow(
-                                new Date(message?.createdAt),
+                               (message?.createdAt),
                                 { addSuffix: true }
                               )} */}
         </span>

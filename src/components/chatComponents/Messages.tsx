@@ -31,25 +31,27 @@ function Messages({ user, currentChat,socket}:any) {
     socket.current.on("getMessage", (data: any) => {
       const senderId = data.senderId;
       getUserDetails(senderId).then((response: any) => {
-        console.log(response.data);
         
         setArrivalMessage({
           
           sender: response.data.user,
           text: data.text,
+          createdAt:data.createdAt
         
         });
         console.log(arrivalMessage);
-
-        (arrivalMessage && currentChat?.members.includes(arrivalMessage?.sender._id)) ||
-        (currentChat?.members.find(
-          (member:any) => member._id !== arrivalMessage?.sender._id
-        ) &&
-          setMessages((prev) => [...prev, arrivalMessage]));
       });
       });
     
   },[socket])
+
+  useEffect(() => {
+    (arrivalMessage && currentChat?.members.includes(arrivalMessage?.sender)) ||
+      (currentChat?.members.find(
+        (member:any) => member._id !== arrivalMessage?.sender
+      ) &&
+        setMessages((prev) => [...prev, arrivalMessage]));
+  }, [arrivalMessage, currentChat]);
 
 
 
@@ -66,6 +68,7 @@ function Messages({ user, currentChat,socket}:any) {
       senderId: userId,
       receiverId,
       text: newMessage,
+      createdAt:Date.now()
     });
 
     addMessage({
