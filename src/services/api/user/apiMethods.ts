@@ -741,6 +741,28 @@ export const updateApplicationStatus= (applcationData:{applicationId:string,stat
   });
 };
 
+
+
+//cancel  application
+export const cancelJobApplication= (applcationId:{applicationId:string,applicantId:string}) => {
+  
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", jobUrls.cancelApplication,applcationId)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+
 //get all applications of a user 
 export const getemployeeApplications= (applicantId:{applicantId:string}) => {
   

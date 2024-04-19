@@ -29,7 +29,6 @@ import EditJob from "../components/EditJob";
 import AddJob from "../components/AddJob";
 import ViewJob from "../components/ViewJob";
 import HiringInterviews from "../components/HiringInterviews";
-import JobList from "../components/HiringJobList";
 import ViewerConnections from "../components/ViewerConnections";
 import ViewerJobs from "../components/ViewerJobs";
 import ViewerPosts from "../components/ViewerPosts";

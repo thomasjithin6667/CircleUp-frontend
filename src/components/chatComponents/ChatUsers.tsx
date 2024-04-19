@@ -25,7 +25,7 @@ const handleAddConversation=(senderId:string,receiverId:string) => {
   addConversation({senderId,receiverId})  .then((response: any) => {
     const conversationData = response.data;
       setConversations(conversationData?.conversations)
-      setCurrentChat(conversationData?.conversation._id)
+      setCurrentChat(conversationData?.conversation)
       setOpenModal(false)
        
    
@@ -113,7 +113,7 @@ const handleAddConversation=(senderId:string,receiverId:string) => {
     <ul className="flex flex-col inline-block w-full h-screen px-2 select-none">
    
     {conversations && conversations?.map((conversation:any)=>(
-    <div onClick={()=>setCurrentChat(conversation._id)}>
+    <div onClick={()=>setCurrentChat(conversation)}>
 
       <Friend CurrentUser={user} conversation={conversation}/>
     </div>

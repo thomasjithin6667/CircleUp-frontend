@@ -1,11 +1,12 @@
 
-import React, { useEffect, useState } from "react";
-import { Bookmark } from "lucide-react";
+import  { useEffect, useState } from "react";
+
 
 import { useSelector } from "react-redux";
-import ApplyJobForm from "./ApplyJobForm";
-import { getemployeeApplications } from "../services/api/user/apiMethods";
+
+import { cancelJobApplication, getemployeeApplications } from "../services/api/user/apiMethods";
 import { updateUser } from "../utils/context/reducers/authSlice";
+import { toast } from "sonner";
 
 interface jobProps {
   post: {
@@ -32,8 +33,20 @@ const Applications = () => {
   const userId = user._id || "";
 
   const [applications, setApplications] = useState<any[]>([]);
-  const [selectedjob, setSelectedJob] = useState<any>({});
-  const [isApply, setIsApply] = useState<boolean>(false);
+
+
+  const handleCancelApplication = (applicationId: string) => {
+    cancelJobApplication({applicationId:applicationId,applicantId:userId}).then((response: any) => {
+      const applicationsData = response.data.applications;
+      setApplications(applicationsData);
+      toast.error(response.data.message)
+
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+  };
+
 
 
 
@@ -59,6 +72,8 @@ getemployeeApplications({applicantId:userId})
   return (
     <>
       {applications?.map((application) => (
+
+        
         <div key={application._id} className="home-post-section bg-white p-4 " style={{ height: "165px" }}>
           <div className="w-full flex justify-between ">
             <div className="flex">
@@ -109,12 +124,26 @@ getemployeeApplications({applicantId:userId})
               </div>
               
           <div className=" flex justify-end mt-10">
-            <button
+
+            {application.applicationStatus=="Pending"&&(
+                   <button
+                   onClick={()=>{handleCancelApplication(application._id)}}
+                       className="text-xs rounded btn border px-4 py-2 cursor-pointer text-red-600 ml-2 bg-white"
+                     >
+                       Cancel Application
+                     </button>
+
+            )}
+               {application.applicationStatus!=="Pending"&&(
+                   <button
+                 
+                       className="text-xs rounded btn border px-4 py-2 cursor-pointer text-green-600 ml-2 bg-white"
+                     >
+                       View Application
+                     </button>
+
+            )}
        
-              className="text-xs rounded btn border px-4 py-2 cursor-pointer text-red-600 ml-2 bg-white"
-            >
-              Cancel Application
-            </button>
           </div>
           </div>
          

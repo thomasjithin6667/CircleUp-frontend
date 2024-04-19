@@ -2,30 +2,34 @@ import { ShieldAlert, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { addJobCategory,getJobCategory,blockJobCategory} from "../../../services/api/admin/apiMethods";
+import { Pagination } from 'flowbite-react'
 
 function JobCategoryPage() {
   const [loading, setLoading] = useState(true);
   const [jobCategories, setjobCategories] = useState<any[]>([]);
   const [jobCategory,setJobCategory] = useState('')
-  useEffect(() => {
-    try {
-      getJobCategory()
-        .then((response: any) => {
-          const jobCategoryData = response.data;
-          setjobCategories(jobCategoryData.jobCategory);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+ 
 
-          console.log(jobCategoryData.jobCategory);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } catch (error:any) {
-      toast.error(error.message);
-    }
-  }, []);
+  useEffect(() => {
+    const fetchJobCategory = async () => {
+      setLoading(true);
+      try {
+        const response: any= await getJobCategory(currentPage);
+        const { jobCategory: jobCategory, totalPages: fetchedTotalPages } = response.data;
+        setjobCategories(jobCategory);
+        setTotalPages(fetchedTotalPages);
+      } catch (error:any) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobCategory();
+  }, [currentPage]);
+
 
   const handleSubmit = async () => {
     if (jobCategory.trim() === '') {
@@ -78,38 +82,18 @@ function JobCategoryPage() {
     }
   }
 
-console.log(jobCategory);
 
-  
+
+const onPageChange = (page: number) => {
+  setCurrentPage(page);
+};
+
 
   return (
-    <div className="w-full overflow-hidden rounded-lg  m-5">
-      <div className="flex gap-3">
-        <div className="w-full">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"></div>
-            <input
-              type="text"
-              id="search"
-              onChange={(e)=>setJobCategory(e.target.value)}
-              value={jobCategory}
-              className="block w-full p-4 pl-10 text-xs  text-gray-900 border  border-gray-100 rounded-lg bg-white "
-              placeholder="Add new Job Category"
-              required
-            />
-            <button
-              type="submit" 
-              onClick={handleSubmit}
-              
-              className=" text-xs rounded-md  text-white absolute right-2.5 bottom-2.5 bg-green-600 hover:bg-green-800 px-4 py-2 "
-            >
-              Add
-            </button>
-          </div>
-        </div>
-     
-      </div>
-      <table className=" w-full border-collapse bg-white text-left text-sm text-gray-500 mt-5">
+    <div  className='w-full border-collapse rounded-lg  pe-6 '>
+
+    <div className="w-full border-collapse rounded-lg  overflow-hidden  ms-5"  style={{height:'550px',width:'1200px'}}>
+    <table className=" w-full border-collapse bg-white text-left text-sm text-gray-500 mt-5">
         <thead className="bg-gray-50">
           <tr>
             <th scope="col" className="px-6 py-4 font-medium text-xs text-gray-900">
@@ -178,7 +162,13 @@ className="text-xs  bg-white text-green-600 hover:bg-gray-100 border border-gray
           {/* Additional rows can be added here */}
         </tbody>
       </table>
+  
     </div>
+        <div className="pagnation flex justify-end mt-5 pe-12">
+        <Pagination className='text-xs ' currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
+      </div>
+      </div>
+  
   );
 }
 

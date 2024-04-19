@@ -3,43 +3,73 @@ import { useEffect, useRef, useState } from 'react';
 import ChatBubbleReciver from './ChatBubbleReciver'
 import ChatBubbleSender from './ChatBubbleSender'
 import { SendHorizonal, Smile,ChevronLeft } from 'lucide-react'
-import { addMessage, getUserMessages } from '../../services/api/user/apiMethods';
+import { addMessage, getUserDetails, getUserMessages } from '../../services/api/user/apiMethods';
 import { toast } from 'sonner';
 import {useLocation,useNavigate} from 'react-router-dom';
 
-function Messages({ user, currentChat}:any) {
+function Messages({ user, currentChat,socket}:any) {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
-  const [friend, setFriend] = useState(null);
+  const [friend, setFriend] = useState<any>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  
-  useEffect(() => {
+  const [arrivalMessage, setArrivalMessage] = useState<any>(null);
 
-  }, [user]);
 
 
   useEffect(() => {
 
 
     const friend = currentChat?.members?.find((m:any) => m._id !== user._id);
-    console.log(currentChat);
-    
-    console.log("hrllo");
-    
-    console.log(friend);
     
     setFriend(friend);
-    getUserMessages(currentChat).then((response:any) => {
+    getUserMessages(currentChat._id).then((response:any) => {
       setMessages(response.data);
     });
   }, [currentChat]);
- 
+  useEffect(()=>{
+    socket.current.on("getMessage", (data: any) => {
+      const senderId = data.senderId;
+      getUserDetails(senderId).then((response: any) => {
+        console.log(response.data);
+        
+        setArrivalMessage({
+          
+          sender: response.data.user,
+          text: data.text,
+        
+        });
+        console.log(arrivalMessage);
+
+        (arrivalMessage && currentChat?.members.includes(arrivalMessage?.sender._id)) ||
+        (currentChat?.members.find(
+          (member:any) => member._id !== arrivalMessage?.sender._id
+        ) &&
+          setMessages((prev) => [...prev, arrivalMessage]));
+      });
+      });
+    
+  },[socket])
+
+
+
 
   const handleSubmit = () => {
     const userId = user._id;
+    const receiver = currentChat.members.find(
+      (member:any) => member._id !== user._id
+    );
+    const receiverId = receiver ? receiver._id : null;
+    console.log(receiverId);
+    
+    socket.current?.emit("sendMessage", {
+      senderId: userId,
+      receiverId,
+      text: newMessage,
+    });
+
     addMessage({
-      conversationId: currentChat,
+      conversationId: currentChat._id,
       sender: userId,
       text: newMessage,
     }).then((response:any) => {
@@ -57,9 +87,17 @@ function Messages({ user, currentChat}:any) {
   return (
     <div className="relative flex flex-col flex-1">
     <div className="z-20 flex flex-grow-0 flex-shrink-0 w-full pr-3 bg-white border-b">
-      <div className="w-12 h-12 mx-4 my-2  bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"></div>
+    <div
+          className="w-10 h-10 mx-4 my-2 text-sm bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
+          style={{
+            backgroundImage: `url(${friend?.profileImageUrl})`,
+          }}
+        ></div>
       <div className="flex flex-col justify-center flex-1 overflow-hidden">
-        <div className="overflow-hidden text-sm font-medium leading-tight text-gray-600 whitespace-no-wrap">{}</div>
+
+      <div className="overflow-hidden text-sm font-medium leading-tight text-gray-600 whitespace-no-wrap">
+            {friend?.username}
+          </div>
         <div className="overflow-hidden text-xs text-green-600  leading-tight whitespace-no-wrap">Online</div>
       </div>
      
@@ -76,8 +114,8 @@ function Messages({ user, currentChat}:any) {
         
           {messages.length &&
                   messages.map((message ,index) => {
-                    return message.sender._id === user._id ||
-                      message.sender === user._id ? (
+                    return message?.sender._id === user._id ||
+                      message?.sender === user._id ? (
                     <div className='mb-3'>
                                               <ChatBubbleSender message={message} />
 

@@ -26,10 +26,11 @@ export const adminPostLogin = (adminData:any) => {
 
 //@dec      All Users List
 //@method   Get
-export const adminUserList = () => {
+export const adminUserList = (page:number) => {
     return new Promise((resolve, reject) => {
         try {
-            adminApiCalls("get", adminUrl.userList, null).then((response) => {
+            const queryParams = `?page=${page}`
+            adminApiCalls("get", adminUrl.userList+queryParams, null).then((response) => {
                 resolve(response);
               }
             ).catch((err) => {
@@ -41,7 +42,7 @@ export const adminUserList = () => {
     })
 };
 
-//@dec      All Users List
+//@dec     user Block
 //@method   Get
 export const adminUserBlock = (userId:{userId:string}) => {
     return new Promise((resolve, reject) => {
@@ -61,10 +62,11 @@ export const adminUserBlock = (userId:{userId:string}) => {
 
 //@dec      All Post List
 //@method   Get
-export const adminPostList = () => {
+export const adminPostList = (page:number) => {
     return new Promise((resolve, reject) => {
         try {
-            adminApiCalls("get", adminUrl.postList, null).then((response) => {
+            const queryParams = `?page=${page}`
+            adminApiCalls("get", adminUrl.postList+queryParams, null).then((response) => {
                 resolve(response);
               }
             ).catch((err) => {
@@ -98,7 +100,7 @@ export const adminPostBlock = (postId:{postId:string}) => {
 //@method   Get
 export const addJobCategory = (jobCategory:{jobCategory:string}) => {
 
-    console.log(jobCategory);
+
     
     return new Promise((resolve, reject) => {
         try {
@@ -118,10 +120,11 @@ export const addJobCategory = (jobCategory:{jobCategory:string}) => {
 //@dec      Job Category
 //method    get
 
-export const    getJobCategory= () => {
+export const    getJobCategory= (page:number) => {
     return new Promise((resolve, reject) => {
       try {
-        adminApiCalls("get", adminUrl.jobCategoryList, null)
+        const queryParams = `?page=${page}`
+        adminApiCalls("get", adminUrl.jobCategoryList+queryParams, null)
           .then((response) => {
             resolve(response);
           })
@@ -141,6 +144,44 @@ export const blockJobCategory = (jobCategoryId:{jobCategoryId:string}) => {
     return new Promise((resolve, reject) => {
         try {
             adminApiCalls("post", adminUrl.blockJobCategory,jobCategoryId).then((response) => {
+                resolve(response);
+              }
+            ).catch((err) => {
+                reject(err);
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+};
+
+
+
+//@dec      All Job list
+//@method   Get
+export const adminJobList = (page:number) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const queryParams = `?page=${page}`
+            adminApiCalls("get", adminUrl.jobList+queryParams, null).then((response) => {
+                resolve(response);
+              }
+            ).catch((err) => {
+                reject(err);
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+};
+
+
+//@dec      Block post
+//@method   Get
+export const adminJobBlock = (jobId:{jobId:string}) => {
+    return new Promise((resolve, reject) => {
+        try {
+            adminApiCalls("post", adminUrl.jobBlock, jobId).then((response) => {
                 resolve(response);
               }
             ).catch((err) => {

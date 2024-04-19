@@ -46,7 +46,7 @@ const ViewJobApplications = () => {
 
   const handleApplictionStatus = (applicationId: string, status: string, userId: string) => {
     updateApplicationStatus({ applicationId, status, userId }).then((response: any) => {
-      const applicationsData = response.data.applications
+      const applicationsData = response.data.jobSpecificApplications
 
 
       switch (pathname) {

@@ -6,6 +6,7 @@ import "rc-slider/assets/index.css";
 import { FilterContext,useFilterContext, } from '../utils/context/jobfilterData/FilterContext';
 import { getFormSelectFormData } from "../services/api/user/apiMethods";
 import { toast } from "sonner";
+import { useNavigate} from "react-router-dom";
 function JobFilterForm({  onReset }:any) {
   const { filterData, setFilterData } = useFilterContext();
   const [locationOptions,setLocationOptions]=useState([])
@@ -16,6 +17,7 @@ function JobFilterForm({  onReset }:any) {
   const [selectedSalaryRange, setSelectedSalaryRange] = useState(0);
   const [selectedExperienceRange, setSelectedExperienceRange] = useState(0);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     setLoading(true);
     getFormSelectFormData()
@@ -63,7 +65,9 @@ function JobFilterForm({  onReset }:any) {
       salaryRange: selectedSalaryRange.toString(),
       experienceRange: selectedExperienceRange.toString(),
     });
-  
+    
+    navigate('/jobs/open-to-work/job-list')
+
     
     
 
@@ -87,8 +91,7 @@ function JobFilterForm({  onReset }:any) {
 
     onReset();
   };
-console.log(jobRoleOptions);
-console.log(locationOptions);
+
 
 
   return (
