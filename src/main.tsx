@@ -8,7 +8,7 @@ import { store, persistor } from './utils/context/store.ts';
 import { RouterProvider } from 'react-router-dom';
 import appRouter from './routes/UserRouter.tsx';
 import { Toaster } from 'sonner';
-import { FilterProvider } from './utils/context/jobfilterData/FilterContext.tsx';
+
 
 
 

@@ -3,12 +3,14 @@ import { X } from "lucide-react";
 import {  useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useSelector } from "react-redux";
-import { applyJob } from "../services/api/user/apiMethods";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "sonner";
+import { updateUser } from "../utils/context/reducers/authSlice";
 
 function ApplyJobForm({ job, cancelApplyJob }: any) {
+
+  const dispatch = useDispatch();
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
   const userId = user._id || "";
@@ -31,8 +33,7 @@ formData.append('coverLetter',values.coverLetter);
 formData.append('resume',  values.resume); 
    
 
- 
-console.log(formData.userId);
+
 const response = await axios.post(' http://localhost:3000/api/job/apply-job', formData, {
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -43,6 +44,14 @@ const response = await axios.post(' http://localhost:3000/api/job/apply-job', fo
 
 if(response.status==201){
   toast.success(response.data.message)
+
+  console.log(response.data);
+  const data = response.data;
+  dispatch(updateUser( {user:data}));
+
+
+  
+
 }else{
   toast.error(response.data.message)
 }

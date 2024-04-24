@@ -14,7 +14,8 @@ function Chat() {
   const userId = user._id;
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState('');
-  const socket = useRef()
+  const socket = useRef<any>()
+  
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ function Chat() {
   }, []);
   useEffect(() => {
     socket?.current?.emit("addUser", user._id);
-    socket?.current?.on("getUsers", (users) => {
+    socket?.current?.on("getUsers", (users:any) => {
       setOnlineUsers(users);
       
     });
@@ -53,9 +54,9 @@ function Chat() {
     <div> 
       <div className="relative flex w-full  overflow-hidden antialiased bg-gray-200" style={{ height: "730px" }}>
 
-        <ChatUsers conversations={conversations} user={user}  setCurrentChat={setCurrentChat} setConversations={setConversations} />
+        <ChatUsers conversations={conversations}  onlineUsers={onlineUsers}   user={user}  setCurrentChat={setCurrentChat} setConversations={setConversations} />
 
-        {currentChat ? <Messages user={user} socket={socket} currentChat={currentChat} /> : <NochatScreen/>}
+        {currentChat ? <Messages user={user}   onlineUsers={onlineUsers} socket={socket} currentChat={currentChat} /> : <NochatScreen/>}
 
         {/* <ChatingUser /> */}
       </div>

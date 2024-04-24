@@ -1,20 +1,52 @@
 import { CircleArrowUp,CircleCheck,CircleX,CircleArrowDownIcon,Ban, Target} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { UnFollowUser, acceptFollowRequest, cancelFollowRequest, rejectFollowRequest } from "../services/api/user/apiMethods";
+import { UnFollowUser, acceptFollowRequest, cancelFollowRequest, getUserConnection, rejectFollowRequest } from "../services/api/user/apiMethods";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from "react";
 function PeopleCard({ user, handleFollow ,updateConnection,updateRequested,updateRequests}: any) {
   
   const selectUser = (state: any) => state.auth.user;
   const currentUser = useSelector(selectUser);
   const userId = currentUser?._id
+  const [connections, setConnections] = useState<any>(null);
+  const [requested, setRequested] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      setLoading(true);
+
+        getUserConnection({ userId })
+      .then((response: any) => {
+        const connectionData = response.data.connection;
+        setConnections(connectionData.connections);
+        setRequested(connectionData.requestSent);
+        setLoading(false);
+   
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  console.log(connections);
+  
+
+  
+
+
+
+  
   const location = useLocation();
   const handleAcceptRequest = (user:any)=>{
 
     acceptFollowRequest({userId,requestedUser:user?._id}).then((response:any)=>{
       updateRequests(response.data.connection.requests)
-   console.log(response.data.connection)
+   
         toast.success("Request Accepted")
     })
 }
@@ -22,7 +54,6 @@ const handleReject = (user:any)=>{
     rejectFollowRequest({userId,requestedUser:user?._id}).then((response:any)=>{
      
         toast.error("Request Rejected")
-        console.log(response.data.connection.requests)
         updateRequests(response.data.connection.requests)
     })
 }
@@ -48,6 +79,18 @@ const handleUnFollow = (user:any) => {
 };
 
 
+const handleUnFollowFromViewProfile = (user:any) => {
+  UnFollowUser({ userId, unfollowingUser: user?._id})
+    .then((response: any) => {
+      toast.error(`Unfollowed User`)
+     
+      setConnections(response.data.connection.connections)
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
+
 
 
   const navigate=useNavigate()
@@ -69,8 +112,23 @@ const handleUnFollow = (user:any) => {
           <div className="flex gap-2 justify-between">
           <button onClick={()=>{navigate(`/visit-profile/bio/${user?._id}`)}} className="text-xs border px-4 py-1 rounded-md border-green-600">view</button>
            
-
-
+          {location.pathname.startsWith('/visit-profile/connections/') && (
+  <div>
+    {requested?.some((request:any) => request._id === user?._id) ? (
+      <button className="text-xs flex gap-1 text-gray-600 font-semibold border px-2 py-1 rounded-md border-gray-600" disabled>
+        Requested <CircleArrowDownIcon size={15} />
+      </button>
+    ) : connections?.some((connection:any) => connection._id === user?._id) ? (
+      <button onClick={() =>  handleUnFollowFromViewProfile(user)} className="text-xs flex gap-1 text-red-600 font-semibold border px-2 py-1 rounded-md border-red-600">
+        Unfollow <CircleArrowDownIcon size={15} />
+      </button>
+    ) : (
+      <button onClick={() => handleFollow(user?._id, user.username)} className="text-xs flex gap-1 text-green-600 font-semibold border px-2 py-1 rounded-md border-green-600">
+        Follow <CircleArrowUp size={15} />
+      </button>
+    )}
+  </div>
+)}
 
           {location.pathname === '/people/discover' && (
           <button  onClick={()=>handleFollow(user?._id,user.username)} className="text-xs flex gap-1 text-green-600 font-semibold border px-2 py-1 rounded-md border-green-600">circle up <CircleArrowUp size={15}/> </button>

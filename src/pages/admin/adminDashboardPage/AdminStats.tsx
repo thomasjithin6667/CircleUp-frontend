@@ -26,7 +26,7 @@ function AdminStats() {
                     </div>
                     <div className="h-50 ml-4 flex w-auto flex-col justify-center">
                     <p className="font-dm text-sm font-medium text-gray-600">Total Users</p>
-                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">$340.5</h4>
+                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">7</h4>
                     </div>
                 </div>
                 <div className="relative flex flex-grow !flex-row flex-col items-center rounded-[10px] rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -52,7 +52,7 @@ function AdminStats() {
                     </div>
                     <div className="h-50 ml-4 flex w-auto flex-col justify-center">
                     <p className="font-dm text-sm font-medium text-gray-600">Total Posts</p>
-                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">$642.39</h4>
+                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">6</h4>
                     </div>
                 </div>
                 <div className="relative flex flex-grow !flex-row flex-col items-center rounded-[10px] rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -77,7 +77,7 @@ function AdminStats() {
                     </div>
                     <div className="h-50 ml-4 flex w-auto flex-col justify-center">
                     <p className="font-dm text-sm font-medium text-gray-600">Total Jobs</p>
-                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">$574.34</h4>
+                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">8</h4>
                     </div>
                 </div>
                 <div className="relative flex flex-grow !flex-row flex-col items-center rounded-[10px] rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -102,7 +102,7 @@ function AdminStats() {
                     </div>
                     <div className="h-50 ml-4 flex w-auto flex-col justify-center">
                     <p className="font-dm text-sm font-medium text-gray-600">Total Sales</p>
-                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">$1,000</h4>
+                    <h4 className="text-xl font-bold text-navy-700 dark:text-white"> ₹ 3140</h4>
                     </div>
                 </div>
                 <div className="relative flex flex-grow !flex-row flex-col items-center rounded-[10px] rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -127,7 +127,7 @@ function AdminStats() {
                     </div>
                     <div className="h-50 ml-4 flex w-auto flex-col justify-center">
                     <p className="font-dm text-sm font-medium text-gray-600">Job Category</p>
-                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">145</h4>
+                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">5</h4>
                     </div>
                 </div>
                 <div className="h-32 relative flex flex-grow !flex-row flex-col items-center rounded-[10px] rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
@@ -151,7 +151,7 @@ function AdminStats() {
                     </div>
                     <div className="h-50 ml-4 flex w-auto flex-col justify-center">
                     <p className="font-dm text-sm font-medium text-gray-600">Reports</p>
-                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">$2433</h4>
+                    <h4 className="text-xl font-bold text-navy-700 dark:text-white">0</h4>
                     </div>
                 </div>
     </div>

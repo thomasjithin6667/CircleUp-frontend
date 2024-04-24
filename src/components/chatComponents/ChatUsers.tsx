@@ -7,7 +7,7 @@ import Friend from './Friend';
 import { toast } from 'sonner';
 
 
-function ChatUsers({conversations,user,setCurrentChat,setConversations}:any) {
+function ChatUsers({conversations,user,setCurrentChat,  onlineUsers  ,setConversations}:any) {
     const [openModal, setOpenModal] = useState(false);
     const [modalSize, setModalSize] = useState<string>('md');
 
@@ -115,7 +115,7 @@ const handleAddConversation=(senderId:string,receiverId:string) => {
     {conversations && conversations?.map((conversation:any)=>(
     <div onClick={()=>setCurrentChat(conversation)}>
 
-      <Friend CurrentUser={user} conversation={conversation}/>
+      <Friend CurrentUser={user}  onlineUsers={onlineUsers} conversation={conversation}/>
     </div>
    ))}
    

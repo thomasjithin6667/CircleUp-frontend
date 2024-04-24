@@ -30,6 +30,10 @@ function AdminLogin() {
       if(response.status === 200) {
        toast.success(data.message)
        dispatch(AdminLoginSuccess({ admin: data }));
+       console.log(data.token);
+       
+       localStorage.setItem('adminToken', data.token);     
+       localStorage.setItem('adminRefreshToken', data.refreshToken);
         navigate('/admin/');
       } else {
         console.log(response.message);

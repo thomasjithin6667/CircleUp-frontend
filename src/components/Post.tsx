@@ -1,10 +1,14 @@
 import { Bookmark, Heart, MessageCircle,X } from "lucide-react";
-import { likePost } from "../services/api/user/apiMethods";
+import { likePost, savePost } from "../services/api/user/apiMethods";
 import { useDispatch, useSelector } from "react-redux";
-import { setUsePosts } from "../utils/context/reducers/authSlice";
+import { setUsePosts, updateUser } from "../utils/context/reducers/authSlice";
 import { toast } from "sonner";
 import { useState } from "react";
 import PostDetails from "./PostDetails";
+import ReportModal from "./ReportModel";
+import { Dropdown } from "flowbite-react";
+
+
 
 interface PostProps {
   post: {
@@ -33,6 +37,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const userId = user._id || "";
  const[value1,setValue1]=useState(false)
  const[value2,setValue2]=useState(false)
+ const [reportModal, setReportModal] = useState(false);
   const[isCommentSection,SetIsCommentSection]=useState(false)
   const handleHideCommentToggle = () => {
     SetIsCommentSection(!isCommentSection);
@@ -52,6 +57,18 @@ const Post: React.FC<PostProps> = ({ post }) => {
   );
   const[likeCount,setLikeCount]=useState(post.likes.length)
 
+
+  const openReportModal = () => {
+    setReportModal(true);
+  };
+  const closeReportModal = () => {
+    setReportModal(false);
+  };
+  const [isSavedByUser, setIsSavedByUser] = useState(
+    user.savedPosts?.includes(post._id)
+  );
+
+  
   const handleLike = (postId: string, userId: string) => {
     try {
       likePost({ postId, userId })
@@ -78,9 +95,29 @@ const Post: React.FC<PostProps> = ({ post }) => {
     }
   };
 
+
+  const handleSave = (postId: string, userId: string) => {
+    try {
+      savePost({ postId, userId,jobId:null })
+        .then((response: any) => {
+          const userData = response.data;
+      
+          dispatch(updateUser({ user: userData }));
+          setIsSavedByUser(!isSavedByUser);
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className=" home-post-section bg-white">
-      <div className="flex items-center px-4 py-3">
+      <div className="flex w-full justify-between px-2">
+        <div>
+        <div className="flex items-center px-4 py-3">
         <img
           className="h-8 w-8 rounded-full"
           src={post.userId.profileImageUrl}
@@ -95,6 +132,29 @@ const Post: React.FC<PostProps> = ({ post }) => {
           </span>
         </div>
       </div>
+
+
+        </div >
+        <div className="p-4">
+        <Dropdown className="flex border-none " label=""  inline>
+        <Dropdown.Item className="text-xs">View Profile</Dropdown.Item>
+
+        {
+                       user._id !== post.userId._id  && (
+
+                        <Dropdown.Item onClick={() => openReportModal()} className="text-xs">Report</Dropdown.Item>
+                       )
+                    }
+     
+
+
+    </Dropdown>
+          
+        </div>
+   
+        
+      </div>
+
       <img style={{ width: "600px" }} src={post.imageUrl} alt="Post" />
 
       <p className="  text-gray-700  ms-4 mt-2 text-xs font-semibold">
@@ -129,11 +189,19 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
 
         
-
-
-          <button type="button">
+{isSavedByUser?(     <button
+           onClick={() => handleSave(post._id, user._id)}
+          type="button">
+            
+            <Bookmark color="green" strokeWidth={1.5} size={22} />
+          </button>):(     <button
+           onClick={() => handleSave(post._id, user._id)}
+          type="button">
+            
             <Bookmark color="gray" strokeWidth={1.5} size={22} />
-          </button>
+          </button>)}
+
+     
         </div>
       </div>
 
@@ -157,13 +225,27 @@ const Post: React.FC<PostProps> = ({ post }) => {
       {isCommentSection && (
             <div className="addpost-popup">
               <div className="addpost-popup">
-              <button className="close-button me-5" onClick={handleClosePostDetails} ><X size={18}  color="white"/></button>
+              <button className="close-button mt-16 me-5" onClick={handleClosePostDetails} ><X size={18}  color="white"/></button>
                 <PostDetails  key={post._id} post={post} likesValue={value2} commentsValue={value1} />
         
               </div>
             </div>
           )}
+
+{reportModal && (
+  <ReportModal
+    userId={userId}
+    postId={post._id}
+    openReportModal={openReportModal}
+    closeReportModal={closeReportModal}
+  />
+)}
+   
+
     </div>
+
+
+
          
 
 

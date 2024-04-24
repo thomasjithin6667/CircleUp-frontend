@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
-import {
-  Edit,
-
-  ShieldAlert,
-  ShieldCheck,
-  View,
-} from "lucide-react";
 
 import {  listUserJob } from "../services/api/user/apiMethods";
 import "../pages/admin/userlistPage/userList.css";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 const HiringJobList: React.FC = () => {
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
@@ -36,8 +28,7 @@ const HiringJobList: React.FC = () => {
       console.log(error);
     }
   }, []);
-  console.log(jobs);
-
+  
   return (
     <>
       {jobs.length === 0 ? (

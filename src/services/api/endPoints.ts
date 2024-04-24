@@ -36,7 +36,10 @@ export const postUrls = {
     getAllPostComments:'/post/get-post-comments',
     addComment:'/post/add-comment',
     replyComment:'/post/reply-comment',
-    deleteComment:'/post/delete-post-comment'
+    deleteComment:'/post/delete-post-comment',
+    reportPost: "/post/report-post",
+    savePost: "post/save-post",
+    getSavedPosts: "post/user-saved-post",
   
 }
 

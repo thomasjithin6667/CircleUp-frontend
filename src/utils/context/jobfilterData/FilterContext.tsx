@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext } from 'react';
 
 // Define the type for the filter data
 interface FilterData {
+  search:string|null
   jobRole: string | null;
   location: string | null;
   jobType: string | null;
@@ -30,6 +31,7 @@ const useFilterContext = () => {
 // FilterProvider component using useState for filterData
 const FilterProvider: React.FC = ({ children }) => {
   const [filterData, setFilterData] = useState<FilterData>({
+    search:null,
     jobRole: null,
     location: null,
     jobType: null,

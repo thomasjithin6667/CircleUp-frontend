@@ -7,13 +7,15 @@ import { addMessage, getUserDetails, getUserMessages } from '../../services/api/
 import { toast } from 'sonner';
 import {useLocation,useNavigate} from 'react-router-dom';
 
-function Messages({ user, currentChat,socket}:any) {
+function Messages({ user, currentChat,socket,onlineUsers}:any) {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
   const [friend, setFriend] = useState<any>(null);
+  const [isOnline, setIsOnline] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
+  const scrollRef = useRef<any>();
 
 
 
@@ -21,7 +23,13 @@ function Messages({ user, currentChat,socket}:any) {
 
 
     const friend = currentChat?.members?.find((m:any) => m._id !== user._id);
-    
+    setIsOnline(() => {
+      if (onlineUsers.find((user:any) => user.userId === friend?._id)) {
+        return true;
+      } else {
+        return false;
+      }
+    });
     setFriend(friend);
     getUserMessages(currentChat._id).then((response:any) => {
       setMessages(response.data);
@@ -44,6 +52,11 @@ function Messages({ user, currentChat,socket}:any) {
       });
     
   },[socket])
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   useEffect(() => {
     (arrivalMessage && currentChat?.members.includes(arrivalMessage?.sender)) ||
@@ -76,14 +89,18 @@ function Messages({ user, currentChat,socket}:any) {
       sender: userId,
       text: newMessage,
     }).then((response:any) => {
-      toast.info("message has been send");
+
       setNewMessage("");
       setMessages([...messages, response.data]);
 
     });
   };
 
-
+  const handleKeyPress = (e:any) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
   
 
 
@@ -101,7 +118,11 @@ function Messages({ user, currentChat,socket}:any) {
       <div className="overflow-hidden text-sm font-medium leading-tight text-gray-600 whitespace-no-wrap">
             {friend?.username}
           </div>
-        <div className="overflow-hidden text-xs text-green-600  leading-tight whitespace-no-wrap">Online</div>
+          {isOnline && (
+            <div className="overflow-hidden text-xs text-green-600  leading-tight  whitespace-no-wrap">
+              Online
+            </div>
+          )}
       </div>
      
       <button onClick={()=>{navigate(location.state?.from || "/home")}} className="text-xs bg-white flex self-center p-2 ml-2 text-gray-500 rounded-md border focus:outline-none hover:text-gray-600 hover:bg-gray-300">
@@ -110,7 +131,7 @@ function Messages({ user, currentChat,socket}:any) {
     
     </div>
     <div className="message-scrollbox-post top-0 bottom-0 left-0 right-0 flex flex-col flex-1 overflow-hidden bg-transparent bg-bottom bg-cover ">
-      <div className="message-scroll-post self-center flex-1 w-full ">
+      <div className="message-scroll-post self-center flex-1 w-full " ref={scrollRef}>
         <div className="relative flex flex-col px-3 py-1 m-auto w-full">
           <div className="self-center px-2 py-1 mx-0 my-1 text-xs text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">Channel was created</div>
           <div className="self-center px-2 py-1 mx-0 my-1 text-xs text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">May 6</div>
@@ -153,6 +174,7 @@ function Messages({ user, currentChat,socket}:any) {
           </span>
             <input
              value={newMessage}
+             onKeyPress={handleKeyPress}
                placeholder="Type your message..."
                onChange={(e) => setNewMessage(e.target.value)}
             type="text" className="w-full items-center h-10 pl-10 pr-4  bg-white  text-xs border border-gray-300 rounded-md focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-green-600 transition-colors duration-300"  />

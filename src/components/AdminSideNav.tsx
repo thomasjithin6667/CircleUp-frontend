@@ -43,14 +43,14 @@ function AdminSideNav() {
             </a>
        
         </li>
-        <li className="mb-1 group">
+        {/* <li className="mb-1 group">
             <a onClick={()=>{navigate('/admin/reports')}}  className="flex font-semibold items-center gap-1  py-3 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
             <MessageSquareWarning  strokeWidth={1.5} size={16} />  
                 <span className="text-xs">Reports</span>
             </a>
-        </li>
+        </li> */}
 
-        <li className="mb-1 group">
+        {/* <li className="mb-1 group">
             <a onClick={()=>{navigate('/admin/notifications')}} className="flex font-semibold items-center gap-1  py-3 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
             <Bell  strokeWidth={1.5} size={16} />
                 <span className="text-xs">Notifications</span>
@@ -63,7 +63,7 @@ function AdminSideNav() {
                 <span className="text-xs">Messages</span>
                 <span className=" md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-600 bg-green-200 rounded-full">2 New</span>
             </a>
-        </li>
+        </li> */}
     </ul>
 </div>
   )

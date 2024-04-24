@@ -3,6 +3,7 @@ import { FilterContext, FilterData } from './FilterContext';
 
 const FilterProvider: React.FC = ({ children }) => {
   const [filterData, setFilterData] = useState<FilterData>({
+    search:null,
     jobRole: null,
     location: null,
     jobType: null,

@@ -1,24 +1,24 @@
 import axios from "axios";
 import { BASE_URL } from "../../../constants/baseUrls";
-import { store } from "../../../utils/context/store";
 
 export const adminApi = axios.create({
   baseURL: `${BASE_URL}/api`,
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: true,
 });
 
 adminApi.interceptors.request.use(
   async (config) => {
-
-    const state = store.getState();
-    const authToken = state.adminAuth.token;
-
-
+    const adminToken = localStorage.getItem('adminToken');
   
-      config.headers['Authorization'] = `Bearer ${authToken}`;
-  
+   
+    if (adminToken) {
+      config.headers['Authorization'] = `Bearer ${adminToken}`;
+    }
 
     return config;
   },
   async (error) => {
     return Promise.reject(error);
-  })
+  }
+);

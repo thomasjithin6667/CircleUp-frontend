@@ -27,8 +27,7 @@ function PeopleRequested() {
           .then((response: any) => {
             const connectionData = response.data.connection;
             setRequested(connectionData.requestSent);
-        
-            console.log(response.data.connection);
+       
             setLoading(false)
             
           })

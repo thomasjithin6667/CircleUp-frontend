@@ -9,29 +9,20 @@ import ReportList from "../pages/admin/adminReportlistPage/ReportList";
 import AdminJobList from "../pages/admin/adminJoblistPage/AdminJobList";
 import AdminStats from "../pages/admin/adminDashboardPage/AdminStats";
 import AdminNotifications from "../pages/admin/adminNotifications.tsx/AdminNotifications";
+import ProtectAdmin from "../routes/protectRoutes/ProtectAdminRoutes";
+import ErrorPage from "../components/errorComponents/ErrorPage";
 
-// const AdminRouter=()=>{
-//     return (
-//         <>
-//         <Routes>
-//         <Route path="/login" element={<AdminLogin/>} />
-//         <Route path="/" element={<AdminDashboard/>} />
-//        <Route path="/user-list" element={<UserList/>}/>
-        
-        
-       
-//         </Routes>
-        
-//         </>
-//     )
-
-
-// }
 
 export const adminRouter = {
     path: "/admin",
-    element: <AdminDashboard />,
-    // errorElement: <Error />,
+    element:  (
+      <ProtectAdmin>
+      <AdminDashboard />
+      </ProtectAdmin>
+    ),  
+    errorElement:<ErrorPage/>
+    ,
+   
     children: [
       {
         path:"/admin",
@@ -79,6 +70,8 @@ export const adminRouter = {
   
   export const adminLoginRouter = {
     path: "/admin/login",
-    element: <AdminLogin />
+    element: <AdminLogin />,
+    errorElement:<ErrorPage/>
+    ,
   }
 

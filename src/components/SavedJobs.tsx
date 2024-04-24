@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Bookmark } from "lucide-react";
-import { listJob } from "../services/api/user/apiMethods";
-import { useSelector } from "react-redux";
+import { getSavedPost, savePost } from "../services/api/user/apiMethods";
+import { useDispatch, useSelector } from "react-redux";
 import ApplyJobForm from "./ApplyJobForm";
+import { updateUser } from "../utils/context/reducers/authSlice";
+import { toast } from "sonner";
 
 interface jobProps {
   post: {
@@ -27,10 +29,11 @@ const SavedJobs = () => {
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
   const userId = user._id || "";
-
+  const dispatch = useDispatch();
   const [jobs, setJobs] = useState<jobProps["post"][]>([]);
   const [selectedjob, setSelectedJob] = useState<any>({});
   const [isApply, setIsApply] = useState<boolean>(false);
+
 
   const handleApplyJob = (job:any) => {
     setIsApply(true);
@@ -43,7 +46,7 @@ const SavedJobs = () => {
 
   useEffect(() => {
     try {
-      listJob({})
+      getSavedPost(userId)
         .then((response: any) => {
           const jobsData = response.data.jobs;
           setJobs(jobsData);
@@ -54,7 +57,26 @@ const SavedJobs = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [user]);
+  
+
+  const handleSave = (jobId: string, userId: string) => {
+    try {
+      savePost({ postId:null, userId,jobId})
+        .then((response: any) => {
+          const userData = response.data;
+          dispatch(updateUser({ user: userData }));
+          
+     
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
 
   return (
     <>
@@ -70,9 +92,18 @@ const SavedJobs = () => {
               </div>
             </div>
 
-            <button>
-              <Bookmark size={18} color="gray" />
-            </button>
+            <div className="flex ">
+             {user.savedJobs?.includes(job._id) ? (
+  <button onClick={() => handleSave(job._id, user._id)} type="button">
+    <Bookmark color="green" fill="green" strokeWidth={1.5} size={22} />
+  </button>
+) : (
+  <button onClick={() => handleSave(job._id, user._id)} type="button">
+    <Bookmark color="gray" strokeWidth={1.5} size={22} />
+  </button>
+)}
+
+             </div>
           </div>
           <div className="mt-10">
             <p className="text-sm mb-3 font-bold">Job Overview</p>

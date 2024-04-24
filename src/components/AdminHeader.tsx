@@ -25,7 +25,8 @@ const AdminHeader: React.FC<HeaderProps> = () => {
   };
   const handleLogout = () => {
     dispatch(AdminLogout());
- 
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("adminRefreshToken");
     navigate("/admin/login");
   };
 
@@ -118,7 +119,7 @@ const AdminHeader: React.FC<HeaderProps> = () => {
 
               <div
                 ref={dropdownRef}
-                className={`absolute right-0 mt-2 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow-lg ${
+                className={`z-50 absolute right-0 mt-2 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow-lg ${
                   isUserMenuOpen ? "block" : "hidden"
                 }`}
               >

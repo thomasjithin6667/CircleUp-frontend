@@ -11,6 +11,7 @@ interface UserData {
   user:any
 }
 
+
 const UserInitialState: AuthState = {
   user: null,
   token: null,
@@ -28,7 +29,15 @@ const authSlice = createSlice({
       state.token=action.payload.user.token
     },
     updateUser:(state,action:PayloadAction<{user:UserData}>)=>{
+      console.log(action.payload.user);
+      
       state.user=action.payload.user.user
+
+    },
+    updateToken:(state,action:PayloadAction<{accessToken:string}>)=>{
+      console.log(action.payload);
+      
+      state.token=action.payload.accessToken
 
     },
     logout: (state:any) => {
@@ -42,5 +51,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { loginSuccess, logout,setUsePosts,updateUser } = authSlice.actions;
+export const { loginSuccess, logout,setUsePosts,updateUser ,updateToken} = authSlice.actions;
 export default authSlice.reducer;

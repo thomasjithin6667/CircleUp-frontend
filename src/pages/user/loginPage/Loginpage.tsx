@@ -39,6 +39,12 @@ const user = useSelector(selectUser);
       if(response.status === 200) {
        toast.success(data.message)
        dispatch(loginSuccess({ user: data }));
+      
+       localStorage.setItem('userToken', data.token);      
+       localStorage.setItem('userRefreshToken', data.refreshToken);
+
+       
+       
         navigate('/home');
       } else {
         console.log(response.message);
@@ -67,6 +73,8 @@ const user = useSelector(selectUser);
         if (response.status === 200) {
           toast.success(data.message);
           dispatch(loginSuccess({ user: data }));
+          localStorage.setItem('userToken', data.token);      
+          localStorage.setItem('userRefreshToken', data.refreshToken);
           navigate('/home');
         } else {
           console.log(response.message);

@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { getAllPosts } from '../services/api/user/apiMethods';
+import  { useEffect, useState } from 'react'
+import { getSavedPost } from '../services/api/user/apiMethods';
 import PostSkeletonUi from './skeletonUI/PostSkeletonUi';
 import Post from './Post';
+import { useSelector } from 'react-redux';
 
 function SavedPosts() {
 
     const [posts, setPosts] = useState([]); 
-    const [users,setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const selectUser = (state: any) => state.auth.user || "";
+    const user = useSelector(selectUser) || "";
+    const userId = user._id || "" ;
+    
     useEffect(() => {
       try {
         setLoading(true);
         setTimeout(() => {
-          getAllPosts()
+          getSavedPost(userId)
             .then((response:any) => {
-              const postsData = response.data;
+              const postsData = response.data.posts;
               setPosts(postsData); 
+              console.log(posts);
               
-              console.log(postsData);
+              
+              
             })
             .catch((error) => {
             console.log(error);
@@ -31,7 +37,7 @@ function SavedPosts() {
         console.log(error);
         
         }
-      }, []);
+      }, [user]);
     
     
 
@@ -40,7 +46,7 @@ function SavedPosts() {
         {loading&&(
   <PostSkeletonUi/>
 )}
-{posts.length > 0 && (
+{posts?.length > 0 && (
   <div className="posts">
     {posts.map((post:any) => (
       <Post key={post._id} post={post}  />

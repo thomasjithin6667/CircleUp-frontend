@@ -40,14 +40,16 @@ const Header: React.FC<HeaderProps> = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    localStorage.removeItem("email");
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userRefreshToken");
+    
     navigate("/login");
   };
 
   const activeLinkStyle = "text-green-600"; 
   const inactiveLinkStyle = "text-gray-700";
   return (
-    <nav className="border z-10 bg-white lg:px-6 py-2.5 h-16 sticky top-0" >
+    <nav className="border   bg-white lg:px-6 py-2.5 h-16 sticky top-0" >
       
       
       <div className="flex flex-wrap justify-between">

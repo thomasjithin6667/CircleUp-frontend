@@ -59,6 +59,7 @@ function JobFilterForm({  onReset }:any) {
   const handleApplyFilters = () => {
  
     setFilterData({
+      search:null,
       jobRole: selectedJobRole?.value,
       location: selectedLocation?.value,
       jobType: selectedJobType,
@@ -82,6 +83,7 @@ function JobFilterForm({  onReset }:any) {
     setSelectedSalaryRange(0);
     setSelectedExperienceRange(0);
       setFilterData({
+      search:null,
       jobRole: null,
       location: null,
       jobType: null,

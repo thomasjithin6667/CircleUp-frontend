@@ -50,7 +50,12 @@ import SavedPosts from "../components/SavedPosts";
 import SavedJobs from "../components/SavedJobs";
 import ViewJobInterviews from "../components/ViewJobInterviews";
 import InterviewCall from "../pages/user/interviewCall/InterviewCall";
-import Protect from "../routes/protectRoutes/ProtectRoutes";
+import Protect from "../routes/protectRoutes/ProtectRoutes"
+import PageNotFound from "../components/errorComponents/PageNotFound";
+import NotAuthorized from "../components/errorComponents/NotAuthorized";
+import ErrorPage from "../components/errorComponents/ErrorPage";
+
+
 
 
 
@@ -67,6 +72,8 @@ const appRouter = createBrowserRouter([
           <App />
         </Protect>
       ),
+      errorElement:<ErrorPage/>
+      ,
    
       children: [
         {
@@ -109,11 +116,15 @@ const appRouter = createBrowserRouter([
     },
     {
       path:"/jobs",
+      
       element: (
         <Protect>
           <App />
         </Protect>
       )
+      ,
+      errorElement:<ErrorPage/>
+      
      ,
       children:[
         {
@@ -158,6 +169,8 @@ const appRouter = createBrowserRouter([
              <JobsOpenToWork/>
             </Protect>
           )
+          ,
+      errorElement:<ErrorPage/>
          ,
           children:[
             {
@@ -186,6 +199,8 @@ const appRouter = createBrowserRouter([
              <JobsDetails/>
             </Protect>
           )
+          ,
+      errorElement:<ErrorPage/>
           
           ,
           children:[
@@ -226,6 +241,8 @@ const appRouter = createBrowserRouter([
        <App/>
         </Protect>
       )
+      ,
+      errorElement:<ErrorPage/>
      ,
       children:[
         {
@@ -264,7 +281,10 @@ const appRouter = createBrowserRouter([
         <Protect>
      <Profile/>
         </Protect>
-      ),
+      )
+      ,
+      errorElement:<ErrorPage/>,
+      
       children:[
         {
           path:"bio",
@@ -283,7 +303,10 @@ const appRouter = createBrowserRouter([
 
         {
           path:"/visit-profile/",
-          element:<ViewerProfile/>,
+          element:<ViewerProfile/>
+          ,
+      errorElement:<ErrorPage/>,
+          
           children:[
             {
               path:"bio/:userId",
@@ -306,31 +329,45 @@ const appRouter = createBrowserRouter([
             },
     {
       path: "/login",
-      element: <Login />,
+      element: <Login />
+      ,
+      errorElement:<ErrorPage/>,
     },
     {
       path: "/signup",
-      element: <Signup />,
+      element: <Signup />
+      ,
+      errorElement:<ErrorPage/>,
     },
     {
       path: "/forgot-password",
-      element: <ForgotPassword />,
+      element: <ForgotPassword />
+      ,
+      errorElement:<ErrorPage/>,
     },
     {
       path: "/otp",
-      element: <OtpPage />,
+      element: <OtpPage />
+      ,
+      errorElement:<ErrorPage/>,
     },
     {
       path: "/forgot-otp",
-      element: <PasswordOtp />,
+      element: <PasswordOtp />
+      ,
+      errorElement:<ErrorPage/>,
     },
     {
       path: "/change-password",
-      element: <ChangePassword />,
+      element: <ChangePassword />
+      ,
+      errorElement:<ErrorPage/>,
     },
     {
         path:"/register-success",
         element:<RegisterSucces/>
+        ,
+      errorElement:<ErrorPage/>
     },
      {
       path:"/chat",
@@ -338,7 +375,8 @@ const appRouter = createBrowserRouter([
         <Protect>
      <Chat/>
         </Protect>
-      )
+      ),
+      errorElement:<ErrorPage/>
      
      }
     ,
@@ -348,7 +386,8 @@ const appRouter = createBrowserRouter([
         <Protect>
      <PremiumPlans/>
         </Protect>
-      )
+      ),
+      errorElement:<ErrorPage/>
    ,
       children:[
         {
@@ -368,7 +407,17 @@ const appRouter = createBrowserRouter([
     {
       path:"/interview-call/:roomId",
       element:<InterviewCall/>
+      ,
+      errorElement:<ErrorPage/>
 
+    },
+    {
+      path: '*',
+      element: <PageNotFound />,
+    },
+    {
+      path: '/not-authorized',
+      element: <NotAuthorized />,
     },
     adminRouter,  
     adminLoginRouter,

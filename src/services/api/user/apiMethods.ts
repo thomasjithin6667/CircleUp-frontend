@@ -147,7 +147,7 @@ export const forgotOTP = (otp: { otp: string }) => {
   export const renewPassword = (userData: { password: string; confirmPassword: string }) => {
     return new Promise((resolve, reject) => {
       try {
-        apiCall("post", userUrls.resetPassword, userData)
+        apiCall("put", userUrls.resetPassword, userData)
           .then((response) => {
             resolve(response);
           })
@@ -229,7 +229,7 @@ export const    getUserPost = (userId:{userId:any}) => {
 export const editPost = (postData: {userId:any,postId:any,  title:any; description:string,hideLikes:boolean,hideComment:boolean }) => {
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", postUrls.editPost, postData)
+      apiCall("put", postUrls.editPost, postData)
         .then((response) => {
           resolve(response);
         })
@@ -271,7 +271,7 @@ export const    deletePost = (postData:{postId:string,userId:string}) => {
 export const    likePost = (postData:{postId:string,userId:string}) => {
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", postUrls.likePost, postData)
+      apiCall("patch", postUrls.likePost, postData)
         .then((response) => {
           resolve(response);
         })
@@ -372,7 +372,7 @@ export const deleteComment = ( commentId:{commentId:any}) => {
 export const setPreferences = (userData: {userId:string,userType:any,isHiring:any }) => {
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", userUrls.setPreferences,userData)
+      apiCall("put", userUrls.setPreferences,userData)
         .then((response) => {
           resolve(response);
         })
@@ -391,7 +391,7 @@ export const setPreferences = (userData: {userId:string,userType:any,isHiring:an
 export const setUserRole = (userData: {userId:string,isHiring:boolean}) => {
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", userUrls.setUserRole,userData)
+      apiCall("put", userUrls.setUserRole,userData)
         .then((response) => {
           resolve(response);
         })
@@ -410,7 +410,7 @@ export const setUserRole = (userData: {userId:string,isHiring:boolean}) => {
 export const setBasicInformation = (userData: any) => {
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", userUrls.setBasicInformation,userData)
+      apiCall("put", userUrls.setBasicInformation,userData)
         .then((response) => {
           resolve(response);
         })
@@ -569,7 +569,7 @@ export const rejectFollowRequest = (data: { userId: string ,requestedUser:string
 //@dec      get connections of a user
 //method    POST
 
-export const getUserConnection = (userId: { userId: string }) => {
+export const getUserConnection = (userId: { userId: string|undefined }) => {
   return new Promise((resolve, reject) => {
     try {
       console.log(userId);
@@ -632,7 +632,7 @@ export const addJob= (data:any) => {
 export const editJob= (data:any) => {
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", jobUrls.editJob, data)
+      apiCall("put", jobUrls.editJob, data)
         .then((response) => {
           resolve(response);
         })
@@ -686,7 +686,7 @@ export const listJob= (filterData:any) => {
 
 
 //list User Jobs
-export const listUserJob= (userId:{userId:string}) => {
+export const listUserJob= (userId:{userId:string|undefined}) => {
   
   return new Promise((resolve, reject) => {
     try {
@@ -728,7 +728,7 @@ export const updateApplicationStatus= (applcationData:{applicationId:string,stat
   
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", jobUrls.updateApplicationStatus,applcationData)
+      apiCall("patch", jobUrls.updateApplicationStatus,applcationData)
         .then((response) => {
           resolve(response);
         })
@@ -748,7 +748,7 @@ export const cancelJobApplication= (applcationId:{applicationId:string,applicant
   
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", jobUrls.cancelApplication,applcationId)
+      apiCall("patch", jobUrls.cancelApplication,applcationId)
         .then((response) => {
           resolve(response);
         })
@@ -1108,7 +1108,7 @@ export const  addInterview= (
 };
 
 
-//get interviewee interview
+//get interviewe interview
 export const getIntervieweeInterviews= (intervieweeId:{intervieweeId:string}) => {
   
   return new Promise((resolve, reject) => {
@@ -1168,3 +1168,59 @@ export const getJobInterviews= (jobId:{jobId:string}) => {
 };
 
 
+//@dec      Add New Message
+//method    post
+export const reportPost = (reportData: {userId:string,postId:string,cause:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", postUrls.reportPost, reportData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+//@dec      Like a post
+//method    POST
+
+export const savePost = (postData: { postId: string|null,jobId:string|null, userId: string }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", postUrls.savePost, postData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+//@dec      Get Saved Post
+//method    POST
+
+export const getSavedPost = (userId: string|undefined) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const url:string = `${postUrls.getSavedPosts}/${userId}`
+      apiCall("get", url, null)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};

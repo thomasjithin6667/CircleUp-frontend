@@ -1,9 +1,12 @@
 import  {  useEffect, useState } from "react";
-import { Bookmark } from "lucide-react";
-import { listJob } from "../services/api/user/apiMethods";
-import { useSelector } from "react-redux";
+import { Bookmark, Lock } from "lucide-react";
+import { listJob, savePost } from "../services/api/user/apiMethods";
+import { useDispatch, useSelector } from "react-redux";
 import ApplyJobForm from "./ApplyJobForm";
 import { useFilterContext} from '../utils/context/jobfilterData/FilterContext';
+import { toast } from "sonner";
+import debounce from 'lodash/debounce';
+import { updateUser } from "../utils/context/reducers/authSlice";
 interface jobProps {
   post: {
     _id: string;
@@ -24,6 +27,7 @@ interface jobProps {
 }
 
 const Jobs = () => {
+  const dispatch = useDispatch();
   const { filterData } = useFilterContext();
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
@@ -32,8 +36,7 @@ const Jobs = () => {
   const [jobs, setJobs] = useState<jobProps["post"][]>([]);
   const [selectedjob, setSelectedJob] = useState<any>({});
   const [isApply, setIsApply] = useState<boolean>(false);
-  
-
+ 
 
 
   const handleApplyJob = (job:any) => {
@@ -44,24 +47,45 @@ const Jobs = () => {
     setIsApply(false)
   }
 
+ 
   
 
-  useEffect(() => {
+  const debouncedListJob = debounce((filterData, userId) => {
+    listJob({ filterData, userId })
+      .then((response: any) => {
+        const jobsData = response.data.jobs;
+        setJobs(jobsData);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, 600); 
 
+  useEffect(() => {
+    debouncedListJob(filterData, userId); 
+    return () => {
+   
+      debouncedListJob.cancel();
+    };
+  }, [filterData]);
+
+  const handleSave = (jobId: string, userId: string) => {
     try {
-      listJob({filterData,userId})
+      savePost({ postId:null, userId,jobId})
         .then((response: any) => {
-          const jobsData = response.data.jobs;
-          setJobs(jobsData);
+          const userData = response.data;
+      
+          dispatch(updateUser({ user: userData }));
+     
         })
         .catch((error) => {
-          console.log(error.message);
+          toast.error(error.message);
         });
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.message);
     }
-  }, [filterData]);
-console.log(filterData);
+  };
+
 
   return (
     < >
@@ -76,10 +100,22 @@ console.log(filterData);
                  <p className="text-sm font-bold">{job.jobRole}</p>
                </div>
              </div>
+
+             <div className="flex ">
+             {user.savedJobs?.includes(job._id) ? (
+  <button onClick={() => handleSave(job._id, user._id)} type="button">
+    <Bookmark color="green" fill="green" strokeWidth={1.5} size={22} />
+  </button>
+) : (
+  <button onClick={() => handleSave(job._id, user._id)} type="button">
+    <Bookmark color="gray" strokeWidth={1.5} size={22} />
+  </button>
+)}
+
+             </div>
  
-             <button>
-               <Bookmark size={18} color="gray" />
-             </button>
+                    
+
            </div>
            <div className="mt-10">
              <p className="text-sm mb-3 font-bold">Job Overview</p>
@@ -116,15 +152,32 @@ console.log(filterData);
                </div>
              </div>
            </div>
+
+           {(user.dailyJobsApplied <3 || user.isPremium == true) &&(
+               <div className="w-full flex justify-end mt-10">
+               <button
+                 onClick={() => handleApplyJob(job)}
+                 className="  hover:bg-white hover:border duration-300 hover:text-green-600 text-xs rounded btn border w-24 px-4 py-2 cursor-pointer text-white ml-2 bg-green-600"
+               >
+                 Apply
+               </button>
+             </div>
+
+           )}
+               {user.dailyJobsApplied>=3&&(
+               <div className="w-full flex justify-end mt-10">
+               <button
+                onClick={()=>{toast.error("Upgrade to premium to apply more jobs")}}
+                 className=" flex opacity-60 gap-1 items-center hover:border duration-300 text-xs rounded btn border w-24 px-4 py-2 cursor-auto text-white ml-2 bg-green-600"
+               >
+                 <Lock size={15}/> Apply
+               </button>
+             </div>
+
+           )}
  
-           <div className="w-full flex justify-end mt-10">
-             <button
-               onClick={() => handleApplyJob(job)}
-               className="  hover:bg-white hover:border duration-300 hover:text-green-600 text-xs rounded btn border w-24 px-4 py-2 cursor-pointer text-white ml-2 bg-green-600"
-             >
-               Apply
-             </button>
-           </div>
+ 
+        
  
            {isApply && selectedjob._id === job._id && <ApplyJobForm job={selectedjob} cancelApplyJob={cancelApplyJob} />}
          </div>
