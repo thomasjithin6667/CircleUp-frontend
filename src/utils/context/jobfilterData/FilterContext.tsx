@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
 
 // Define the type for the filter data
-interface FilterData {
+export interface FilterData {
   search:string|null
   jobRole: string | null;
   location: string | null;

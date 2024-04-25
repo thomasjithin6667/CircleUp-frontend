@@ -2,12 +2,10 @@
 import { useEffect, useState } from "react";
 
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
-import { useSelector } from "react-redux";
 
 
 function SearchPage() {
-  const selectUser = (state:any)=>state.auth.user;
-  const user = useSelector(selectUser);
+
   const location = useLocation();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState<string|null>("");

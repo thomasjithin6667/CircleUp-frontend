@@ -8,24 +8,7 @@ import { cancelJobApplication, getemployeeApplications } from "../services/api/u
 import { updateUser } from "../utils/context/reducers/authSlice";
 import { toast } from "sonner";
 
-interface jobProps {
-  post: {
-    _id: string;
-    userId: {
-      _id: string;
-      profileImageUrl: string;
-    };
-    companyName: string;
-    jobRole: string;
-    jobDescription: string;
-    requiredSkills: string;
-    jobLocation: string;
-    salary: string;
-    jobType: string;
-    experience: string;
-    qualification: string;
-  };
-}
+
 
 const Applications = () => {
   const selectUser = (state: any) => state.auth.user || "";

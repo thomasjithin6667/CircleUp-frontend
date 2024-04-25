@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Member {
     _id: string;
@@ -6,10 +6,7 @@ interface Member {
     profileImageUrl:string;
   }
  
-  interface Conversation {
-    member: Member[];
-  }
-  
+
 
 function Friend({conversation,CurrentUser,onlineUsers}:any) {
 

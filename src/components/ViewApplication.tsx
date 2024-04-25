@@ -8,7 +8,7 @@ import { X } from "lucide-react";
 function  ViewApplication({application,cancelViewApplication}:any) {
 
 const showPdf=(pdf:string)=>{
-    window.open(`http://localhost:3000/uploads/${pdf}`,"_blank","noreferrer")
+    window.open(`http://circleup.site/api/uploads/${pdf}`,"_blank","noreferrer")
 }
   return (
     <>

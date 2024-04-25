@@ -1,8 +1,8 @@
-import React from 'react'
+
 
 function ChatingUser() {
   return (
-    <nav className="right-0 flex flex-col hidden pb-2 bg-white border-l border-gray-300 xl:block" style={{ width: "24rem" }}>
+    <nav className="right-0 flex flex-col pb-2 bg-white border-l border-gray-300 xl:block" style={{ width: "24rem" }}>
     <div className="flex items-center justify-between w-full p-3">
       <button className="p-2 text-gray-500 rounded-full focus:outline-none hover:text-gray-600 hover:bg-gray-200">
         <svg className="w-6 h-6 text-gray-600 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

@@ -1,5 +1,5 @@
 import { PlusCircle, X } from 'lucide-react'
-import { Button, Modal} from "flowbite-react";
+import { Modal} from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { addConversation, getUserConnection } from '../../services/api/user/apiMethods';
@@ -9,7 +9,6 @@ import { toast } from 'sonner';
 
 function ChatUsers({conversations,user,setCurrentChat,  onlineUsers  ,setConversations}:any) {
     const [openModal, setOpenModal] = useState(false);
-    const [modalSize, setModalSize] = useState<string>('md');
 
     
     const selectUser = (state: any) => state.auth.user;
@@ -78,37 +77,7 @@ const handleAddConversation=(senderId:string,receiverId:string) => {
         </div>
       </div>
     </div>
-    {/* <div className="border-b shadow-bot">
-      <ul className="flex flex-row items-center inline-block px-2 list-none select-none">
-        <li className="flex-auto px-1 mx-1 -mb-px text-center rounded-t-lg cursor-pointer last:mr-0 hover:bg-gray-200">
-          <a className="flex items-center justify-center block py-2 text-xs font-semibold leading-normal tracking-wide border-b-2 border-blue-500">
-            All
-          </a>
-        </li>
-        <li className="flex-auto px-1 mx-1 -mb-px text-center rounded-t-lg cursor-pointer last:mr-0 hover:bg-gray-200">
-            <a className="flex items-center justify-center block py-2 text-xs font-semibold leading-normal tracking-wide border-b-2 border-transparent">
-              Work
-            </a>
-          </li>
-          <li className="flex-auto px-1 mx-1 -mb-px text-center rounded-t-lg cursor-pointer last:mr-0 hover:bg-gray-200">
-            <a className="flex items-center justify-center block py-2 text-xs font-semibold leading-normal tracking-wide border-b-2 border-transparent">
-              Private
-              <span className="flex items-center justify-center w-5 h-5 ml-1 text-xs text-white bg-blue-500 rounded-full">2</span>
-            </a>
-          </li>
-          <li className="flex-auto px-1 mx-1 -mb-px text-center rounded-t-lg cursor-pointer last:mr-0 hover:bg-gray-200">
-            <a className="flex items-center justify-center block py-2 text-xs font-semibold leading-normal tracking-wide border-b-2 border-transparent">
-              Groups
-            </a>
-          </li>
-          <li className="flex-auto px-1 mx-1 -mb-px text-center rounded-t-lg cursor-pointer last:mr-0 hover:bg-gray-200">
-            <a className="flex items-center justify-center block py-2 text-xs font-semibold leading-normal tracking-wide border-b-2 border-transparent">
-              Channels
-            </a>
-          </li>
-        
-      </ul>
-    </div> */}
+   
     <div className="relative mt-2 mb-4 overflow-x-hidden overflow-y-auto scrolling-touch lg:max-h-sm scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray">
     <ul className="flex flex-col inline-block w-full h-screen px-2 select-none">
    
@@ -139,7 +108,7 @@ const handleAddConversation=(senderId:string,receiverId:string) => {
         </div>
      
       </div>
-      <Modal  show={openModal} size={modalSize} onClose={() => setOpenModal(false)}>
+      <Modal  show={openModal} size='md' onClose={() => setOpenModal(false)}>
         
         <Modal.Body>
            

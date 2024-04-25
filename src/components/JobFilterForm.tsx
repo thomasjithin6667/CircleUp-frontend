@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import  { useContext, useEffect, useState } from "react";
 import { Accordion } from "flowbite-react";
 import Select from "react-select";
 import Slider from "rc-slider";

@@ -3,7 +3,7 @@ import "./landing.css"
 useNavigate
 
 function Landing() {
-  const naviagte = useNavigate()
+
   return (
     <>
        

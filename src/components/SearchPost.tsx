@@ -2,15 +2,12 @@ import { useEffect, useState } from 'react';
 import { search } from '../services/api/user/apiMethods';
 import PostSkeletonUi from './skeletonUI/PostSkeletonUi';
 import Post from './Post';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import NoPost from './skeletonUI/NoPost';
 
 function SearchPost() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const selectUser = (state: any) => state.auth.user || '';
-  const user = useSelector(selectUser) || '';
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState<string>('');
 

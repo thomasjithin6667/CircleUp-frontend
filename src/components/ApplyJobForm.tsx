@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "sonner";
 import { updateUser } from "../utils/context/reducers/authSlice";
+import { BASE_URL } from "../constants/baseUrls";
 
 function ApplyJobForm({ job, cancelApplyJob }: any) {
 
@@ -34,7 +35,7 @@ formData.append('resume',  values.resume);
    
 
 
-const response = await axios.post(' http://localhost:3000/api/job/apply-job', formData, {
+const response = await axios.post(`${BASE_URL}/api/job/apply-job`, formData, {
   headers: {
     'Content-Type': 'multipart/form-data',
   },
@@ -83,7 +84,7 @@ setSubmitting(false);
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, setFieldValue }) => (
+          {({ isSubmitting}) => (
             <Form className="w-full p-5">
                 <div className="w-full mb-4  text-xs  rounded-md">
                   <div className="flex gap-2">

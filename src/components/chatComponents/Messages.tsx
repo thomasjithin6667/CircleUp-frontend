@@ -4,7 +4,6 @@ import ChatBubbleReciver from './ChatBubbleReciver'
 import ChatBubbleSender from './ChatBubbleSender'
 import { SendHorizonal, Smile,ChevronLeft } from 'lucide-react'
 import { addMessage, getUserDetails, getUserMessages } from '../../services/api/user/apiMethods';
-import { toast } from 'sonner';
 import {useLocation,useNavigate} from 'react-router-dom';
 
 function Messages({ user, currentChat,socket,onlineUsers}:any) {

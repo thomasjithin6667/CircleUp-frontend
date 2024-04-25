@@ -62,7 +62,7 @@ function AddPost({updatePost}:any) {
     }),
     onSubmit: async () => {
       setLoading(true);
-      const { image, title, description} = formik.values;
+      const {  title, description} = formik.values;
 
       try {
         const response = await fetch(croppedImage);
