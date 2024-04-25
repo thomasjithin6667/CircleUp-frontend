@@ -3,6 +3,7 @@ import { Bell, Bookmark, Mail } from "lucide-react";
 import { useDispatch, useSelector} from "react-redux";
 import { useNavigate, useLocation  } from "react-router-dom";
 import { logout } from "../utils/context/reducers/authSlice";
+import { toast } from "sonner";
 
 
 
@@ -14,6 +15,7 @@ const Header: React.FC<HeaderProps> = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const toggleUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
   };
@@ -45,6 +47,22 @@ const Header: React.FC<HeaderProps> = () => {
     
     navigate("/login");
   };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (searchQuery.trim() === "") {
+
+      toast.error("Please enter a search term.");
+    } 
+    else {
+      navigate(`/search/posts?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
 
   const activeLinkStyle = "text-green-600"; 
   const inactiveLinkStyle = "text-gray-700";
@@ -98,7 +116,7 @@ const Header: React.FC<HeaderProps> = () => {
           </li>
         </ul>
 
-          <form className="relative w-80 ms-52 me-6">
+        <form className="relative w-80 ms-52 me-6" onSubmit={handleSearchSubmit}>
             <div className="relative">
               <input
                 type="search"
@@ -108,6 +126,8 @@ const Header: React.FC<HeaderProps> = () => {
                 style={{
                   position: "relative",
                 }}
+                value={searchQuery}
+                onChange={handleSearchChange}
               />
               <button
                 type="submit"
@@ -136,6 +156,7 @@ const Header: React.FC<HeaderProps> = () => {
               </button>
             </div>
           </form>
+
 
           <ul className="flex justify-between items-center gap-6">
             <li  onClick={() => navigate('/home/notifications')}>
@@ -224,3 +245,7 @@ const Header: React.FC<HeaderProps> = () => {
 };
 
 export default Header;
+
+
+
+

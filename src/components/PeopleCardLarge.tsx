@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react";
-function PeopleCard({ user, handleFollow ,updateConnection,updateRequested,updateRequests}: any) {
+function PeopleCardLarge({ user, handleFollow ,updateConnection,updateRequested,updateRequests}: any) {
   
   const selectUser = (state: any) => state.auth.user;
   const currentUser = useSelector(selectUser);
@@ -108,7 +108,7 @@ const handleFollowFromViewProfile = (foloweduserId:string,followedUserName:strin
   const navigate=useNavigate()
   return (
     <>
-        <div className=" home-recommed-section bg-white flex justify-between px-4 py-4 items-end" >
+        <div className=" bg-white flex justify-between px-4 py-4 items-end w-full mx-5 mt-3 rounded-md" >
           <div>
           <img
         className="h-9 w-9 rounded-full border-2 p-.5 mb-3 border-green-600"
@@ -171,6 +171,6 @@ const handleFollowFromViewProfile = (foloweduserId:string,followedUserName:strin
   )
 }
 
-export default PeopleCard
+export default PeopleCardLarge
 
 

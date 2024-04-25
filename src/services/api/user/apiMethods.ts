@@ -469,7 +469,7 @@ export const getUserDetails = (  userId: string|undefined) => {
 //@dec      followUser
 //method    POST
 
-export const followUser = (data: { userId: string ,followingUser:string}) => {
+export const followUser = (data: { userId: string|undefined ,followingUser:string|undefined}) => {
   return new Promise((resolve, reject) => {
     try {
       apiCall("post", connectionUrls.follow, data)
@@ -572,7 +572,7 @@ export const rejectFollowRequest = (data: { userId: string ,requestedUser:string
 export const getUserConnection = (userId: { userId: string|undefined }) => {
   return new Promise((resolve, reject) => {
     try {
-      console.log(userId);
+     
       
       apiCall("post", connectionUrls.getConnection, userId)
         .then((response) => {
@@ -591,7 +591,7 @@ export const getUserConnection = (userId: { userId: string|undefined }) => {
 //@dec      cancel follow Request
 //method    POST
 
-export const cancelFollowRequest = (data: { userId: string ,cancelingUser:string}) => {
+export const cancelFollowRequest = (data: { userId: string |undefined,cancelingUser:string}) => {
   return new Promise((resolve, reject) => {
     try {
       apiCall("post", connectionUrls.cancelRequest, data)
@@ -1224,3 +1224,25 @@ export const getSavedPost = (userId: string|undefined) => {
     }
   });
 };
+
+//@dec      Search 
+//method    GET
+
+export const search = (searchQuery: string) => {
+  return new Promise((resolve, reject) => {
+    try {
+        
+      const url:string = `${userUrls.search}?searchQuery=${searchQuery}`
+      apiCall("get", url, null)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+

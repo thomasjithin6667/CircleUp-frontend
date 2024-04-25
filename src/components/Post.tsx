@@ -53,9 +53,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
     SetIsCommentSection(false); 
   };
   const [isLikedByUser, setIsLikedByUser] = useState(
-    post.likes.some((like) => like._id === userId)
+    post?.likes?.some((like) => like._id === userId)
   );
-  const[likeCount,setLikeCount]=useState(post.likes.length)
+  const[likeCount,setLikeCount]=useState(post?.likes?.length)
 
 
   const openReportModal = () => {

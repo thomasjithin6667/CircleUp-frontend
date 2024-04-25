@@ -17,7 +17,8 @@ export const userUrls ={
     checkout:'/checkout-user',
     validate:'/validate-payment',
     allTransactions:'/get-transactions',
-    getNotifications:'/get-notifications'
+    getNotifications:'/get-notifications',
+    search:'/search'
    
 }
 

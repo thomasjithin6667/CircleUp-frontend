@@ -37,8 +37,12 @@ function UserBio() {
      
       <div className="background w-full h-36 bg-gray-300 mt-7 rounded-t-md" ></div>
       <div className="bio bg-white w-full h-96 rounded-b-md pt-16 px-10">
-        <div className="flex justify-between">
-        <p  className="text-xs mb-5 text-green-600 font-medium">Online</p>
+        <div className="flex justify-between mb-4">
+          
+        {!user.isHiring?(
+         <p className="text-xs bg-green-600 text-white py-1 mt-1 w-32 rounded-full text-center">Available for work</p>
+
+      ):( <p className="text-xs bg-white border  border-green-600 font-semibold text-green-600 py-1 mt-1 w-32 rounded-full text-center">Recruiting </p>)}
         <button onClick={handleEditButtonClick}><Edit size={15}/></button>
           
         </div>

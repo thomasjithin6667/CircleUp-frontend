@@ -26,8 +26,9 @@ function PeopleRequests() {
           .then((response: any) => {
             const connectionData = response.data.connection;
             setRequests(connectionData.requested);
+           
+            
         
-            console.log(response.data.connection);
             setLoading(false)
             
           })
