@@ -19,6 +19,7 @@ export const userUrls ={
     allTransactions:'/get-transactions',
     getNotifications:'/get-notifications',
     search:'/search'
+    
    
 }
 
@@ -48,14 +49,19 @@ export const postUrls = {
 export const adminUrl = {
     login: "/admin/login",
     userList:'/admin/get-users',
+    transactionsList:'/admin/get-transactions',
     userBlock:'/admin/user-block',
     jobBlock:'/admin/job-block',
     postList:'/admin/get-posts',
+    reportList:'/admin/get-reports',
     jobList:'/admin/get-jobs',
     postBlock:'/admin/post-block',
     jobCategoryList:'/admin/job-category',
     addJobCategory:'/admin/add-job-category',
-    blockJobCategory:'/admin/block-job-category'
+    blockJobCategory:'/admin/block-job-category',
+    chartData:'/admin/chart-data',
+    dashboardStats:'/admin/dashboard-stats',
+
 }
 
 export const connectionUrls = {
@@ -88,7 +94,8 @@ export const connectionUrls = {
     getIntervieweeInterviews:'/job/get-interviewee-interviews',
     getInterviewerInterviews:'/job/get-interviewer-interviews',
     getJobInterviews:'/job/get-job-interviews',
-    getFormSelectData:'/job/form-select-data'
+    getFormSelectData:'/job/form-select-data',
+    blockJob:'/job/block-job'
   }
 
 
@@ -99,4 +106,6 @@ export const connectionUrls = {
     findConversation: "/chat/find-conversation",
     addMessage: "/chat/add-message",
     getMessages: "/chat/get-messages",
+    setMessageRead: "/chat/set-message-read",
+    getUnreadMessages:'/chat/get-unread-messages'
   };

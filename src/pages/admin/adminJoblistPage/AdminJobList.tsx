@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import {ShieldAlert,ShieldCheck} from 'lucide-react'
-import { adminJobBlock, adminJobList, adminPostBlock, adminPostList } from '../../../services/api/admin/apiMethods';
+import { adminJobBlock, adminJobList,} from '../../../services/api/admin/apiMethods';
 import { Pagination } from 'flowbite-react'
 
 const AdminJobList: React.FC = () => {
@@ -120,7 +120,7 @@ const AdminJobList: React.FC = () => {
             <td className=" text-xs px-6 py-4">
               <div className="flex justify-end gap-4">
               {job.isAdminBlocked?(<button type="button"  style={{width:'110px'}}     onClick={() => handleJobBlock(job._id,"unblock")}
- className="text-xs  bg-white text-green-600 hover:bg-gray-100 border border-gray-200  focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
+ className="text-xs  bg-white text-green-600 hover:bg-gray-100 border border-gray-200  focus:outline-none font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
                 <ShieldCheck size={18} />UnBlock
 </button>):(<button style={{width:'110px'}} type="button" onClick={() => handleJobBlock(job._id,"block")} className="text-xs bg-white text-red-600 hover:bg-gray-100 border border-gray-200  focus:outline-none  font-medium rounded-lg  ps-7 py-2.5 text-center inline-flex items-center  me-2 mb-2">
 <ShieldAlert size={18} />  Block

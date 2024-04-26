@@ -11,6 +11,7 @@ import AdminStats from "../pages/admin/adminDashboardPage/AdminStats";
 import AdminNotifications from "../pages/admin/adminNotifications.tsx/AdminNotifications";
 import ProtectAdmin from "../routes/protectRoutes/ProtectAdminRoutes";
 import ErrorPage from "../components/errorComponents/ErrorPage";
+import AdminTransactions from "../pages/admin/adminTransactions/AdminTransactions";
 
 
 export const adminRouter = {
@@ -63,7 +64,13 @@ export const adminRouter = {
         path:"/admin/notifications",
         element:<AdminNotifications/>
         
+      },
+      {
+        path:"/admin/transactions",
+        element:<AdminTransactions/>
+        
       }
+    
     
     ]
   };

@@ -58,6 +58,7 @@ import SearchPage from "../pages/user/search/SearchPage";
 import SearchPost from "../components/SearchPost";
 import SearchPeople from "../components/SearchPeople";
 import SearchJobs from "../components/SearchJobs";
+import ProtectedVideoCall from "../components/ProtectedVideoCall";
 
 
 
@@ -448,8 +449,8 @@ const appRouter = createBrowserRouter([
       ]
     },
     {
-      path:"/interview-call/:roomId",
-      element:<InterviewCall/>
+      path:"/interview-call/:roomId/:userId",
+      element:<ProtectedVideoCall/>
       ,
       errorElement:<ErrorPage/>
 

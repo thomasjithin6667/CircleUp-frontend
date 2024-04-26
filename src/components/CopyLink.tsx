@@ -1,6 +1,11 @@
 import  { useState } from 'react';
+import { BASE_URL, DOMIAN_URL } from '../constants/baseUrls';
+import { useSelector } from 'react-redux';
 
 const CopyLink = ({interview}:any) => {
+    const selectUser = (state: any) => state.auth.user || "";
+    const user = useSelector(selectUser) || "";
+    const userId = user._id || "";
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
@@ -16,7 +21,7 @@ const CopyLink = ({interview}:any) => {
                     <input
                         id="phone-numbers"
                         type="text"
-                        value={interview?.interviewLink}
+                        value={`${DOMIAN_URL}/interview-call/${interview?.interviewLink}/${userId}`}
                         aria-describedby="helper-text-explanation"
                         className="bg-gray-100 border border-e-0 border-white text-gray-900 text-sm rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         disabled

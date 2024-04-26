@@ -49,7 +49,7 @@ function JobCategoryPage() {
      
     } catch (error:any) {
       console.log(error.message);
-      toast.error("Failed to add hashtag");
+      toast.error("Failed to add job Category");
     }
   }
 
@@ -91,9 +91,35 @@ const onPageChange = (page: number) => {
 
   return (
     <div  className='w-full border-collapse rounded-lg  pe-6 '>
+    
 
     <div className="w-full border-collapse rounded-lg  overflow-hidden  ms-5"  style={{height:'550px',width:'1200px'}}>
-    <table className=" w-full border-collapse bg-white text-left text-sm text-gray-500 mt-5">
+   
+    <div className="flex gap-3 mt-5">
+        <div className="w-full">
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"></div>
+            <input
+              type="text"
+              id="search"
+              onChange={(e)=>setJobCategory(e.target.value)}
+              value={jobCategory}
+              className="block w-full p-4 pl-10 text-xs  text-gray-900 border  border-gray-100 rounded-lg bg-white "
+              placeholder="Add new Job Category"
+              required
+            />
+            <button
+              type="submit" 
+              onClick={handleSubmit}
+
+              className=" text-xs rounded-md  text-white absolute right-2.5 bottom-2.5 bg-green-600 hover:bg-green-800 px-4 py-2 "
+            >
+              Add
+            </button>
+          </div>
+        </div>
+        </div>
+    <table className=" w-full  overflow-hidden  border-collapse bg-white text-left text-sm text-gray-500 mt-5">
         <thead className="bg-gray-50">
           <tr>
             <th scope="col" className="px-6 py-4 font-medium text-xs text-gray-900">
@@ -132,7 +158,7 @@ const onPageChange = (page: number) => {
             </span>
           </td>
           <td className="px-6 py-4 text-xs">
-            {jobCategory.date}
+          {new Date(jobCategory.date).toLocaleDateString()}
           </td>
 
           <td className=" text-xs px-6 py-4">{jobCategory.isBlocked?(<span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">

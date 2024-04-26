@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { getUnreadMessages } from '../../services/api/user/apiMethods';
 
 interface Member {
     _id: string;
@@ -13,6 +14,17 @@ function Friend({conversation,CurrentUser,onlineUsers}:any) {
     const [user, setUser] = useState<Member | null>(null);
     const [isOnline, setIsOnline] = useState(false);
     const [updatedAtTime, setUpdatedAtTime] = useState<string>('');
+    const conversationId = conversation._id;
+  const userId = CurrentUser._id;
+    const [unReadMessages, setUnreadMessages] = useState([]);
+    useEffect(() => {
+   
+
+      getUnreadMessages({ conversationId, userId }).then((response: any) => {
+        console.log(response.data);
+        setUnreadMessages(response.data);
+      });
+    }, []);
     useEffect(() => {
       if (conversation) {
         const friend = conversation.members.find((m: any) => m._id !== CurrentUser._id);
@@ -26,8 +38,13 @@ function Friend({conversation,CurrentUser,onlineUsers}:any) {
         setUpdatedAtTime(formattedTime);
       }
     }, [conversation, CurrentUser, onlineUsers]);
+
+
+    const handleClick = () => {
+      setUnreadMessages([]);
+    };
     return (
-    <li className={`flex flex-no-wrap border-t border-b items-center pr-3 text-black rounded-lg cursor-pointer mt-200 py-65 ${user?._id===CurrentUser._id?'bg-gray-50':''} hover:bg-gray-200`} style={{ paddingTop: '0.65rem', paddingBottom: '0.65rem' }}>
+    <li onClick={handleClick}  className={`flex flex-no-wrap border-t border-b items-center pr-3 text-black rounded-lg cursor-pointer mt-200 py-65 ${user?._id===CurrentUser._id?'bg-gray-50':''} hover:bg-gray-200`} style={{ paddingTop: '0.65rem', paddingBottom: '0.65rem' }}>
     <div className="flex justify-between w-full focus:outline-none">
       <div className="flex justify-between w-full">
         <div className="relative flex items-center justify-center w-12 h-12 ml-2 mr-3 text-xl font-semibold text-white bg-blue-500 rounded-full flex-no-shrink">
@@ -61,8 +78,14 @@ function Friend({conversation,CurrentUser,onlineUsers}:any) {
           </div>
           <div className="flex justify-between text-xs leading-none truncate mt-3">
             <span>{conversation?.lastMessage}</span>
-            <span v-else className="flex items-center justify-center w-4 h-4 text-xs text-right text-white bg-green-600 rounded-full">2</span>
-          </div>
+            {unReadMessages.length !== 0 && (
+                <span
+                  v-else
+                  className="flex items-center justify-center w-5 h-5 text-xs text-right text-white bg-green-600 rounded-full"
+                >
+                  {unReadMessages.length}
+                </span>
+              )}          </div>
         </div>
       </div>
     </div>

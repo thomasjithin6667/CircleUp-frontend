@@ -42,6 +42,26 @@ export const adminUserList = (page:number) => {
     })
 };
 
+
+
+//@dec      All transactions List
+//@method   Get
+export const adminTransactions= (page:number) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const queryParams = `?page=${page}`
+            adminApiCalls("get", adminUrl.transactionsList+queryParams, null).then((response) => {
+                resolve(response);
+              }
+            ).catch((err) => {
+                reject(err);
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+};
+
 //@dec     user Block
 //@method   Get
 export const adminUserBlock = (userId:{userId:string}) => {
@@ -175,8 +195,27 @@ export const adminJobList = (page:number) => {
     })
 };
 
+//@dec      All report list
+//@method   Get
+export const adminReportList = (page:number) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const queryParams = `?page=${page}`
+            adminApiCalls("get", adminUrl.reportList+queryParams, null).then((response) => {
+                resolve(response);
+              }
+            ).catch((err) => {
+                reject(err);
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+};
 
-//@dec      Block post
+
+
+//@dec      Block job
 //@method   Get
 export const adminJobBlock = (jobId:{jobId:string}) => {
     return new Promise((resolve, reject) => {
@@ -192,3 +231,44 @@ export const adminJobBlock = (jobId:{jobId:string}) => {
         }
     })
 };
+
+
+
+//@dec     Get Chart Data
+//@method   Get
+export const chartData = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        adminApiCalls("get", adminUrl.chartData, null)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+  
+  
+  
+  //@dec     Get Dashboard Stats
+  //@method   Get
+  export const getDashboardStats = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        adminApiCalls("get", adminUrl.dashboardStats, null)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+  

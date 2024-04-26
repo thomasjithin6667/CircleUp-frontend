@@ -107,7 +107,7 @@ const PostList: React.FC = () => {
               </div>
             </td>
             <td className="text-xs px-6 py-4">
-            {post.updatedAt}
+            {new Date(post.createdAt).toLocaleDateString()}
               
 
             </td>

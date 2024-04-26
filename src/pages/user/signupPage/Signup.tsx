@@ -43,6 +43,7 @@ const dispatch = useDispatch();
       }
     }).catch((error) => {
       console.log(error?.message)
+      toast.error(error?.message);
     })
   };
 

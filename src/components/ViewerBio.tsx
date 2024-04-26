@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import "../pages/user/userHome/userHome.css"
 import {  CircleArrowDownIcon, CircleArrowUp, LocateIcon, Mail, MessageCircle, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { UnFollowUser, cancelFollowRequest, followUser, getUserConnection, getUserDetails, getUserPost } from "../services/api/user/apiMethods";
 
@@ -162,9 +162,9 @@ function ViewerBio() {
            <button onClick={() =>  handleUnFollowFromViewProfile(user)} className="text-xs flex gap-1 text-red-600 font-semibold border px-2 py-1 rounded-md ">
        Circle Down <CircleArrowDownIcon size={15} />
       </button>
-      <button  onClick={()=>handleCancel(user)} className="text-xs flex gap-1 text-green-600 font-semibold border px-2 py-1 rounded-md broder" >
+      <Link to={`/chat?userId=${user._id}`} className="text-xs flex gap-1 text-green-600 font-semibold border px-2 py-1 rounded-md broder" >
         Message <MessageCircle size={15} />
-      </button>
+      </Link>
 
 
       </div>

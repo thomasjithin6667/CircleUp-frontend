@@ -6,13 +6,15 @@ import { FormValues } from "../../../utils/validation/signupValidation";
 //method    POST
 
 export const postRegister = (userData:FormValues) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         try {
             apiCall("post", userUrls.register, userData).then((response)=>{
                 resolve(response);
-                console.log("apiMethods"+response);
                 
-            })
+                
+            }).catch((err)=>{
+              reject(err);
+          })
         } catch (error) {
             resolve({status:500, message: "Somethings wrong."})
         }
@@ -24,13 +26,15 @@ export const postRegister = (userData:FormValues) => {
 //method    POST
 
 export const postOTP = (otp:{ otp: string })=>{
-return new Promise((resolve)=>{
+return new Promise((resolve,reject)=>{
     try {
         apiCall("post", userUrls.registerOtp, otp).then((response)=>{
             resolve(response);
-            console.log("apiMethods"+response);
+         
             
-        })
+        }).catch((err)=>{
+          reject(err);
+      })
         
     } catch (error) {
         resolve({status:500, message: "Somethings wrong."})
@@ -44,14 +48,16 @@ return new Promise((resolve)=>{
 //method    POST
 
 export const postResendOTP = (email:{email:string})=>{
-    return new Promise((resolve)=>{
+    return new Promise((resolve,reject)=>{
         try {
-            console.log(email)
+         
             apiCall("post", userUrls.resendOtp, email).then((response)=>{
                 
                 resolve(response);
-                console.log("apiMethods"+response);
-            })
+               
+            }).catch((err)=>{
+              reject(err);
+          })
             
         } catch (error) {
             resolve({status:500, message: "Somethings wrong."})
@@ -686,11 +692,12 @@ export const listJob= (filterData:any) => {
 
 
 //list User Jobs
-export const listUserJob= (userId:{userId:string|undefined}) => {
+export const listUserJob= (userId:{userId:string|undefined,page:number}) => {
   
   return new Promise((resolve, reject) => {
     try {
-      apiCall("post", jobUrls.listUserJob, userId)
+      const queryParams = `?page=${userId.page}`
+      apiCall("post", jobUrls.listUserJob+queryParams, userId)
         .then((response) => {
           resolve(response);
         })
@@ -702,6 +709,9 @@ export const listUserJob= (userId:{userId:string|undefined}) => {
     }
   });
 };
+
+
+
 
 //apply-job
 export const applyJob= ({formData}:any) => {
@@ -1246,3 +1256,80 @@ export const search = (searchQuery: string) => {
   });
 };
 
+
+//@dec      Block job
+//@method   Get
+export const userJobBlock = (jobId:{jobId:string}) => {
+  return new Promise((resolve, reject) => {
+      try {
+        apiCall("post",jobUrls.blockJob, jobId).then((response) => {
+              resolve(response);
+            }
+          ).catch((err) => {
+              reject(err);
+          })
+      } catch (error) {
+          reject(error);
+      }
+  })
+};
+
+
+
+
+//@dec      Set Messages Read
+//method    Patch
+
+export const setMessageRead = (messageData:{conversationId: string,userId:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("patch", chatUrl.setMessageRead, messageData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+//@dec      Get Unread Messages
+//method    Get
+
+export const getUnreadMessages = (messageData:{conversationId: string,userId:string}) => {
+  return new Promise((resolve, reject) => {
+    try {
+      apiCall("post", chatUrl.getUnreadMessages, messageData)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (error) {
+      resolve({ status: 500, message: "Somethings wrong." });
+    }
+  });
+};
+
+
+//@dec      Login user
+//method    POST
+
+export const setInterviewStatus = (interviewData:{interviewId:string,status:string}) => {
+  return new Promise((resolve, reject) => {
+      try {
+          apiCall('patch', jobUrls.setInterviewStatus, interviewData).then((response)=>{
+              resolve(response);
+          }).catch((err)=>{
+              reject(err);
+          })
+      } catch (error) {
+          resolve({ status: 500, message:"Somethings wrong." });
+      }
+  })
+
+}

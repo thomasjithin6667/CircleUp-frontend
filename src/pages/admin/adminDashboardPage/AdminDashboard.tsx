@@ -17,9 +17,9 @@ function AdminDashboard() {
     }
   },[admin,  navigate]);
   return (
-    <div className='main bg-gray-100 '>
+    <div className='main bg-gray-100 ' style={{height:"900px"}}>
 <AdminHeader/>
-<div className='flex'>
+<div className='flex '>
 <AdminSideNav/>
  <Outlet/>
 

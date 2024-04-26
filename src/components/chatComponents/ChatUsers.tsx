@@ -23,8 +23,13 @@ function ChatUsers({conversations,user,setCurrentChat,  onlineUsers  ,setConvers
 const handleAddConversation=(senderId:string,receiverId:string) => {
   addConversation({senderId,receiverId})  .then((response: any) => {
     const conversationData = response.data;
-      setConversations(conversationData?.conversations)
-      setCurrentChat(conversationData?.conversation)
+
+    
+    const existChat = conversations.filter((con:any)=>con._id===conversationData._id);
+    if(!existChat.length){
+        setConversations((prev:any) => [...prev, conversationData]);
+    }      
+    setCurrentChat(conversationData)
       setOpenModal(false)
        
    

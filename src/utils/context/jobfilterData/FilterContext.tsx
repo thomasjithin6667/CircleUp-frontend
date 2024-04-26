@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
 
-// Define the type for the filter data
 export interface FilterData {
   search:string|null
   jobRole: string | null;
@@ -10,16 +9,13 @@ export interface FilterData {
   experienceRange: string | null;
 }
 
-// Define the type for the context value
 interface FilterContextValue {
   filterData: FilterData;
   setFilterData: React.Dispatch<React.SetStateAction<FilterData>>;
 }
 
-// Create the context with an initial empty object as the default value
 const FilterContext = createContext<FilterContextValue | undefined>(undefined);
 
-// Create a custom hook to consume the context
 const useFilterContext = () => {
   const context = useContext(FilterContext);
   if (!context) {
@@ -28,8 +24,7 @@ const useFilterContext = () => {
   return context;
 };
 
-// FilterProvider component using useState for filterData
-const FilterProvider: React.FC = ({ children }) => {
+const FilterProvider: React.FC = ({ children }:any) => {
   const [filterData, setFilterData] = useState<FilterData>({
     search:null,
     jobRole: null,

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import ChatBubbleReciver from './ChatBubbleReciver'
 import ChatBubbleSender from './ChatBubbleSender'
 import { SendHorizonal, Smile,ChevronLeft } from 'lucide-react'
-import { addMessage, getUserDetails, getUserMessages } from '../../services/api/user/apiMethods';
+import { addMessage, getUserDetails, getUserMessages, setMessageRead } from '../../services/api/user/apiMethods';
 import {useLocation,useNavigate} from 'react-router-dom';
 
 function Messages({ user, currentChat,socket,onlineUsers}:any) {
@@ -101,6 +101,9 @@ function Messages({ user, currentChat,socket,onlineUsers}:any) {
     }
   };
   
+  useEffect(() => {
+    setMessageRead({ conversationId: currentChat._id, userId: user._id });
+  }, [socket]);
 
 
   return (
@@ -133,9 +136,10 @@ function Messages({ user, currentChat,socket,onlineUsers}:any) {
       <div className="message-scroll-post self-center flex-1 w-full " ref={scrollRef}>
         <div className="relative flex flex-col px-3 py-1 m-auto w-full">
           <div className="self-center px-2 py-1 mx-0 my-1 text-xs text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">Channel was created</div>
-          <div className="self-center px-2 py-1 mx-0 my-1 text-xs text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">May 6</div>
+          <div className="self-center px-2 py-1 mx-0 my-1 text-xs text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">{currentChat?.createdAt &&
+                    new Date(currentChat.createdAt).toLocaleDateString()}</div>
         
-          {messages.length &&
+          {messages.length!==0 &&
                   messages.map((message ,index) => {
                     return message?.sender._id === user._id ||
                       message?.sender === user._id ? (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getInterviewerInterviews } from "../services/api/user/apiMethods";
+import { getInterviewerInterviews, setInterviewStatus } from "../services/api/user/apiMethods";
 import CopyLink from "./CopyLink";
 import { View } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,12 +11,14 @@ const HiringInterviews = () => {
 
 
 
-  const handleGroupVideoCall =(interviewLink:string)=>{
+  const handleGroupVideoCall =(interviewLink:string,interviewId:string)=>{
 
     
  
     const  roomId=interviewLink
+    setInterviewStatus({interviewId:interviewId,status:"Started"})
      navigate(`/interview-call/${roomId}`, { state: { from: location.pathname } })
+  
   }
   
   const selectUser = (state: any) => state.auth.user || "";
@@ -91,7 +93,7 @@ const HiringInterviews = () => {
              <View size={15}/>
             </button>
             <button
-            onClick={()=>{handleGroupVideoCall(interview.interviewLink)}}
+            onClick={()=>{handleGroupVideoCall(interview.interviewLink,interview._id)}}
               className="text-xs rounded btn border px-4 py-2 cursor-pointer text-green-600 ml-2 bg-white"
             >
               Join Interview

@@ -1,33 +1,66 @@
 import React, { useEffect, useState } from "react";
 
-import {  listUserJob } from "../services/api/user/apiMethods";
+import {  listUserJob, userJobBlock } from "../services/api/user/apiMethods";
 import "../pages/admin/userlistPage/userList.css";
 import { useSelector } from "react-redux";
 import {  useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { Pagination } from "flowbite-react";
 const HiringJobList: React.FC = () => {
   const selectUser = (state: any) => state.auth.user || "";
   const user = useSelector(selectUser) || "";
   const userId = user._id || "";
   const navigate =useNavigate()
-
+  const [currentPage, setCurrentPage] = useState(1);
   const [jobs, setJobs] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
 
+  
+  
   useEffect(() => {
-    try {
-     listUserJob({userId:userId})
-        .then((response: any) => {
-          const jobsData = response.data.jobs;
-          setJobs(jobsData);
+    const fetchJobs = async () => {
+      setLoading(true);
+      try {
+        const response: any = await listUserJob({ userId, page: currentPage });
+        const { jobs: jobsData, totalPages: fetchedTotalPages } = response.data;
+        setJobs(jobsData);
+        setTotalPages(fetchedTotalPages);
+      } catch (error:any) {
+        console.error(error.message); 
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchJobs();
+  }, [currentPage, userId]);
 
-          console.log(response.data);
+
+  const handleJobBlock = (jobId: string,status:string) => {
+    try {
+      const requestData = { jobId };
+      userJobBlock(requestData)
+        .then((response: any) => {
+          const data = response.data;
+          if(status=="block"){
+            toast.error(data.message);
+          }else{
+            toast.info(data.message);
+
+          }
+            setJobs(response.data.jobs);
         })
         .catch((error) => {
-          console.log(error.message);
+          toast.error(error.message);
         });
-    } catch (error) {
-      console.log(error);
+    } catch (err:any) {
+      toast.error(err.message);
     }
-  }, []);
+  }
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+  };
   
   return (
     <>
@@ -36,7 +69,7 @@ const HiringJobList: React.FC = () => {
           <p className="py-2">No Job postings</p>
         </div>
       ) : (
-        <div className="w-full overflow-hidden rounded-lg m-5" style={{ width: '1053px' }}>
+        <div className="w-full overflow-hidden rounded-lg mx-5 mt-5 mb-3" style={{ height:'440px',width: '1053px' }}>
           <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
             <thead className="bg-gray-50">
               <tr>
@@ -86,7 +119,7 @@ const HiringJobList: React.FC = () => {
                   <td className="font-xs px-6 py-4">{new Date(job.createdAt).toLocaleDateString()}</td>
                   <td className="font-xs px-6 py-4">{new Date(job.lastDateToApply).toLocaleDateString()}</td>
                   <td className="text-xs px-6 py-4">
-                    {job.isDeleted ? (
+                    {job.isBlocked? (
                       <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
                         Blocked
                       </span>
@@ -118,10 +151,10 @@ const HiringJobList: React.FC = () => {
                     </button>
   
                     <div className="justify-end gap-4">
-                      {job.isDeleted ? (
+                      {job.isBlocked ? (
                         <button
                           type="button"
-                          onClick={() => console.log(job._id, 'unblock')}
+                          onClick={() => handleJobBlock(job._id,"block")}
                           className="text-xs px-5 bg-white text-green-600 hover:bg-gray-100 border border-gray-200 focus:outline-none font-medium rounded-lg py-2.5 text-center inline-flex items-center me-2 mb-2"
                         >
                           UnBlock
@@ -129,7 +162,7 @@ const HiringJobList: React.FC = () => {
                       ) : (
                         <button
                           type="button"
-                          onClick={() => console.log(job._id, 'block')}
+                          onClick={() => handleJobBlock(job._id,"block")}
                           className="text-xs px-5 bg-white text-red-600 hover:bg-gray-100 border border-gray-200 focus:outline-none font-medium rounded-lg py-2.5 text-center inline-flex items-center me-2 mb-2"
                         >
                           Block
@@ -141,8 +174,13 @@ const HiringJobList: React.FC = () => {
               ))}
             </tbody>
           </table>
+
         </div>
+        
       )}
+                <div className="pagnation flex justify-end pe-1">
+        <Pagination className='text-xs ' currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
+      </div>
     </>
   );
   

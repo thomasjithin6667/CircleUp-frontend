@@ -16,7 +16,7 @@ function InterviewCall() {
   const username = user.username;
 
   const handleLeaveRoom = () => {
-    console.log("user Left");
+ 
     navigate(location.state?.from || "/");
   };
 
@@ -28,7 +28,7 @@ function InterviewCall() {
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appId,
         serverSecret,
-        roomId,
+        roomId as string,
         Date.now().toString(),
         username
       );
