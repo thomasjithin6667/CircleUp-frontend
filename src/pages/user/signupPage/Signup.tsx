@@ -1,8 +1,8 @@
 import { Formik,Form,Field ,ErrorMessage} from 'formik';
 import './signup.css'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import TextError from '../../../components/TextError';
-import {initialValues,validationSchema} from '../../../utils/validation/signupValidation'
+import { initialValues as defaultInitialValues,validationSchema} from '../../../utils/validation/signupValidation'
 import { postRegister } from '../../../services/api/user/apiMethods';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../utils/context/reducers/authSlice';
 import {auth,provider} from "../../../utils/firebase/config"
 import {signInWithPopup} from "firebase/auth";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 
 
@@ -20,12 +20,22 @@ import { useSelector } from "react-redux";
 
 
 function Signup() {
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const email = queryParams.get('email') || '';
+  const [userEmail,setUserEmail] = useState(email)
   
   const selectUser = (state:any)=>state.auth.user;
 const user = useSelector(selectUser);
 
 const dispatch = useDispatch();
-
+const initialValues = { ...defaultInitialValues, email: userEmail };
+useEffect(()=>{
+  if(email.length!==0){
+    initialValues.email=userEmail;
+  }
+},[initialValues,userEmail])
 
   const navigate = useNavigate();
   localStorage.removeItem('otpTimer')
@@ -51,6 +61,7 @@ const dispatch = useDispatch();
   
   const googleSubmit = () => {
     signInWithPopup(auth, provider).then((data: any) => {
+      console.log(data);
   
       const userData = {
         username: data.user.displayName,
@@ -63,6 +74,8 @@ const dispatch = useDispatch();
         if (response.status === 200) {
           toast.success(data.message);
           dispatch(loginSuccess({ user: data }));
+          localStorage.setItem('userToken', data.token);      
+          localStorage.setItem('userRefreshToken', data.refreshToken);
           navigate('/home');
         } else {
           console.log(response.message);
@@ -100,8 +113,9 @@ const dispatch = useDispatch();
 
       <div className="w-full  lg:w-1/2 flex items-center justify-center">
         
-        <div className='logo'>   <img src="https://i.postimg.cc/YC7Hwhxb/Screenshot-2024-03-04-151411.png" alt="" /></div>
-        
+      <div className='logo'>  
+        <a href="/"><img src="https://i.postimg.cc/YC7Hwhxb/Screenshot-2024-03-04-151411.png" alt="" /></a> </div>
+                
         <div className="max-w-md w-full p-6" >
           <p className="title text-4xl font-black  mb-2 text-black ">Register with us.</p>
           <h1 className="text-sm  mb-6 text-gray-500 ">Explore open career opportunities </h1>

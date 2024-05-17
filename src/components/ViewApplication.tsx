@@ -8,7 +8,7 @@ import { X } from "lucide-react";
 function  ViewApplication({application,cancelViewApplication}:any) {
 
 const showPdf=(pdf:string)=>{
-    window.open(`http://circleup.site/api/uploads/${pdf}`,"_blank","noreferrer")
+    window.open(`https://circleup.site/api/uploads/${pdf}`,"_blank","noreferrer")
 }
   return (
     <>
@@ -93,6 +93,7 @@ const showPdf=(pdf:string)=>{
                 </div>
                       
             <button
+            
                     type="submit"
                     className="text-xs rounded btn border px-4 py-2 cursor-pointer text-white ml-2 bg-gray-900 hover:bg-green-600 "
                    

@@ -59,9 +59,9 @@ import SearchPost from "../components/SearchPost";
 import SearchPeople from "../components/SearchPeople";
 import SearchJobs from "../components/SearchJobs";
 import ProtectedVideoCall from "../components/ProtectedVideoCall";
-
-
-
+import ContactUs from "../pages/user/contactus/ContactUs";
+import Features from "../pages/user/features/Features";
+import AboutUs from "../pages/user/aboutus/AboutUs";
 
 
 const appRouter = createBrowserRouter([
@@ -463,6 +463,19 @@ const appRouter = createBrowserRouter([
       path: '/not-authorized',
       element: <NotAuthorized />,
     },
+    {
+      path:'/contact-us',
+      element:<ContactUs/>
+    }
+  ,
+  {
+    path:'/features',
+    element:<Features/>
+  },
+  {
+    path:'/about-us',
+    element:<AboutUs/>
+  },
     adminRouter,  
     adminLoginRouter,
   

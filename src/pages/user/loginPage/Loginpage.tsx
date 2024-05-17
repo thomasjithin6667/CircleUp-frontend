@@ -140,7 +140,9 @@ const user = useSelector(selectUser);
       </div>
 
       <div className="w-full  lg:w-1/2 flex items-center justify-center ">
-        <div className='logo'>   <img src="https://i.postimg.cc/YC7Hwhxb/Screenshot-2024-03-04-151411.png" alt="" /></div>
+       
+        <div className='logo'>  
+        <a href="/"><img src="https://i.postimg.cc/YC7Hwhxb/Screenshot-2024-03-04-151411.png" alt="" /></a> </div>
         
         <div className="max-w-md w-full p-6" >
           <p className="title text-4xl font-black  mb-2 text-black ">Login to your account.</p>

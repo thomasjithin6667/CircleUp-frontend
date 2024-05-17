@@ -1,56 +1,53 @@
 import { useNavigate } from "react-router-dom"
 import "./landing.css"
+import { useState } from "react";
+import Header2 from "../../../components/Header2";
 useNavigate
 
 function Landing() {
 
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+
+  const handleChange = (e:any) => {
+      setEmail(e.target.value);
+  };
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+    navigate(`/signup?email=${email}`);
+};
   return (
     <>
        
-    <nav  className=  " z-10 bg-white border px-4 lg:px-6 py-2.5 ">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-            <a href="" className="flex items-center">
-                <img src="https://i.postimg.cc/YC7Hwhxb/Screenshot-2024-03-04-151411.png" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
-               
-            </a>
-            <div className="flex items-center lg:order-2 ms-10">
-                <a href="/signup"  className="inline-flex items-center justify-center px-5 py-2 mr-3 text-xs font-medium text-center border rounded-lg text-green-600 hover:bg-gray-100 ">Sign Up</a>
-        
-            </div>
-            <div  className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-                <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-                  
-                    <li>
-                        <a href="#" className="text-xs block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-green-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-green-600 dark:hover:bg-gray-700 dark:hover:text-green-600 lg:dark:hover:bg-transparent dark:border-gray-700">About</a>
-                    </li>
-         
-                    <li>
-                        <a href="#" className="text-xs block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-green-600 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Features</a>
-                    </li>
-                
-                    <li>
-                        <a href="#" className="text-xs block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-green-600  dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<Header2/>
 
 
 
 
 <div className="container mx-auto px-6 py-16 pt-28 text-center ">
 <div className=" mx-auto  max-w-lg">
-<h1 className="title  font-bold text-black text-4xl">Platform to Connect & Hire Experts for any Job</h1>
+<h1 className="title   text-black text-4xl">Platform to Connect & Hire Experts for any Job</h1>
 
-<p className="mt-6 text-gray-700">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero similique obcaecati illum mollitia.</p>
+<p className="mt-6 text-xs text-gray-700">  Build and engage with your professional network. Access knowledge, insights and opportunities.</p>
 
-<div className="mx-auto mt-6 w-full max-w-sm rounded-md border bg-transparent focus-within:border-blue-400 focus-within:ring focus-within:ring-blue-300 focus-within:ring-opacity-40 dark:border-gray-700 dark:focus-within:border-blue-300">
-  <form  className="flex flex-col md:flex-row">
-    <input type="email" placeholder="Enter your email address" className=" text-xs m-1 h-10 flex-1 appearance-none border-none bg-transparent px-4 py-2 text-gray-700 placeholder-gray-400 focus:placeholder-transparent focus:outline-none focus:ring-0 dark:text-gray-200" />
-
-    <button  type="submit" className=" text-xs m-1 h-10 transform rounded-md bg-green-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-gray-900 focus:bg-blue-400 focus:outline-none">Join Us</button>
-  </form>
+<div className="mx-auto mt-6 w-full max-w-sm bg-white rounded-md border  focus-within:border-green-400 focus-within:ring focus-within:ring-green-300 focus-within:ring-opacity-40 dark:border-gray-700 dark:focus-within:border-green-300">
+<form onSubmit={handleSubmit} className="flex flex-col md:flex-row">
+            <input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={handleChange}
+                className="text-xs m-1 h-10 flex-1 appearance-none border-none  px-4 py-2 text-gray-700 placeholder-gray-400 focus:placeholder-transparent focus:outline-none focus:ring-0 dark:text-gray-200"
+            />
+            <button
+                type="submit"
+                className="text-xs m-1 h-10 transform rounded-md bg-green-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-gray-900 focus:bg-green-400 focus:outline-none"
+            >
+                Join Us
+            </button>
+        </form>
 </div>
 </div>
 
