@@ -2,11 +2,19 @@ import { useNavigate } from "react-router-dom"
 import "./landing.css"
 import { useState } from "react";
 import Header2 from "../../../components/Header2";
-useNavigate
+
 
 function Landing() {
 
   const navigate = useNavigate();
+
+
+
+
+  const handleNavigation = (path:any) => {
+    navigate(path);
+  };
+
 
   const [email, setEmail] = useState('');
 
@@ -107,8 +115,18 @@ function Landing() {
 
   </div>
 </div>
+
 </div>
+
 </div>
+<div className="flex text-xs gap-1 justify-center mt-10 mb-3 w-full lg:hidden">
+      <p className="cursor-pointer" onClick={() => handleNavigation('/about-us')}>About</p>
+      <span>.</span>
+      <p className="cursor-pointer" onClick={() => handleNavigation('/features')}>Features</p>
+      <span>.</span>
+      <p className="cursor-pointer" onClick={() => handleNavigation('/contact-us')}>Contact</p>
+    </div>
+
 
 
 <div  className="main-area">
